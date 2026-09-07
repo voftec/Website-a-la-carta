@@ -5,10 +5,10 @@
  *   node tools/catalog.js export   -> writes catalog.csv from js/modules.js
  *   node tools/catalog.js import   -> rewrites window.MODULES in js/modules.js from catalog.csv
  *
- * CSV layout (one row per line, UTF-8 with BOM so Excel opens it directly):
+ * CSV layout (UTF-8, comma separated; Google Sheets: =IMPORTDATA("<pages-url>/catalog.csv")):
+ *   category  category name
  *   type      module | quantity | tier
  *   id        module id (for quantity/tier rows: the parent module id)
- *   category  category name (module rows)
  *   name      module name / quantity label / tier option name
  *   option_id tier option id (tier rows only)
  *   tagline, description
@@ -24,7 +24,7 @@ const path = require("path");
 const root = path.join(__dirname, "..");
 const MOD_PATH = path.join(root, "js", "modules.js");
 const CSV_PATH = path.join(root, "catalog.csv");
-const COLS = ["type", "id", "category", "name", "option_id", "tagline", "description", "one_time_usd", "monthly_usd", "weeks", "included", "requires", "preview", "min", "max", "default"];
+const COLS = ["category", "type", "id", "name", "option_id", "tagline", "description", "one_time_usd", "monthly_usd", "weeks", "included", "requires", "preview", "min", "max", "default"];
 
 function loadCatalog() {
   const w = {};
@@ -45,12 +45,12 @@ function exportCsv() {
     lines.push(row({ type: "module", id: m.id, category: cat[m.cat], name: m.name, tagline: m.tagline, description: m.desc,
       one_time_usd: m.oneTime, monthly_usd: m.monthly, weeks: m.weeks, included: m.locked ? "yes" : "no",
       requires: (m.requires || []).join(";"), preview: m.preview || "" }));
-    if (m.qty) lines.push(row({ type: "quantity", id: m.id, name: m.qty.label, one_time_usd: m.qty.unit, monthly_usd: m.qty.unitMonthly || 0,
+    if (m.qty) lines.push(row({ category: cat[m.cat], type: "quantity", id: m.id, name: m.qty.label, one_time_usd: m.qty.unit, monthly_usd: m.qty.unitMonthly || 0,
       min: m.qty.min, max: m.qty.max, default: m.qty.default ?? m.qty.min }));
     if (m.tier) for (const o of m.tier.options)
-      lines.push(row({ type: "tier", id: m.id, name: o.name, option_id: o.id, tagline: m.tier.label, one_time_usd: o.oneTime, monthly_usd: o.monthly }));
+      lines.push(row({ category: cat[m.cat], type: "tier", id: m.id, name: o.name, option_id: o.id, tagline: m.tier.label, one_time_usd: o.oneTime, monthly_usd: o.monthly }));
   }
-  fs.writeFileSync(CSV_PATH, "\uFEFF" + lines.join("\r\n") + "\r\n");
+  fs.writeFileSync(CSV_PATH, lines.join("\n") + "\n");
   console.log(`wrote ${CSV_PATH} (${MODULES.length} modules, ${lines.length - 1} rows)`);
 }
 
