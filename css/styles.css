@@ -223,6 +223,18 @@ input, select { font: inherit; }
 .empty { padding: 60px 36px; text-align: center; color: var(--muted); font-size: 13px; }
 
 /* ---------- Right: calculator ---------- */
+.budget { background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 10px; }
+.budget-head { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.budget-head b { color: var(--ok); letter-spacing: 0; text-transform: none; font-size: 12px; }
+.budget-head b.over { color: var(--accent-2); }
+.budget-bar { position: relative; height: 10px; border-radius: 5px; background: #22222f; overflow: hidden; }
+.budget-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--ok), var(--accent), var(--accent-2)); transition: width .3s; }
+.budget-bar em { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--bg); }
+.budget-ticks { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin-top: 6px; }
+.budget-ticks .cur { color: var(--text); font-weight: 600; }
+.budget-hint { font-size: 11px; color: var(--muted); margin-top: 6px; }
+.budget-hint.over { color: var(--accent-2); }
+
 .totals { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
 .total-card { background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; }
 .total-card span { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }

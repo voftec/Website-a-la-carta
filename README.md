@@ -30,7 +30,7 @@ Everything lives in `js/modules.js`:
   preview: "ar_hub" }                                          // section renderer in js/preview.js
 ```
 
-Presets (Starter / Fan Experience / Mr. Worldwide) are at the bottom of the same file.
+Presets (Starter ≈ $5k / Fan Experience ≈ $8k / Mr. Worldwide ≈ $15k) and the budget bands (`BUDGETS`: Base $5k, Mid $8k, Top $15k) are at the bottom of the same file. The calculator shows which band the current selection falls in.
 
 ## Deploy
 

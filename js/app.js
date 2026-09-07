@@ -63,7 +63,7 @@
     const p = PRESETS.find((x) => x.id === pid);
     state.on = new Set(MODULES.filter((m) => m.locked).map((m) => m.id));
     (p.modules === "all" ? MODULES.map((m) => m.id) : p.modules).forEach((id) => state.on.add(id));
-    if (pid === "worldwide") { state.tier.ar_world = "volumetric"; state.tier.support = "tour"; state.qty.ar_face = 6; }
+    if (pid === "worldwide") { state.tier.ar_world = "volumetric"; state.tier.support = "tour"; state.qty.ar_face = 4; }
     if (render) renderAll();
   }
 
@@ -134,6 +134,7 @@
     // Parallel workstreams: effective calendar time ≈ 45% of summed effort, min 3 weeks
     const calWeeks = Math.max(3, Math.round(weeks * 0.45));
 
+    renderBudget(oneNet);
     $("#t-onetime").textContent = fmt(oneNet);
     $("#t-monthly").innerHTML = fmt(mo) + "<small>/mo</small>";
     $("#t-year").textContent = fmt(oneNet + mo * 12);
@@ -149,6 +150,19 @@
     $("#timeline").innerHTML = `<h3>Timeline (${calWeeks} wks, parallel streams)</h3>` + phases.map(([n, f]) => `<div class="ph"><b>${n}</b><i style="width:${f * 100}%"></i><span>${Math.max(1, Math.round(calWeeks * f))} wk</span></div>`).join("");
 
     document.querySelectorAll("#presets button").forEach((b) => b.classList.remove("active"));
+  }
+
+  function renderBudget(oneNet) {
+    const top = BUDGETS[BUDGETS.length - 1].max;
+    const band = BUDGETS.find((b) => oneNet <= b.max);
+    const pct = Math.min(100, (oneNet / top) * 100);
+    const over = oneNet > top;
+    $("#budget").innerHTML = `
+      <div class="budget-head"><span>Budget band</span><b class="${over ? "over" : ""}">${band ? band.name + " · up to " + fmt(band.max) : "Over " + fmt(top)}</b></div>
+      <div class="budget-bar"><i style="width:${pct}%"></i>${BUDGETS.slice(0, -1).map((b) => `<em style="left:${(b.max / top) * 100}%"></em>`).join("")}</div>
+      <div class="budget-ticks">${BUDGETS.map((b) => `<span class="${band && band.id === b.id ? "cur" : ""}">${b.name} ${fmt(b.max)}</span>`).join("")}</div>
+      ${band && band.max - oneNet > 0 && band.max - oneNet < 1500 ? `<div class="budget-hint">${fmt(band.max - oneNet)} left in this band</div>` : ""}
+      ${over ? `<div class="budget-hint over">${fmt(oneNet - top)} above the top budget — remove modules or lower the volumetric / filter count</div>` : ""}`;
   }
 
   function renderAll() { renderCatalog(); renderPreview(); renderCalc(); save(); }
