@@ -40,3 +40,11 @@ Static — works on GitHub Pages, Vercel or Netlify with no build step.
 
 Agrega el nombre al link y el titulo/hero cambian: `?artist=daddy-yankee` (o corto: `?jlo`). Separa palabras con `-`. Sin parametro muestra Pitbull / Mr. Worldwide.
 
+
+## Editar precios en Excel
+
+`catalog.csv` tiene una fila por modulo (categoria, nombre, descripcion, precio unico, mensual, semanas, dependencias) y filas `quantity` / `tier` para precios por unidad u opciones. Abrilo en Excel, edita, guarda como CSV y corre:
+
+    node tools/catalog.js import   # CSV -> js/modules.js
+    node tools/catalog.js export   # js/modules.js -> CSV
+
