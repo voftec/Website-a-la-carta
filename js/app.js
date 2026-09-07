@@ -43,7 +43,7 @@
   MODULES.filter((m) => m.locked).forEach((m) => state.on.add(m.id));
 
   const view = {
-    has: (id) => state.on.has(id),
+    has: (id) => id === "ar_hub" ? MODULES.some((m) => m.cat === "ar" && state.on.has(m.id)) : state.on.has(id),
     qty: (id) => state.qty[id] ?? byId[id]?.qty?.default ?? byId[id]?.qty?.min ?? 0,
     tier: (id) => state.tier[id] ?? byId[id]?.tier?.options[0].id,
   };
@@ -143,7 +143,7 @@
   function renderPreview() {
     const R = PREVIEW_RENDERERS;
     let html = "";
-    PREVIEW_ORDER.forEach((id) => { if (state.on.has(id) && R[id]) html += R[id](view) || ""; });
+    PREVIEW_ORDER.forEach((id) => { if (view.has(id) && R[id]) html += R[id](view) || ""; });
     html += R.footer(view);
     const el = $("#preview");
     el.innerHTML = html;

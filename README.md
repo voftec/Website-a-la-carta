@@ -25,7 +25,7 @@ Everything lives in `js/modules.js`:
 { id, cat, name, tagline, desc, oneTime, monthly, weeks,
   qty:   { label, min, max, unit, unitMonthly, default },   // per-unit pricing (e.g. number of AR filters)
   tier:  { label, options: [{ id, name, oneTime, monthly }] }, // variants (e.g. 3D avatar vs volumetric)
-  requires: ["ar_hub"],                                       // auto-enables dependencies
+  requires: ["fanclub"],                                       // auto-enables dependencies
   locked: true,                                               // always included (hero, hosting)
   preview: "ar_hub" }                                          // section renderer in js/preview.js
 ```
