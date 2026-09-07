@@ -112,6 +112,9 @@
 
   R.video = () => sec("video", "Video hub", h("WATCH") + p("Music videos, behind the scenes, interviews."), cards([["Official video", "4:12"], ["Behind the tour", "12:30"], ["Studio session", "6:05"]], "thumb"));
   R.gallery = () => sec("gallery", "Gallery", h("PHOTOS"), `<div class="feed">${Array.from({ length: 6 }).map((_, i) => `<div data-net="${["Miami", "LA", "Madrid", "Studio", "Red carpet", "Tour"][i]}"></div>`).join("")}</div>`);
+  R.analytics = (s) => sec("analytics", "Team dashboard (private)", h("YOUR FAN METRICS") + p(`Google Analytics 4 - ${10 + s.qty("analytics")} events tracked. Private panel for your team, segmented by country, device, campaign and fan tier.`),
+    `<div class="grid"><div class="card"><b>128k</b><span>Visitors / 30d</span></div><div class="card"><b>41k</b><span>AR filter opens</span></div><div class="card"><b>9.2k</b><span>Pre-saves</span></div><div class="card"><b>3.1k</b><span>Ticket clicks</span></div></div>
+     <div class="lb"><div><span>US</span><span>Miami - LA - NYC</span><span>38%</span></div><div><span>MX</span><span>CDMX - GDL</span><span>17%</span></div><div><span>ES</span><span>Madrid - BCN</span><span>11%</span></div></div>`);
   R.news = () => sec("news", "News", h("LATEST") , cards([["New album announced", "Sep 1"], ["World tour adds 12 dates", "Aug 20"], ["AR filters now live", "Aug 2"]]));
   R.timeline = () => sec("timeline", "Timeline", h("MIAMI → WORLDWIDE") + p("Scroll-driven career story."),
     `<div class="chips"><span class="chip">2004 · M.I.A.M.I.</span><span class="chip">2009 · I Know You Want Me</span><span class="chip">2011 · Give Me Everything</span><span class="chip">2013 · Timber</span><span class="chip">2026 · New era</span></div>`);
@@ -128,6 +131,6 @@
   R.footer = (s) => `<div class="footer"><span>© ${A().name}${d(" · Mr. 305 Inc.", "")}</span><span>${s.has("legal") ? "Privacy · Cookies · Age 13+ for AR" : "Privacy"}${s.has("press") ? " · Press kit" : ""}${s.has("a11y") ? " · Accessibility" : ""}${s.has("pwa") ? " · 📲 Install app" : ""}</span></div>`;
 
   /* Order in which sections appear on the landing */
-  window.PREVIEW_ORDER = ["hero", "countdown", "presave", "ar_hub", "ar_ugc", "calendar", "setlist", "livestream", "fanclub", "points", "leaderboard", "quiz", "fancard", "contests", "birthday", "fanwall", "store", "collectibles", "donate", "smartlinks", "playlist", "video", "gallery", "news", "timeline", "challenge", "socialfeed", "worldmap", "capture", "player"];
+  window.PREVIEW_ORDER = ["hero", "countdown", "presave", "ar_hub", "ar_ugc", "calendar", "setlist", "livestream", "fanclub", "points", "leaderboard", "quiz", "fancard", "contests", "birthday", "fanwall", "store", "collectibles", "donate", "smartlinks", "playlist", "video", "gallery", "news", "timeline", "challenge", "socialfeed", "worldmap", "capture", "analytics", "player"];
   window.PREVIEW_RENDERERS = R;
 })();
