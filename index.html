@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Website à la carte — Mr. Worldwide Fan Experience</title>
+  <meta name="description" content="Interactive proposal: pick the modules, preview the full fan-experience landing, and see the price update live." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">305</span>
+      <div>
+        <h1>Website à la carte</h1>
+        <p>Mr. Worldwide · WebAR Fan Experience — interactive proposal</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <div class="presets" id="presets"></div>
+      <button class="btn ghost" id="btn-reset" title="Clear all optional modules">Reset</button>
+      <button class="btn ghost" id="btn-share" title="Copy shareable link">Share</button>
+      <button class="btn primary" id="btn-export">Export proposal</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- LEFT: module catalog -->
+    <aside class="panel panel-left">
+      <div class="panel-head">
+        <h2>Modules</h2>
+        <input id="search" type="search" placeholder="Search modules…" />
+      </div>
+      <div id="catalog" class="catalog"></div>
+    </aside>
+
+    <!-- CENTER: full landing preview -->
+    <section class="panel panel-center">
+      <div class="device-bar">
+        <div class="device-toggle">
+          <button data-device="desktop" class="active">Desktop</button>
+          <button data-device="mobile">Mobile</button>
+        </div>
+        <span id="page-length" class="page-length"></span>
+      </div>
+      <div class="device-frame" id="device-frame">
+        <div class="browser-chrome"><span></span><span></span><span></span><em>mrworldwide.com</em></div>
+        <div id="preview" class="preview"></div>
+      </div>
+    </section>
+
+    <!-- RIGHT: price calculator -->
+    <aside class="panel panel-right">
+      <div class="panel-head"><h2>Price calculator</h2></div>
+      <div class="totals">
+        <div class="total-card">
+          <span>One-time build</span>
+          <strong id="t-onetime">$0</strong>
+        </div>
+        <div class="total-card">
+          <span>Monthly (licences, hosting, care)</span>
+          <strong id="t-monthly">$0<small>/mo</small></strong>
+        </div>
+        <div class="total-row"><span>First-year total</span><strong id="t-year">$0</strong></div>
+        <div class="total-row"><span>Estimated timeline</span><strong id="t-weeks">0 weeks</strong></div>
+        <div class="total-row"><span>Modules selected</span><strong id="t-count">0</strong></div>
+      </div>
+
+      <div class="options">
+        <label class="opt">
+          <span>Discount</span>
+          <select id="discount">
+            <option value="0">None</option>
+            <option value="0.10">10% — bundle (8+ modules)</option>
+            <option value="0.15">15% — annual prepay</option>
+            <option value="0.20">20% — launch partner</option>
+          </select>
+        </label>
+        <label class="opt">
+          <span>Payment plan</span>
+          <select id="plan">
+            <option value="1">100% upfront</option>
+            <option value="2">50 / 50</option>
+            <option value="3">40 / 30 / 30</option>
+          </select>
+        </label>
+      </div>
+      <div id="plan-breakdown" class="plan-breakdown"></div>
+
+      <h3>Line items</h3>
+      <ul id="lines" class="lines"></ul>
+
+      <div class="timeline" id="timeline"></div>
+      <p class="fineprint">Prices in USD, indicative for proposal purposes. Third-party licences (8th Wall, Shopify, streaming APIs) billed at cost + setup. Volumetric capture requires artist availability.</p>
+    </aside>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="js/modules.js"></script>
+  <script src="js/preview.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
