@@ -40,22 +40,12 @@
     `<div class="chips"><span class="pill c">Spotify</span><span class="pill o">Apple Music</span><span class="pill o">Deezer</span><span class="pill o">Amazon Music</span></div>`);
 
   R.ar_hub = (s) => {
-    const items = [];
-    if (s.has("ar_face")) for (let i = 1; i <= Math.min(s.qty("ar_face"), 6); i++) items.push([`Face filter #${i}`, i === 1 ? d("Worldwide Shades", "Signature shades") : i === 2 ? d("Dale! flares", "Stage flares") : i === 3 ? d("305 tuxedo", "Tour look") : "Face lens"]);
-    if (s.has("ar_world")) items.push([`${A().name} in your room`, s.tier("ar_world") === "volumetric" ? "Volumetric capture" : "3D avatar"]);
-    if (s.has("ar_portal")) items.push(["Portal: walk into the show", "360° + spatial audio"]);
-    if (s.has("ar_marker")) items.push([`Scan the cover`, `${s.qty("ar_marker")} image targets`]);
-    if (s.has("ar_tryon")) items.push([`Try-on merch`, `${s.qty("ar_tryon")} SKUs`]);
-    if (!items.length) items.push(["Your first filter", "Add filter modules on the left"]);
-    let extra = "";
-    if (s.has("ar_drops")) extra += `<div class="chips" style="margin-top:14px"><span class="chip hot">🔒 Miami only · unlocks Fri 9PM</span><span class="chip">Scan QR at the venue</span><span class="chip">Next drop in 3d 4h</span></div>`;
-    if (s.has("ar_booth")) extra += `<div class="row" style="margin-top:14px"><span class="pill y">📸 Open AR booth</span><span class="chip">15s video · watermark · ${d("#DaleWorldwide", "#" + A().name.replace(/\s+/g, "") + "AR")}</span><span class="chip">Share to TikTok / IG / WhatsApp</span></div>`;
     const refs = MODULES.filter((m) => m.cat === "ar" && s.has(m.id) && window.AR_MEDIA && AR_MEDIA[m.id]).map((m) => {
       const ar = AR_MEDIA[m.id];
       const vids = ar.videos.map((v) => `<figure><video src="${v.src}" muted loop playsinline autoplay preload="metadata"></video><figcaption>${v.effect}</figcaption></figure>`).join("");
       return `<div class="ar-ref"><div class="ar-ref-vids">${vids || '<div class="ar-ref-empty">Image target demo</div>'}</div><h3>${m.name} <span class="pill">${ar.camera}</span></h3><p class="sub">${ar.what}</p></div>`;
     }).join("");
-    return sec("ar_hub", "WebAR hub", h("AR FILTERS - NO APP NEEDED") + p("Point your phone at the QR or tap on mobile. Works on iOS & Android in the browser."), refs + cards(items, "ar") + extra);
+    return sec("ar_hub", "WebAR hub", h("AR FILTERS - NO APP NEEDED") + p("Point your phone at the QR or tap on mobile. Works on iOS & Android in the browser."), refs);
   };
 
   R.ar_ugc = () => sec("ar_ugc", "UGC wall", h("FAN MOMENTS") + p("Moderated captures from fans worldwide — the best make it to the venue screens."),
