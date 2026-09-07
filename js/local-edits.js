@@ -11,11 +11,13 @@ window.LOCAL_EDITS = (() => {
     try {
       const raw = localStorage.getItem(KEY);
       if (raw) e = { removed: [], overrides: {}, ...JSON.parse(raw) };
+      /* catalog changed since these edits were made: drop stale removals (kept overrides still apply) */
+      if (window.CATALOG_VERSION && e.catalog !== window.CATALOG_VERSION) { e.removed = []; e.catalog = window.CATALOG_VERSION; }
       else if (localStorage.getItem(LEGACY)) e.removed = JSON.parse(localStorage.getItem(LEGACY));
     } catch {}
     return e;
   }
-  const save = (e) => { localStorage.setItem(KEY, JSON.stringify(e)); localStorage.removeItem(LEGACY); };
+  const save = (e) => { e.catalog = window.CATALOG_VERSION; localStorage.setItem(KEY, JSON.stringify(e)); localStorage.removeItem(LEGACY); };
 
   /* Return a deep copy of a module with its overrides applied */
   function patch(m, o) {
