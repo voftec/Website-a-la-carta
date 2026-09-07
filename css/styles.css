@@ -379,3 +379,9 @@ input, select { font: inherit; }
 #lines li.ext-head{margin-top:10px;border-top:1px dashed rgba(255,255,255,.15);padding-top:8px}
 #lines li.ext span:first-child{opacity:.75}
 .adm-t .ext{display:block;color:#f5c542}
+
+.lang{display:flex;flex-wrap:wrap;gap:4px;max-width:70%}
+.lang span{padding:2px 6px;border-radius:999px;border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.35)}
+.lang span.on{border-color:var(--accent);color:var(--text)}
+.lang span{display:inline-flex;align-items:center;gap:4px}
+.lang img{width:14px;height:10px;border-radius:2px;object-fit:cover}

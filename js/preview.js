@@ -17,10 +17,12 @@
   const d = (pit, gen) => (A().isDefault ? pit : gen);
   const R = {};
 
+  const FLAG = { English: "us", Spanish: "es", French: "fr", Italian: "it", German: "de", Dutch: "nl", Portuguese: "br", Japanese: "jp", Korean: "kr", Mandarin: "cn", Arabic: "sa", Hindi: "in", Russian: "ru", Turkish: "tr" };
+  const CODE = { English: "EN", Spanish: "ES", French: "FR", Italian: "IT", German: "DE", Dutch: "NL", Portuguese: "PT", Japanese: "JA", Korean: "KO", Mandarin: "ZH", Arabic: "AR", Hindi: "HI", Russian: "RU", Turkish: "TR" };
   R.hero = (s) => `
     <div class="p-nav"><b>${A().upper}</b><span>Music</span><span>AR Filters</span><span>Tour</span><span>Fan Club</span><span>Store</span></div>
     <section data-mod="hero" class="hero">
-      ${s.has("i18n") ? `<div class="lang"><b>EN</b> · ES${(s.picks ? s.picks("i18n") : []).map((l) => " · " + l.slice(0, 2).toUpperCase()).join("")}</div>` : ""}
+      ${s.has("i18n") ? `<div class="lang">${["English", "Spanish", ...(s.picks ? s.picks("i18n") : [])].map((l, i) => `<span class="${i ? "" : "on"}" title="${l}">${FLAG[l] ? `<img src="https://flagcdn.com/w20/${FLAG[l]}.png" alt="" />` : "🌐"} ${CODE[l] || l.slice(0, 2).toUpperCase()}</span>`).join("")}</div>` : ""}
       <h1>${heroTitle()}</h1>
       <p>The official ${A().name} fan experience. Unlock AR filters, pre-save the new album, catch the tour and earn your place on the worldwide leaderboard.${A().isDefault ? " Dale!" : ""}</p>
       <div class="ctas">
