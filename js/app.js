@@ -143,6 +143,7 @@
     $("#t-count").textContent = state.on.size;
     $("#tab-count").textContent = `${state.on.size} selected`;
     $("#tab-price").textContent = fmt(oneNet);
+    $("#t-budget").textContent = `${fmt(oneNet)} USD`;
     $("#mb-onetime").textContent = fmt(oneNet);
     $("#mb-monthly").textContent = `+ ${fmt(mo)}/mo`;
     $("#lines").innerHTML = lines.join("");
