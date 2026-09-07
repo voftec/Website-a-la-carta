@@ -26,9 +26,15 @@
     </div>
   </header>
 
+  <nav class="mobile-tabs" id="mobile-tabs">
+    <button data-tab="left" class="active">Modules<small id="tab-count"></small></button>
+    <button data-tab="center">Preview<small id="tab-sections"></small></button>
+    <button data-tab="right">Price<small id="tab-price"></small></button>
+  </nav>
+
   <main class="layout">
     <!-- LEFT: module catalog -->
-    <aside class="panel panel-left">
+    <aside class="panel panel-left show">
       <div class="panel-head">
         <h2>Modules</h2>
         <input id="search" type="search" placeholder="Search modules…" />
@@ -97,6 +103,12 @@
       <p class="fineprint">Prices in USD, indicative for proposal purposes. Third-party licences (8th Wall, Shopify, streaming APIs) billed at cost + setup. Volumetric capture requires artist availability.</p>
     </aside>
   </main>
+
+  <div class="mobile-bar">
+    <div class="mb-total"><b id="mb-onetime">$0</b><span id="mb-monthly">+ $0/mo</span></div>
+    <div class="mb-band" id="mb-band"></div>
+    <button class="btn primary" data-tab="right">See price</button>
+  </div>
 
   <div id="toast" class="toast"></div>
 

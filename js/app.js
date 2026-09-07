@@ -115,6 +115,7 @@
     const sections = el.querySelectorAll("section").length;
     const px = sections * (state.device === "mobile" ? 700 : 520);
     $("#page-length").textContent = `${sections} sections · ≈ ${(px / 900).toFixed(1)} screens · scroll to explore`;
+    $("#tab-sections").textContent = `${sections} sections`;
   }
 
   /* ---------- RIGHT: calculator ---------- */
@@ -140,6 +141,10 @@
     $("#t-year").textContent = fmt(oneNet + mo * 12);
     $("#t-weeks").textContent = `${calWeeks} weeks`;
     $("#t-count").textContent = state.on.size;
+    $("#tab-count").textContent = `${state.on.size} selected`;
+    $("#tab-price").textContent = fmt(oneNet);
+    $("#mb-onetime").textContent = fmt(oneNet);
+    $("#mb-monthly").textContent = `+ ${fmt(mo)}/mo`;
     $("#lines").innerHTML = lines.join("");
 
     const splits = { 1: [1], 2: [0.5, 0.5], 3: [0.4, 0.3, 0.3] }[state.plan];
@@ -157,6 +162,9 @@
     const band = BUDGETS.find((b) => oneNet <= b.max);
     const pct = Math.min(100, (oneNet / top) * 100);
     const over = oneNet > top;
+    const mb = $("#mb-band");
+    mb.textContent = band ? `${band.name} band · ${fmt(band.max - oneNet)} left` : `${fmt(oneNet - top)} over top`;
+    mb.classList.toggle("over", over);
     $("#budget").innerHTML = `
       <div class="budget-head"><span>Budget band</span><b class="${over ? "over" : ""}">${band ? band.name + " · up to " + fmt(band.max) : "Over " + fmt(top)}</b></div>
       <div class="budget-bar"><i style="width:${pct}%"></i>${BUDGETS.slice(0, -1).map((b) => `<em style="left:${(b.max / top) * 100}%"></em>`).join("")}</div>
@@ -192,7 +200,10 @@
     const s = e.target.closest("section[data-mod]");
     if (!s) return;
     const el = document.querySelector(`.mod[data-mod="${s.dataset.mod}"]`);
-    if (el) { el.scrollIntoView({ behavior: "smooth", block: "center" }); el.classList.add("expanded"); }
+    if (el) {
+      if (window.matchMedia("(max-width: 860px)").matches) showTab("left");
+      el.scrollIntoView({ behavior: "smooth", block: "center" }); el.classList.add("expanded");
+    }
   });
   document.querySelectorAll("[data-device]").forEach((b) => b.addEventListener("click", () => {
     state.device = b.dataset.device;
@@ -209,6 +220,13 @@
     catch { toast("Copy this URL from the address bar"); }
   });
   $("#btn-export").addEventListener("click", () => window.print());
+
+  /* mobile tabs */
+  function showTab(tab) {
+    document.querySelectorAll(".panel").forEach((p) => p.classList.toggle("show", p.classList.contains("panel-" + tab)));
+    document.querySelectorAll("#mobile-tabs button").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));
+  }
+  document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => showTab(b.dataset.tab)));
 
   let toastT;
   function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2200); }
