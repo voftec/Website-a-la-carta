@@ -232,7 +232,7 @@
     $("#device-frame").classList.toggle("mobile", state.device === "mobile");
     renderPreview();
   }));
-  $("#presets").innerHTML = PRESETS.map((p) => `<button data-preset="${p.id}" title="${p.blurb}">${p.name}</button>`).join("");
+  $("#presets").innerHTML = PRESETS.map((p) => `<button data-preset="${p.id}" title="${p.blurb}">${p.id === "worldwide" && !ARTIST.isDefault ? "All-in" : p.name}</button>`).join("");
   $("#presets").addEventListener("click", (e) => { if (e.target.dataset.preset) { applyPreset(e.target.dataset.preset); e.target.classList.add("active"); } });
   $("#btn-reset").addEventListener("click", () => { state.on = new Set(MODULES.filter((m) => m.locked).map((m) => m.id)); state.qty = {}; state.tier = {}; renderAll(); });
   $("#btn-share").addEventListener("click", async () => {

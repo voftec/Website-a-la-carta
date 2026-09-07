@@ -14,6 +14,7 @@
     return w.length > 1 ? `${w[0]}<br><span>${w.slice(1).join(" ")}</span>` : `<span>${a.upper}</span>`;
   };
 
+  const d = (pit, gen) => (A().isDefault ? pit : gen);
   const R = {};
 
   R.hero = (s) => `
@@ -38,7 +39,7 @@
 
   R.ar_hub = (s) => {
     const items = [];
-    if (s.has("ar_face")) for (let i = 1; i <= Math.min(s.qty("ar_face"), 6); i++) items.push([`Face filter #${i}`, i === 1 ? "Worldwide Shades" : i === 2 ? "Dale! flares" : i === 3 ? "305 tuxedo" : "Face lens"]);
+    if (s.has("ar_face")) for (let i = 1; i <= Math.min(s.qty("ar_face"), 6); i++) items.push([`Face filter #${i}`, i === 1 ? d("Worldwide Shades", "Signature shades") : i === 2 ? d("Dale! flares", "Stage flares") : i === 3 ? d("305 tuxedo", "Tour look") : "Face lens"]);
     if (s.has("ar_world")) items.push([`${A().name} in your room`, s.tier("ar_world") === "volumetric" ? "Volumetric capture" : "3D avatar"]);
     if (s.has("ar_portal")) items.push(["Portal: walk into the show", "360° + spatial audio"]);
     if (s.has("ar_marker")) items.push([`Scan the cover`, `${s.qty("ar_marker")} image targets`]);
@@ -46,7 +47,7 @@
     if (!items.length) items.push(["Your first filter", "Add filter modules on the left"]);
     let extra = "";
     if (s.has("ar_drops")) extra += `<div class="chips" style="margin-top:14px"><span class="chip hot">🔒 Miami only · unlocks Fri 9PM</span><span class="chip">Scan QR at the venue</span><span class="chip">Next drop in 3d 4h</span></div>`;
-    if (s.has("ar_booth")) extra += `<div class="row" style="margin-top:14px"><span class="pill y">📸 Open AR booth</span><span class="chip">15s video · watermark · #DaleWorldwide</span><span class="chip">Share to TikTok / IG / WhatsApp</span></div>`;
+    if (s.has("ar_booth")) extra += `<div class="row" style="margin-top:14px"><span class="pill y">📸 Open AR booth</span><span class="chip">15s video · watermark · ${d("#DaleWorldwide", "#" + A().name.replace(/\s+/g, "") + "AR")}</span><span class="chip">Share to TikTok / IG / WhatsApp</span></div>`;
     return sec("ar_hub", "WebAR hub", h("AR FILTERS — NO APP NEEDED") + p("Point your phone at the QR or tap on mobile. Works on iOS & Android in the browser."), cards(items, "ar") + extra);
   };
 
@@ -55,7 +56,7 @@
 
   R.calendar = (s) => {
     const dates = [["12", "SEP", "Miami, FL", "Kaseya Center"], ["19", "SEP", "Los Angeles, CA", "Crypto.com Arena"], ["03", "OCT", "Madrid, ES", "WiZink Center"], ["11", "OCT", "Mexico City, MX", "Foro Sol"]];
-    return sec("calendar", "Tour calendar", h("WORLDWIDE TOUR") + p("Synced from Bandsintown. Add to your calendar. Get alerts when he's near you."),
+    return sec("calendar", "Tour calendar", h(d("WORLDWIDE TOUR", "ON TOUR")) + p("Synced from Bandsintown. Add to your calendar. Get alerts when he's near you."),
       `<div class="dates">${dates.map(([d, m, c, v], i) => `<div class="date"><div class="d">${d}<small>${m}</small></div><div class="c">${c}<span>${v}</span></div><div>${s.has("tickets") && i === 0 ? `<span class="pill p" style="padding:6px 12px;font-size:11px">Presale code</span>` : `<span class="pill o" style="padding:6px 12px;font-size:11px">Tickets</span>`}${s.has("vip") ? ` <span class="pill y" style="padding:6px 12px;font-size:11px">VIP</span>` : ""}</div></div>`).join("")}</div>`);
   };
 
@@ -63,35 +64,35 @@
     `<div class="poll">${[["Give Me Everything", 62], ["Timber", 48], ["Fireball", 41], ["I Know You Want Me", 33]].map(([t, v]) => `<div><span>${t}</span><div class="bar"><i style="width:${v}%"></i></div><span>${v}%</span></div>`).join("")}</div>`);
 
   R.livestream = () => sec("livestream", "Livestream", h("LIVE FROM MIAMI — SEP 12") + p("Watch party with live chat and reactions. Replay for 48h."),
-    `<div class="card" style="aspect-ratio:16/9;max-width:560px;background:linear-gradient(135deg,#2a1a30,#101018)"><b>▶ Stream starts in 2h 14m</b><span>PPV $9.99 · Free for Worldwide members</span></div>`);
+    `<div class="card" style="aspect-ratio:16/9;max-width:560px;background:linear-gradient(135deg,#2a1a30,#101018)"><b>▶ Stream starts in 2h 14m</b><span>PPV $9.99 · Free for ${d("Worldwide", "VIP")} members</span></div>`);
 
   R.fanclub = () => sec("fanclub", "Fan club", h("JOIN THE FAMILIA") + p("One login. Three tiers. Perks that grow with you."),
-    `<div class="tiers"><div class="tier"><b>Free</b><span class="price">$0</span><br>Newsletter, AR hub, leaderboard</div><div class="tier hi"><b>Dale</b><span class="price">$5<small>/mo</small></span><br>Presales, filter early access, badge</div><div class="tier"><b>Worldwide</b><span class="price">$15<small>/mo</small></span><br>Livestreams, drops early access, VIP lottery</div></div>`);
+    `<div class="tiers"><div class="tier"><b>Free</b><span class="price">$0</span><br>Newsletter, AR hub, leaderboard</div><div class="tier hi"><b>${d("Dale", "Fan")}</b><span class="price">$5<small>/mo</small></span><br>Presales, filter early access, badge</div><div class="tier"><b>${d("Worldwide", "VIP")}</b><span class="price">$15<small>/mo</small></span><br>Livestreams, drops early access, VIP lottery</div></div>`);
 
   R.points = (s) => sec("points", "Rewards", h("EARN POINTS. UNLOCK DALE.") + p("Stream, share, capture, attend — every action counts."),
     `<div class="row"><div class="chips"><span class="chip">+50 pre-save</span><span class="chip">+20 AR capture</span><span class="chip">+100 attend show</span><span class="chip">+10 share</span></div></div>
      <div style="margin-top:14px;max-width:420px"><div class="row" style="justify-content:space-between;font-size:12px"><span>Level 4 · Fireball</span><span>2,340 / 3,000</span></div><div class="bar"><i style="width:78%"></i></div></div>
-     ${s.has("leaderboard") ? `<div class="lb" style="margin-top:14px;max-width:420px"><div><span>#1</span><span>🇲🇽 @dale_carlos</span><span>18,920</span></div><div><span>#2</span><span>🇪🇸 @mariaworldwide</span><span>17,400</span></div><div><span>#3</span><span>🇺🇸 @miami305</span><span>16,110</span></div></div>` : ""}`);
+     ${s.has("leaderboard") ? `<div class="lb" style="margin-top:14px;max-width:420px"><div><span>#1</span><span>🇲🇽 @${d("dale_carlos", "carlos_fan")}</span><span>18,920</span></div><div><span>#2</span><span>🇪🇸 @${d("mariaworldwide", "maria_vip")}</span><span>17,400</span></div><div><span>#3</span><span>🇺🇸 @${d("miami305", "nyc_fan")}</span><span>16,110</span></div></div>` : ""}`);
 
-  R.leaderboard = (s) => (s.has("points") ? "" : sec("leaderboard", "Leaderboard", h("WORLDWIDE LEADERBOARD"), `<div class="lb"><div><span>#1</span><span>🇲🇽 @dale_carlos</span><span>18,920</span></div><div><span>#2</span><span>🇪🇸 @mariaworldwide</span><span>17,400</span></div></div>`));
+  R.leaderboard = (s) => (s.has("points") ? "" : sec("leaderboard", "Leaderboard", h(d("WORLDWIDE LEADERBOARD", "FAN LEADERBOARD")), `<div class="lb"><div><span>#1</span><span>🇲🇽 @${d("dale_carlos", "carlos_fan")}</span><span>18,920</span></div><div><span>#2</span><span>🇪🇸 @${d("mariaworldwide", "maria_vip")}</span><span>17,400</span></div></div>`));
 
-  R.quiz = () => sec("quiz", "Quiz", h("HOW WORLDWIDE ARE YOU?") + p("6 questions. One filter unlocked. Infinite bragging rights."),
-    `<div class="chips"><span class="pill y">Start quiz</span><span class="chip">Results: Mr. 305 · Mr. Worldwide · Dale Legend</span></div>`);
+  R.quiz = () => sec("quiz", "Quiz", h(d("HOW WORLDWIDE ARE YOU?", "WHAT KIND OF FAN ARE YOU?")) + p("6 questions. One filter unlocked. Infinite bragging rights."),
+    `<div class="chips"><span class="pill y">Start quiz</span><span class="chip">Results: ${d("Mr. 305 · Mr. Worldwide · Dale Legend", "Casual · Superfan · Legend")}</span></div>`);
 
-  R.fancard = () => sec("fancard", "Fan card", h("YOUR WORLDWIDE PASSPORT") + p("Connect Spotify to generate your personal stats card."),
+  R.fancard = () => sec("fancard", "Fan card", h(d("YOUR WORLDWIDE PASSPORT", "YOUR FAN PASSPORT")) + p("Connect Spotify to generate your personal stats card."),
     `<div class="passport"><div><span>Minutes streamed</span><b>14,230</b></div><div><span>Top track</span><b>Fireball</b></div><div><span>Shows attended</span><b>3</b></div><div><span>Fan since</span><b>2009</b></div></div>`);
 
   R.contests = () => sec("contests", "Giveaway", h("WIN A FLIGHT TO THE MIAMI SHOW") + p("Enter by pre-saving, sharing an AR capture or joining the fan club."),
     `<div class="chips"><span class="pill p">Enter now</span><span class="chip">Ends Sep 10 · Official rules</span></div>`);
 
   R.birthday = () => sec("birthday", "Personal video", h(`A MESSAGE FROM ${A().alias.toUpperCase()}`) + p("Members can request a personalised birthday shout-out."),
-    `<div class="card" style="max-width:360px;aspect-ratio:16/9;background:linear-gradient(135deg,#302a10,#101018)"><b>🎂 "Happy birthday, Sofia — Dale!"</b><span>Rendered from approved templates</span></div>`);
+    `<div class="card" style="max-width:360px;aspect-ratio:16/9;background:linear-gradient(135deg,#302a10,#101018)"><b>🎂 "Happy birthday, Sofia${d(" — Dale!", "!")}"</b><span>Rendered from approved templates</span></div>`);
 
   R.fanwall = () => sec("fanwall", "Fan wall", h("THE WALL") + p("Moderated community feed."),
-    `<div class="lb"><div><span>💬</span><span><b>@lucia_305</b> — Just unlocked the Madrid filter!! 🔥</span><span>2m</span></div><div><span>📌</span><span><b>${A().name}</b> — Miami, you ready? See you Friday.</span><span>1h</span></div></div>`);
+    `<div class="lb"><div><span>💬</span><span><b>@${d("lucia_305", "lucia_fan")}</b> — Just unlocked the Madrid filter!! 🔥</span><span>2m</span></div><div><span>📌</span><span><b>${A().name}</b> — Miami, you ready? See you Friday.</span><span>1h</span></div></div>`);
 
   R.store = (s) => sec("store", "Store", h("OFFICIAL MERCH") + p("Shopify-powered. Ships worldwide."),
-    cards([["Worldwide Cap", "$35"], ["Dale Tee", "$40"], ["305 Hoodie", "$85"], ["Tour Poster", "$25"]], "thumb") +
+    cards([[d("Worldwide Cap", "Logo Cap"), "$35"], [d("Dale Tee", "Tour Tee"), "$40"], [d("305 Hoodie", "Hoodie"), "$85"], ["Tour Poster", "$25"]], "thumb") +
     (s.has("drops") ? `<div class="chips" style="margin-top:14px"><span class="chip hot">🔥 Limited drop · Fri 12PM ET · Members 1h early</span><span class="chip">Virtual queue · 2 per fan</span></div>` : "") +
     (s.has("bundles") ? `<div class="chips" style="margin-top:8px"><span class="chip">Album + Hoodie bundle · $99</span><span class="chip">Vinyl pre-order</span></div>` : ""));
 
@@ -124,7 +125,7 @@
   R.capture = () => sec("capture", "Fan capture", h("STAY IN THE LOOP") + p("Tour alerts, filter drops and presale codes. EN / ES."),
     `<div class="form"><input placeholder="Email or phone" /><span class="pill y">Join</span></div>`);
 
-  R.footer = (s) => `<div class="footer"><span>© Pitbull · Mr. 305 Inc.</span><span>${s.has("legal") ? "Privacy · Cookies · Age 13+ for AR" : "Privacy"}${s.has("press") ? " · Press kit" : ""}${s.has("a11y") ? " · Accessibility" : ""}${s.has("pwa") ? " · 📲 Install app" : ""}</span></div>`;
+  R.footer = (s) => `<div class="footer"><span>© ${A().name}${d(" · Mr. 305 Inc.", "")}</span><span>${s.has("legal") ? "Privacy · Cookies · Age 13+ for AR" : "Privacy"}${s.has("press") ? " · Press kit" : ""}${s.has("a11y") ? " · Accessibility" : ""}${s.has("pwa") ? " · 📲 Install app" : ""}</span></div>`;
 
   /* Order in which sections appear on the landing */
   window.PREVIEW_ORDER = ["hero", "countdown", "presave", "ar_hub", "ar_ugc", "calendar", "setlist", "livestream", "fanclub", "points", "leaderboard", "quiz", "fancard", "contests", "birthday", "fanwall", "store", "collectibles", "donate", "smartlinks", "playlist", "video", "gallery", "news", "timeline", "challenge", "socialfeed", "worldmap", "capture", "player"];
