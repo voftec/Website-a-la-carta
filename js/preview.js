@@ -6,14 +6,22 @@
   const p = (t) => `<p class="sub">${t}</p>`;
   const cards = (items, cls = "") => `<div class="grid">${items.map(([b, s]) => `<div class="card ${cls}"><b>${b}</b><span>${s}</span></div>`).join("")}</div>`;
 
+  const A = () => window.ARTIST || { name: "Pitbull", upper: "PITBULL", alias: "Mr. Worldwide", isDefault: true };
+  const heroTitle = () => {
+    const a = A();
+    if (a.isDefault) return "MR.<br><span>WORLDWIDE</span>";
+    const w = a.upper.split(" ");
+    return w.length > 1 ? `${w[0]}<br><span>${w.slice(1).join(" ")}</span>` : `<span>${a.upper}</span>`;
+  };
+
   const R = {};
 
   R.hero = (s) => `
-    <div class="p-nav"><b>PITBULL</b><span>Music</span><span>AR Filters</span><span>Tour</span><span>Fan Club</span><span>Store</span></div>
+    <div class="p-nav"><b>${A().upper}</b><span>Music</span><span>AR Filters</span><span>Tour</span><span>Fan Club</span><span>Store</span></div>
     <section data-mod="hero" class="hero">
       ${s.has("i18n") ? `<div class="lang"><b>EN</b> · ES${s.qty("i18n") ? ` · +${s.qty("i18n")}` : ""}</div>` : ""}
-      <h1>MR.<br><span>WORLDWIDE</span></h1>
-      <p>The official fan experience. Unlock AR filters, pre-save the new album, catch the tour and earn your place on the worldwide leaderboard. Dale!</p>
+      <h1>${heroTitle()}</h1>
+      <p>The official ${A().name} fan experience. Unlock AR filters, pre-save the new album, catch the tour and earn your place on the worldwide leaderboard.${A().isDefault ? " Dale!" : ""}</p>
       <div class="ctas">
         ${s.has("ar_hub") ? `<span class="pill y">Try the AR filters</span>` : ""}
         ${s.has("presave") ? `<span class="pill p">Pre-save the album</span>` : ""}
@@ -31,7 +39,7 @@
   R.ar_hub = (s) => {
     const items = [];
     if (s.has("ar_face")) for (let i = 1; i <= Math.min(s.qty("ar_face"), 6); i++) items.push([`Face filter #${i}`, i === 1 ? "Worldwide Shades" : i === 2 ? "Dale! flares" : i === 3 ? "305 tuxedo" : "Face lens"]);
-    if (s.has("ar_world")) items.push(["Pitbull in your room", s.tier("ar_world") === "volumetric" ? "Volumetric capture" : "3D avatar"]);
+    if (s.has("ar_world")) items.push([`${A().name} in your room`, s.tier("ar_world") === "volumetric" ? "Volumetric capture" : "3D avatar"]);
     if (s.has("ar_portal")) items.push(["Portal: walk into the show", "360° + spatial audio"]);
     if (s.has("ar_marker")) items.push([`Scan the cover`, `${s.qty("ar_marker")} image targets`]);
     if (s.has("ar_tryon")) items.push([`Try-on merch`, `${s.qty("ar_tryon")} SKUs`]);
@@ -76,11 +84,11 @@
   R.contests = () => sec("contests", "Giveaway", h("WIN A FLIGHT TO THE MIAMI SHOW") + p("Enter by pre-saving, sharing an AR capture or joining the fan club."),
     `<div class="chips"><span class="pill p">Enter now</span><span class="chip">Ends Sep 10 · Official rules</span></div>`);
 
-  R.birthday = () => sec("birthday", "Personal video", h("A MESSAGE FROM MR. WORLDWIDE") + p("Members can request a personalised birthday shout-out."),
+  R.birthday = () => sec("birthday", "Personal video", h(`A MESSAGE FROM ${A().alias.toUpperCase()}`) + p("Members can request a personalised birthday shout-out."),
     `<div class="card" style="max-width:360px;aspect-ratio:16/9;background:linear-gradient(135deg,#302a10,#101018)"><b>🎂 "Happy birthday, Sofia — Dale!"</b><span>Rendered from approved templates</span></div>`);
 
   R.fanwall = () => sec("fanwall", "Fan wall", h("THE WALL") + p("Moderated community feed."),
-    `<div class="lb"><div><span>💬</span><span><b>@lucia_305</b> — Just unlocked the Madrid filter!! 🔥</span><span>2m</span></div><div><span>📌</span><span><b>Pitbull</b> — Miami, you ready? See you Friday.</span><span>1h</span></div></div>`);
+    `<div class="lb"><div><span>💬</span><span><b>@lucia_305</b> — Just unlocked the Madrid filter!! 🔥</span><span>2m</span></div><div><span>📌</span><span><b>${A().name}</b> — Miami, you ready? See you Friday.</span><span>1h</span></div></div>`);
 
   R.store = (s) => sec("store", "Store", h("OFFICIAL MERCH") + p("Shopify-powered. Ships worldwide."),
     cards([["Worldwide Cap", "$35"], ["Dale Tee", "$40"], ["305 Hoodie", "$85"], ["Tour Poster", "$25"]], "thumb") +

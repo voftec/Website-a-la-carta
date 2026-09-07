@@ -35,3 +35,8 @@ Presets (Starter ≈ $5k / Fan Experience ≈ $8k / Mr. Worldwide ≈ $15k) and 
 ## Deploy
 
 Static — works on GitHub Pages, Vercel or Netlify with no build step.
+
+## Personalizar el artista
+
+Agrega el nombre al link y el titulo/hero cambian: `?artist=daddy-yankee` (o corto: `?jlo`). Separa palabras con `-`. Sin parametro muestra Pitbull / Mr. Worldwide.
+

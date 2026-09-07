@@ -3,6 +3,26 @@
   const byId = Object.fromEntries(MODULES.map((m) => [m.id, m]));
   const fmt = (n) => "$" + Math.round(n).toLocaleString("en-US");
 
+  /* ---------- artist (from ?artist=daddy-yankee or ?daddy-yankee) ---------- */
+  const ARTIST = (() => {
+    const q = new URLSearchParams(location.search);
+    const raw = (q.get("artist") || q.get("a") || [...q.keys()].find((k) => !q.get(k)) || "").trim();
+    const name = raw
+      ? raw.replace(/[-_+]+/g, " ").replace(/\s+/g, " ").trim().replace(/\b\p{L}/gu, (c) => c.toUpperCase())
+      : "Pitbull";
+    const isDefault = !raw;
+    return {
+      name, isDefault,
+      upper: name.toUpperCase(),
+      alias: isDefault ? "Mr. Worldwide" : name,
+      domain: name.toLowerCase().replace(/[^a-z0-9]+/g, "") + ".com",
+    };
+  })();
+  window.ARTIST = ARTIST;
+  document.title = `Website à la carte — ${ARTIST.alias} Fan Experience`;
+  $("#brand-sub").textContent = `${ARTIST.alias} · WebAR Fan Experience — interactive proposal`;
+  $("#pv-domain").textContent = ARTIST.domain;
+
   /* ---------- state ---------- */
   const state = { on: new Set(), qty: {}, tier: {}, discount: 0, plan: 1, device: "desktop" };
   MODULES.filter((m) => m.locked).forEach((m) => state.on.add(m.id));
