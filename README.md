@@ -48,3 +48,7 @@ Agrega el nombre al link y el titulo/hero cambian: `?artist=daddy-yankee` (o cor
     node tools/catalog.js import   # CSV -> js/modules.js
     node tools/catalog.js export   # js/modules.js -> CSV
 
+
+## Admin: curate the offer
+
+Open `admin.html` (locally or at the Pages URL) to see every module with its price, remove modules from the offer (with undo/redo and restore), and see the final maximum price. Removals are stored in the browser (localStorage) and hide those modules in the configurator on the same browser. To make it permanent, download the filtered `catalog.csv` from the admin page, replace the file and run `node tools/catalog.js import`.

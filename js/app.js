@@ -1,5 +1,20 @@
 (function () {
   const $ = (s) => document.querySelector(s);
+
+  /* ---------- modules removed from the offer in admin.html (localStorage) ---------- */
+  (() => {
+    let removed;
+    try { removed = new Set(JSON.parse(localStorage.getItem("alc_removed") || "[]")); } catch { removed = new Set(); }
+    if (!removed.size) return;
+    let changed = true;
+    while (changed) {
+      changed = false;
+      window.MODULES.forEach((m) => { if (!removed.has(m.id) && (m.requires || []).some((r) => removed.has(r))) { removed.add(m.id); changed = true; } });
+    }
+    window.MODULES = window.MODULES.filter((m) => !removed.has(m.id));
+    window.PRESETS.forEach((p) => { if (Array.isArray(p.modules)) p.modules = p.modules.filter((id) => !removed.has(id)); });
+  })();
+  const MODULES = window.MODULES;
   const byId = Object.fromEntries(MODULES.map((m) => [m.id, m]));
   const fmt = (n) => "$" + Math.round(n).toLocaleString("en-US");
 
