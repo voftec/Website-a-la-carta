@@ -50,7 +50,12 @@
     let extra = "";
     if (s.has("ar_drops")) extra += `<div class="chips" style="margin-top:14px"><span class="chip hot">🔒 Miami only · unlocks Fri 9PM</span><span class="chip">Scan QR at the venue</span><span class="chip">Next drop in 3d 4h</span></div>`;
     if (s.has("ar_booth")) extra += `<div class="row" style="margin-top:14px"><span class="pill y">📸 Open AR booth</span><span class="chip">15s video · watermark · ${d("#DaleWorldwide", "#" + A().name.replace(/\s+/g, "") + "AR")}</span><span class="chip">Share to TikTok / IG / WhatsApp</span></div>`;
-    return sec("ar_hub", "WebAR hub", h("AR FILTERS — NO APP NEEDED") + p("Point your phone at the QR or tap on mobile. Works on iOS & Android in the browser."), cards(items, "ar") + extra);
+    const refs = MODULES.filter((m) => m.cat === "ar" && s.has(m.id) && window.AR_MEDIA && AR_MEDIA[m.id]).map((m) => {
+      const ar = AR_MEDIA[m.id];
+      const vids = ar.videos.map((v) => `<figure><video src="${v.src}" muted loop playsinline autoplay preload="metadata"></video><figcaption>${v.effect}</figcaption></figure>`).join("");
+      return `<div class="ar-ref"><div class="ar-ref-vids">${vids || '<div class="ar-ref-empty">Image target demo</div>'}</div><h3>${m.name} <span class="pill">${ar.camera}</span></h3><p class="sub">${ar.what}</p></div>`;
+    }).join("");
+    return sec("ar_hub", "WebAR hub", h("AR FILTERS - NO APP NEEDED") + p("Point your phone at the QR or tap on mobile. Works on iOS & Android in the browser."), refs + cards(items, "ar") + extra);
   };
 
   R.ar_ugc = () => sec("ar_ugc", "UGC wall", h("FAN MOMENTS") + p("Moderated captures from fans worldwide — the best make it to the venue screens."),

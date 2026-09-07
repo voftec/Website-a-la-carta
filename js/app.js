@@ -133,9 +133,22 @@
         </div>
         <div class="mod-price"><b>${one ? fmt(one) : mo ? "" : "—"}</b><small>${mo ? fmt(mo) + "/mo" : one ? "one-time" : ""}</small></div>
       </div>
-      <div class="mod-desc">${m.desc}${m.days ? ` <em>~${m.days} days</em>` : ""}${m.ext || m.extNote ? `<div class="mod-ext">Third-party: <b>${m.ext ? fmt(m.ext) + "/mo" : "usage-based"}</b> - ${m.extNote || ""} (billed at cost)</div>` : ""}</div>
+      <div class="mod-desc">${m.desc}${m.days ? ` <em>~${m.days} days</em>` : ""}${m.ext || m.extNote ? `<div class="mod-ext">Third-party: <b>${m.ext ? fmt(m.ext) + "/mo" : "usage-based"}</b> - ${m.extNote || ""} (billed at cost)</div>` : ""}${arRefs(m)}</div>
       <div class="mod-controls">${controls}</div>
       <button class="mod-more" data-more="${m.id}">details ▾</button>
+    </div>`;
+  }
+
+  function arRefs(m) {
+    const ar = window.AR_MEDIA && AR_MEDIA[m.id];
+    if (!ar) return "";
+    const vids = ar.videos.map((v) => `<figure><video src="${v.src}" muted loop playsinline preload="metadata" controls></video><figcaption><b>${v.label}</b>${v.effect}</figcaption></figure>`).join("");
+    return `<div class="ar-refs">
+      <button type="button" class="ar-refs-toggle" data-arrefs="${m.id}">Reference videos & effect ${ar.videos.length ? `(${ar.videos.length})` : ""} <span>\u25BE</span></button>
+      <div class="ar-refs-body">
+        <div class="ar-what"><span class="pill">${ar.camera}</span>${ar.what}</div>
+        ${vids ? `<div class="ar-strip">${vids}</div>` : `<div class="ar-none">Reference video coming soon.</div>`}
+      </div>
     </div>`;
   }
 
@@ -228,6 +241,7 @@
   $("#catalog").addEventListener("click", (e) => {
     const head = e.target.closest(".cat-head");
     if (head) { const id = head.parentElement.dataset.cat; collapsed.has(id) ? collapsed.delete(id) : collapsed.add(id); renderCatalog(); return; }
+    if (e.target.closest("[data-arrefs]")) { const b = e.target.closest(".ar-refs"); b.classList.toggle("open"); b.querySelectorAll("video").forEach((v) => b.classList.contains("open") ? v.play().catch(() => {}) : v.pause()); return; }
     if (e.target.dataset.more) { e.target.closest(".mod").classList.toggle("expanded"); return; }
     if (e.target.dataset.unpick) { const id = e.target.dataset.unpick; state.pick[id] = view.picks(id).filter((o) => o !== e.target.dataset.val); renderAll(); return; }
     const mod = e.target.closest(".mod");
