@@ -4,7 +4,7 @@ Core & Brand,module,i18n,Bilingual EN / ES (+ more),,"Dale, worldwide means worl
 Core & Brand,quantity,i18n,"Extra languages (PT, FR, DE…)",,,,100,0,,,,,0,8,0
 Core & Brand,module,capture,Fan Capture (Email + SMS),,Own the audience,"Newsletter + SMS opt-in with double opt-in, tagging by interest (tour, AR, merch), connected to Mailchimp / Klaviyo / Community.",350,10,1,no,,capture,,,
 Core & Brand,module,cms,Headless CMS & Admin,,Team edits without a developer,"Sanity / Strapi CMS with roles, drafts, scheduled publishing and image pipeline. Editors update tour dates, news, filters and drops.",300,15,2,no,,,,,
-WebAR Filters,module,ar_face,Face Filters,,"Shades, tux, 'Dale!' lens flares","Face-tracked AR lenses (glasses, headwear, makeup, particle FX). Price per filter includes 3D asset, tracking tuning and QA on iOS/Android.",0,0,1,no,ar_face,,,,
+WebAR Filters,module,ar_face,Face Filters,,"Shades, tux, 'Dale!' lens flares","Face-tracked AR lenses (glasses, headwear, makeup, particle FX). Price per filter includes 3D asset, tracking tuning and QA on iOS/Android.",0,0,1,no,,ar_face,,,
 WebAR Filters,quantity,ar_face,Number of face filters,,,,200,0,,,,,1,20,3
 Music & Releases,module,presave,Pre-Save Campaign,,Spotify · Apple Music · Deezer · Amazon,"OAuth pre-save with follow-artist, auto-add to library on release day, fan data capture, thank-you page with exclusive filter unlock.",500,10,1.5,no,,presave,,,
 Music & Releases,module,countdown,Release Countdown & Reveal,,Tension until midnight,"Timezone-aware countdown, scheduled reveal of cover art/tracklist, confetti moment, auto-switch to smart links on release.",100,0,0.5,no,,countdown,,,

@@ -28,6 +28,19 @@
     .adm-t .name b { display: block; }
     .adm-t .name span { color: var(--muted); font-size: 12px; }
     .adm-t .name i { display: block; color: var(--accent-3); font-size: 11px; font-style: normal; margin-top: 2px; }
+    .tag.ed { color: var(--accent); }
+    .adm-t td.acts { text-align: right; white-space: nowrap; }
+    .adm-t td.acts button { margin-left: 6px; }
+    .adm-t tr.open td { background: var(--panel-2); border-bottom: 0; }
+    .adm-t tr.edrow td { background: var(--panel-2); padding: 4px 12px 14px; }
+    .editor .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .editor .grid.tier { grid-template-columns: 2fr 1fr 1fr; margin-bottom: 8px; }
+    .editor h4 { margin: 14px 0 6px; font-size: 12px; color: var(--muted); font-weight: 500; }
+    .editor .f { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); }
+    .editor .f.wide { grid-column: 1 / -1; }
+    .editor input, .editor textarea { width: 100%; padding: 7px 9px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--text); font-size: 13px; resize: vertical; }
+    .editor input:focus, .editor textarea:focus { outline: none; border-color: var(--accent); }
+    .editor .ed-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 12px; }
     .tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 6px; background: var(--panel-2); color: var(--muted); margin-left: 6px; }
     .adm-side { position: sticky; top: 20px; align-self: start; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; }
     .adm-side h3 { font-size: 14px; margin-bottom: 12px; }
@@ -49,7 +62,7 @@
       <span class="brand-mark">AR</span>
       <div>
         <h1>Módulos que ofrecemos</h1>
-        <p>Eliminá lo que no querés ofrecer — se quita del configurador. Todo se puede deshacer.</p>
+        <p>Editá título, descripción, precios y duración, o eliminá lo que no querés ofrecer. Todo se puede deshacer.</p>
       </div>
     </div>
     <div class="adm-tools" style="margin:0">
@@ -72,12 +85,14 @@
       <h3>Price calculator final</h3>
       <div class="kv"><span>Módulos ofrecidos</span><b id="s-count"></b></div>
       <div class="kv"><span>Eliminados</span><b id="s-removed"></b></div>
+      <div class="kv"><span>Editados</span><b id="s-edited"></b></div>
+      <div class="kv"><span>Semanas (suma)</span><b id="s-weeks"></b></div>
       <div class="kv"><span>Base one-time (todo activado)</span><b id="s-one"></b></div>
       <div class="kv"><span>Mensual (todo activado)</span><b id="s-mon"></b></div>
       <div class="kv total"><span>Oferta máxima</span><b id="s-max"></b></div>
       <p class="hint">Suma de todos los módulos ofrecidos con sus cantidades por defecto y el tier más barato — es el techo del configurador.</p>
       <div class="actions">
-        <button id="restore-all" class="ok">Restaurar todo</button>
+        <button id="restore-all" class="ok">Restaurar todo (deshacer ediciones)</button>
         <button id="export-csv" class="primary">Descargar catalog.csv (solo ofrecidos)</button>
       </div>
       <p class="hint">Los cambios quedan guardados en este navegador. Para fijarlos en el sitio publicado: descargá el CSV, reemplazá <code>catalog.csv</code> y corré <code>node tools/catalog.js import</code>.</p>
@@ -86,6 +101,7 @@
   </main>
 
   <script src="js/modules.js"></script>
+  <script src="js/local-edits.js"></script>
   <script src="js/admin.js"></script>
 </body>
 </html>

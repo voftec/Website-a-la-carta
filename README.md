@@ -51,4 +51,4 @@ Agrega el nombre al link y el titulo/hero cambian: `?artist=daddy-yankee` (o cor
 
 ## Admin: curate the offer
 
-Open `admin.html` (locally or at the Pages URL) to see every module with its price, remove modules from the offer (with undo/redo and restore), and see the final maximum price. Removals are stored in the browser (localStorage) and hide those modules in the configurator on the same browser. To make it permanent, download the filtered `catalog.csv` from the admin page, replace the file and run `node tools/catalog.js import`.
+Open `admin.html` (locally or at the Pages URL) to see every module with its price, edit title, tagline, description, prices and build weeks (also per-unit and tier prices), remove modules from the offer (with undo/redo and restore), and see the final maximum price. Edits are stored in the browser (localStorage) and hide those modules in the configurator on the same browser. To make it permanent, download the filtered `catalog.csv` from the admin page, replace the file and run `node tools/catalog.js import`.

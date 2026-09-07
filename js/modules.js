@@ -28,7 +28,7 @@ window.MODULES = [
     desc: "Sanity / Strapi CMS with roles, drafts, scheduled publishing and image pipeline. Editors update tour dates, news, filters and drops.", oneTime: 300, monthly: 15, weeks: 2, preview: null },
   { id: "ar_face", cat: "ar", name: "Face Filters", tagline: "Shades, tux, 'Dale!' lens flares", 
     desc: "Face-tracked AR lenses (glasses, headwear, makeup, particle FX). Price per filter includes 3D asset, tracking tuning and QA on iOS/Android.", oneTime: 0, monthly: 0, weeks: 1, 
-    requires: ["ar_face"], qty: {"label":"Number of face filters","min":1,"max":20,"unit":200,"unitMonthly":0,"default":3}, preview: null },
+    qty: {"label":"Number of face filters","min":1,"max":20,"unit":200,"unitMonthly":0,"default":3}, preview: "ar_face" },
   { id: "presave", cat: "music", name: "Pre-Save Campaign", tagline: "Spotify · Apple Music · Deezer · Amazon", 
     desc: "OAuth pre-save with follow-artist, auto-add to library on release day, fan data capture, thank-you page with exclusive filter unlock.", oneTime: 500, monthly: 10, weeks: 1.5, preview: "presave" },
   { id: "countdown", cat: "music", name: "Release Countdown & Reveal", tagline: "Tension until midnight", 
