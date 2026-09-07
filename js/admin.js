@@ -42,13 +42,14 @@
   const cheapestTier = (m) => m.tier ? m.tier.options.reduce((a, o) => (o.oneTime + o.monthly * 12 < a.oneTime + a.monthly * 12 ? o : a)) : null;
   const priceOf = (m) => {
     const q = m.qty ? (m.qty.default ?? m.qty.min) : 0, t = cheapestTier(m);
-    return { one: m.oneTime + (m.qty ? q * m.qty.unit : 0) + (t ? t.oneTime : 0), mon: m.monthly + (m.qty ? q * (m.qty.unitMonthly || 0) : 0) + (t ? t.monthly : 0) };
+    return { one: m.oneTime + (m.qty ? q * m.qty.unit : 0) + (t ? t.oneTime : 0), mon: m.monthly + (m.qty ? q * (m.qty.unitMonthly || 0) : 0) + (t ? t.monthly : 0), ext: m.ext || 0 };
   };
   const priceLabel = (m) => {
     if (m.qty) return `${fmt(m.qty.unit)}/u${m.qty.unitMonthly ? ` + ${fmt(m.qty.unitMonthly)}/mes` : ""}<br><small>×${m.qty.default ?? m.qty.min} default${m.oneTime ? ` + ${fmt(m.oneTime)} base` : ""}</small>`;
     if (m.tier) { const os = m.tier.options; return `${fmt(Math.min(...os.map((o) => o.oneTime)))}–${fmt(Math.max(...os.map((o) => o.oneTime)))}${os.some((o) => o.monthly) ? `<br><small>${fmt(Math.min(...os.map((o) => o.monthly)))}–${fmt(Math.max(...os.map((o) => o.monthly)))}/mes</small>` : ""}<br><small>${os.length} tiers</small>`; }
     return `${fmt(m.oneTime)}${m.monthly ? `<br><small>${fmt(m.monthly)}/mes</small>` : ""}`;
   };
+  const extLabel = (m) => m.ext || m.extNote ? `<small class="ext">+ ${fmt(m.ext || 0)}/mes terceros</small>` : "";
 
   /* ---------- editor ---------- */
   const F = (id, path, label, value, type = "text", extra = "") =>
@@ -63,7 +64,9 @@
       ${F(id, "desc", "Descripción", m.desc, "textarea")}
       ${F(id, "oneTime", m.qty ? "Precio base único (USD)" : "Precio único (USD)", m.oneTime, "number", 'min="0" step="10"')}
       ${F(id, "monthly", "Mensual (USD)", m.monthly, "number", 'min="0" step="5"')}
-      ${F(id, "weeks", "Duración desarrollo (semanas)", m.weeks, "number", 'min="0" step="0.5"')}
+      ${F(id, "days", "Duración desarrollo (días)", m.days, "number", 'min="0" step="1"')}
+      ${F(id, "ext", "Servicios de terceros (USD/mes, a costo)", m.ext || 0, "number", 'min="0" step="1"')}
+      ${F(id, "extNote", "Qué servicio de terceros (se muestra al cliente)", m.extNote || "")}
     </div>`;
     if (m.qty) h += `<h4>Por unidad — ${esc(m.qty.label)}</h4><div class="grid">
       ${F(id, "qty.label", "Etiqueta", m.qty.label)}
@@ -91,10 +94,10 @@
       if (!mods.length) return "";
       const live = MODULES.filter((m) => m.cat === c.id && !rm.has(m.id)).length;
       return `<div class="adm-cat"><h2>${c.icon} ${c.name} <small>· ${live} ofrecidos</small></h2>
-        <table class="adm-t"><thead><tr><th>Módulo</th><th style="text-align:right">Precio</th><th>Semanas</th><th></th></tr></thead><tbody>
+        <table class="adm-t"><thead><tr><th>Módulo</th><th style="text-align:right">Precio</th><th>Días</th><th></th></tr></thead><tbody>
         ${mods.map((m) => `<tr class="${rm.has(m.id) ? "removed" : ""} ${open.has(m.id) ? "open" : ""}" data-row="${m.id}">
           <td class="name"><b>${esc(m.name)}${m.locked ? '<span class="tag">incluido</span>' : ""}${isEdited(m.id) ? '<span class="tag ed">editado</span>' : ""}</b><span>${esc(m.tagline)}</span>${(m.requires || []).length ? `<i>requiere: ${m.requires.map((r) => esc(mod(r)?.name || r)).join(", ")}</i>` : ""}</td>
-          <td class="num">${priceLabel(m)}</td><td>${m.weeks || "—"}</td>
+          <td class="num">${priceLabel(m)}${extLabel(m)}</td><td>${m.days || "—"}</td>
           <td class="acts">${rm.has(m.id)
             ? `<button class="ok" data-restore="${m.id}">Restaurar</button>`
             : `<button data-edit="${m.id}">${open.has(m.id) ? "Cerrar" : "Editar"}</button>${m.locked ? "" : `<button class="danger" data-remove="${m.id}">Eliminar</button>`}`}</td>
@@ -102,13 +105,14 @@
     }).join("");
 
     const live = MODULES.filter((m) => !rm.has(m.id)).map(current);
-    const tot = live.reduce((a, m) => { const p = priceOf(m); a.one += p.one; a.mon += p.mon; a.w += m.weeks || 0; return a; }, { one: 0, mon: 0, w: 0 });
+    const tot = live.reduce((a, m) => { const p = priceOf(m); a.one += p.one; a.mon += p.mon; a.ext += p.ext; a.d += m.days || 0; return a; }, { one: 0, mon: 0, ext: 0, d: 0 });
     $("#s-count").textContent = `${live.length} / ${MODULES.length}`;
     $("#s-removed").textContent = rm.size;
     $("#s-edited").textContent = Object.keys(edits.overrides).filter(isEdited).length;
     $("#s-one").textContent = fmt(tot.one);
     $("#s-mon").textContent = fmt(tot.mon) + "/mes";
-    $("#s-weeks").textContent = tot.w + " sem";
+    $("#s-ext").textContent = fmt(tot.ext) + "/mes";
+    $("#s-weeks").textContent = `${tot.d} días (≈ ${Math.round(tot.d / 7)} sem)`;
     $("#s-max").textContent = `${fmt(tot.one)} USD`;
     $("#undo").disabled = !undo.length; $("#redo").disabled = !redo.length;
     $("#restore-all").disabled = !rm.size && !Object.keys(edits.overrides).length;
@@ -117,14 +121,14 @@
 
   /* ---------- CSV export (current offer with edits) ---------- */
   function exportCsv() {
-    const COLS = ["category", "type", "id", "name", "option_id", "tagline", "description", "one_time_usd", "monthly_usd", "weeks", "included", "requires", "preview", "min", "max", "default"];
+    const COLS = ["category", "type", "id", "name", "option_id", "tagline", "description", "one_time_usd", "monthly_usd", "third_party_monthly_usd", "third_party_note", "days", "included", "requires", "preview", "min", "max", "default"];
     const e = (v) => { const s = v == null ? "" : String(v); return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
     const row = (o) => COLS.map((c) => e(o[c])).join(",");
     const lines = [COLS.join(",")], rm = removed();
     for (const m of MODULES.filter((x) => !rm.has(x.id)).map(current)) {
       const category = catName[m.cat];
-      lines.push(row({ category, type: "module", id: m.id, name: m.name, tagline: m.tagline, description: m.desc, one_time_usd: m.oneTime, monthly_usd: m.monthly, weeks: m.weeks, included: m.locked ? "yes" : "no", requires: (m.requires || []).join(";"), preview: m.preview || "" }));
-      if (m.qty) lines.push(row({ category, type: "quantity", id: m.id, name: m.qty.label, one_time_usd: m.qty.unit, monthly_usd: m.qty.unitMonthly || 0, min: m.qty.min, max: m.qty.max, default: m.qty.default ?? m.qty.min }));
+      lines.push(row({ category, type: "module", id: m.id, name: m.name, tagline: m.tagline, description: m.desc, one_time_usd: m.oneTime, monthly_usd: m.monthly, third_party_monthly_usd: m.ext || 0, third_party_note: m.extNote || "", days: m.days, included: m.locked ? "yes" : "no", requires: (m.requires || []).join(";"), preview: m.preview || "" }));
+      if (m.qty) lines.push(row({ category, type: "quantity", id: m.id, name: m.qty.label, one_time_usd: m.qty.unit, monthly_usd: m.qty.unitMonthly || 0, min: m.qty.min, max: m.qty.max, default: m.qty.default ?? m.qty.min, tagline: (m.qty.included || []).join(";"), option_id: (m.qty.options || []).join(";") }));
       if (m.tier) for (const o of m.tier.options) lines.push(row({ category, type: "tier", id: m.id, name: o.name, option_id: o.id, tagline: m.tier.label, one_time_usd: o.oneTime, monthly_usd: o.monthly }));
     }
     const a = document.createElement("a");

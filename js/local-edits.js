@@ -21,7 +21,7 @@ window.LOCAL_EDITS = (() => {
   function patch(m, o) {
     if (!o) return m;
     const r = { ...m };
-    for (const k of ["name", "tagline", "desc", "oneTime", "monthly", "weeks"]) if (o[k] != null && o[k] !== "") r[k] = k === "name" || k === "tagline" || k === "desc" ? String(o[k]) : Number(o[k]);
+    for (const k of ["name", "tagline", "desc", "oneTime", "monthly", "days", "ext", "extNote"]) if (o[k] != null && o[k] !== "") r[k] = k === "name" || k === "tagline" || k === "desc" || k === "extNote" ? String(o[k]) : Number(o[k]);
     if (m.qty && o.qty) r.qty = { ...m.qty, ...Object.fromEntries(Object.entries(o.qty).filter(([, v]) => v != null && v !== "").map(([k, v]) => [k, k === "label" ? String(v) : Number(v)])) };
     if (m.tier && o.tier) r.tier = { ...m.tier, options: m.tier.options.map((op) => {
       const t = o.tier[op.id]; if (!t) return op;

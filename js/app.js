@@ -28,12 +28,13 @@
   $("#pv-domain").textContent = ARTIST.domain;
 
   /* ---------- state ---------- */
-  const state = { on: new Set(), qty: {}, tier: {}, discount: 0, plan: 1, device: "desktop" };
+  const state = { on: new Set(), qty: {}, tier: {}, pick: {}, discount: 0, plan: 1, device: "desktop" };
   MODULES.filter((m) => m.locked).forEach((m) => state.on.add(m.id));
 
   const view = {
     has: (id) => id === "ar_hub" ? MODULES.some((m) => m.cat === "ar" && state.on.has(m.id)) : state.on.has(id),
-    qty: (id) => state.qty[id] ?? byId[id]?.qty?.default ?? byId[id]?.qty?.min ?? 0,
+    qty: (id) => byId[id]?.qty?.options ? view.picks(id).length : (state.qty[id] ?? byId[id]?.qty?.default ?? byId[id]?.qty?.min ?? 0),
+    picks: (id) => state.pick[id] || [],
     tier: (id) => state.tier[id] ?? byId[id]?.tier?.options[0].id,
   };
 
@@ -41,7 +42,7 @@
     let one = m.oneTime, mo = m.monthly;
     if (m.qty) { const q = view.qty(m.id); one += q * m.qty.unit; mo += q * (m.qty.unitMonthly || 0); }
     if (m.tier) { const t = m.tier.options.find((o) => o.id === view.tier(m.id)); one += t.oneTime; mo += t.monthly; }
-    return { one, mo };
+    return { one, mo, ext: m.ext || 0 };
   }
   const dependents = (id) => MODULES.filter((m) => (m.requires || []).includes(id)).map((m) => m.id);
 
@@ -62,6 +63,7 @@
     const parts = [...state.on].map((id) => {
       let s = id;
       if (state.qty[id] != null) s += ":q" + state.qty[id];
+      if (state.pick[id]?.length) s += ":l" + state.pick[id].map((n) => byId[id].qty.options.indexOf(n)).join(".");
       if (state.tier[id]) s += ":t" + state.tier[id];
       return s;
     });
@@ -76,7 +78,11 @@
       const [id, ...rest] = tok.split(":");
       if (!byId[id]) return;
       state.on.add(id);
-      rest.forEach((r) => { if (r[0] === "q") state.qty[id] = +r.slice(1); if (r[0] === "t") state.tier[id] = r.slice(1); });
+      rest.forEach((r) => {
+        if (r[0] === "q") state.qty[id] = +r.slice(1);
+        if (r[0] === "t") state.tier[id] = r.slice(1);
+        if (r[0] === "l" && byId[id].qty?.options) state.pick[id] = r.slice(1).split(".").map((i) => byId[id].qty.options[+i]).filter(Boolean);
+      });
     });
     opts.forEach((o) => { if (o[0] === "d") state.discount = +o.slice(1); if (o[0] === "p") state.plan = +o.slice(1); });
     $("#discount").value = String(state.discount);
@@ -110,7 +116,12 @@
     const { one, mo } = modCost(m);
     const missing = (m.requires || []).filter((r) => !state.on.has(r));
     let controls = "";
-    if (m.qty) controls += `<label>${m.qty.label} <input type="number" data-qty="${m.id}" min="${m.qty.min}" max="${m.qty.max}" value="${view.qty(m.id)}" /> <span>× ${fmt(m.qty.unit)}</span></label>`;
+    if (m.qty?.options) {
+      const picks = view.picks(m.id);
+      const left = m.qty.options.filter((o) => !picks.includes(o));
+      controls += `<div class="picks">${(m.qty.included || []).map((o) => `<span class="chip inc">${o}</span>`).join("")}${picks.map((o) => `<span class="chip">${o} <button data-unpick="${m.id}" data-val="${o}" title="Remove">✕</button></span>`).join("")}</div>
+        ${left.length && picks.length < m.qty.max ? `<label>${m.qty.label} <select data-pick="${m.id}"><option value="">+ Add language (${fmt(m.qty.unit)} each)</option>${left.map((o) => `<option>${o}</option>`).join("")}</select></label>` : ""}`;
+    } else if (m.qty) controls += `<label>${m.qty.label} <input type="number" data-qty="${m.id}" min="${m.qty.min}" max="${m.qty.max}" value="${view.qty(m.id)}" /> <span>× ${fmt(m.qty.unit)}</span></label>`;
     if (m.tier) controls += `<label>${m.tier.label} <select data-tier="${m.id}">${m.tier.options.map((o) => `<option value="${o.id}" ${view.tier(m.id) === o.id ? "selected" : ""}>${o.name} — ${o.oneTime ? fmt(o.oneTime) : ""}${o.monthly ? fmt(o.monthly) + "/mo" : ""}</option>`).join("")}</select></label>`;
     if (m.requires) controls += `<span class="req">requires: ${m.requires.map((r) => byId[r].name).join(", ")}</span>`;
     return `<div class="mod ${on ? "on" : ""} ${m.locked ? "disabled" : ""}" data-mod="${m.id}">
@@ -122,7 +133,7 @@
         </div>
         <div class="mod-price"><b>${one ? fmt(one) : mo ? "" : "—"}</b><small>${mo ? fmt(mo) + "/mo" : one ? "one-time" : ""}</small></div>
       </div>
-      <div class="mod-desc">${m.desc}${m.weeks ? ` <em>~${m.weeks} wk</em>` : ""}</div>
+      <div class="mod-desc">${m.desc}${m.days ? ` <em>~${m.days} days</em>` : ""}${m.ext || m.extNote ? `<div class="mod-ext">Third-party: <b>${m.ext ? fmt(m.ext) + "/mo" : "usage-based"}</b> - ${m.extNote || ""} (billed at cost)</div>` : ""}</div>
       <div class="mod-controls">${controls}</div>
       <button class="mod-more" data-more="${m.id}">details ▾</button>
     </div>`;
@@ -145,31 +156,36 @@
   /* ---------- RIGHT: calculator ---------- */
   function renderCalc() {
     const lines = [];
-    let one = 0, mo = 0, weeks = 0;
+    let one = 0, mo = 0, ext = 0, days = 0;
+    const extLines = [];
     CATEGORIES.forEach((c) => MODULES.filter((m) => m.cat === c.id && state.on.has(m.id)).forEach((m) => {
-      const cost = modCost(m); one += cost.one; mo += cost.mo; weeks += m.weeks || 0;
+      const cost = modCost(m); one += cost.one; mo += cost.mo; ext += cost.ext; days += m.days || 0;
+      if (m.ext || m.extNote) extLines.push(`<li class="ext"><span>${m.name}<em>${m.extNote || ""}</em></span><span class="amt">${m.ext ? `<small>${fmt(m.ext)}/mo</small>` : "<small>at cost</small>"}</span></li>`);
       let detail = "";
-      if (m.qty) detail = `${view.qty(m.id)} × ${m.qty.label.toLowerCase()}`;
+      if (m.qty?.options) detail = [...(m.qty.included || []), ...view.picks(m.id)].join(", ");
+      else if (m.qty) detail = `${view.qty(m.id)} × ${m.qty.label.toLowerCase()}`;
       if (m.tier) detail = m.tier.options.find((o) => o.id === view.tier(m.id)).name;
-      lines.push(`<li><span>${m.name}<em>${c.name}${detail ? " · " + detail : ""}</em></span><span class="amt">${cost.one ? fmt(cost.one) : ""}${cost.mo ? `<small>${fmt(cost.mo)}/mo</small>` : ""}${m.locked ? "" : `<button data-remove="${m.id}" title="Remove">✕</button>`}</span></li>`);
+      lines.push(`<li><span>${m.name}<em>${c.name}${detail ? " · " + detail : ""}</em></span><span class="amt">${cost.one ? fmt(cost.one) : cost.mo ? "" : "Included"}${cost.mo ? `<small>${fmt(cost.mo)}/mo</small>` : ""}${m.locked ? "" : `<button data-remove="${m.id}" title="Remove">✕</button>`}</span></li>`);
     }));
     const disc = one * state.discount;
     if (disc) lines.push(`<li class="discount"><span>Discount (${Math.round(state.discount * 100)}%)</span><span class="amt">−${fmt(disc)}</span></li>`);
     const oneNet = one - disc;
     // Parallel workstreams: effective calendar time ≈ 45% of summed effort, min 3 weeks
-    const calWeeks = Math.max(3, Math.round(weeks * 0.45));
+    const calWeeks = Math.max(3, Math.round((days / 7) * 0.45));
 
     renderBudget(oneNet);
     $("#t-onetime").textContent = fmt(oneNet);
     $("#t-monthly").innerHTML = fmt(mo) + "<small>/mo</small>";
-    $("#t-year").textContent = fmt(oneNet + mo * 12);
+    $("#t-ext").innerHTML = fmt(ext) + "<small>/mo</small>";
+    $("#t-year").textContent = fmt(oneNet + (mo + ext) * 12);
     $("#t-weeks").textContent = `${calWeeks} weeks`;
     $("#t-count").textContent = state.on.size;
     $("#tab-count").textContent = `${state.on.size} selected`;
     $("#tab-price").textContent = fmt(oneNet);
     $("#t-budget").textContent = `${fmt(oneNet)} USD`;
     $("#mb-onetime").textContent = fmt(oneNet);
-    $("#mb-monthly").textContent = `+ ${fmt(mo)}/mo`;
+    $("#mb-monthly").textContent = `+ ${fmt(mo + ext)}/mo`;
+    if (extLines.length) lines.push(`<li class="ext-head"><span>Third-party services<em>billed at cost, paid by the artist</em></span><span class="amt">${fmt(ext)}<small>/mo</small></span></li>`, ...extLines);
     $("#lines").innerHTML = lines.join("");
 
     const splits = { 1: [1], 2: [0.5, 0.5], 3: [0.4, 0.3, 0.3] }[state.plan];
@@ -206,12 +222,14 @@
     if (t.dataset.toggle) toggle(t.dataset.toggle, t.checked);
     if (t.dataset.qty) { const m = byId[t.dataset.qty]; state.qty[m.id] = Math.min(m.qty.max, Math.max(m.qty.min, +t.value || 0)); }
     if (t.dataset.tier) state.tier[t.dataset.tier] = t.value;
+    if (t.dataset.pick && t.value) { const id = t.dataset.pick; state.pick[id] = [...view.picks(id), t.value]; }
     renderAll();
   });
   $("#catalog").addEventListener("click", (e) => {
     const head = e.target.closest(".cat-head");
     if (head) { const id = head.parentElement.dataset.cat; collapsed.has(id) ? collapsed.delete(id) : collapsed.add(id); renderCatalog(); return; }
     if (e.target.dataset.more) { e.target.closest(".mod").classList.toggle("expanded"); return; }
+    if (e.target.dataset.unpick) { const id = e.target.dataset.unpick; state.pick[id] = view.picks(id).filter((o) => o !== e.target.dataset.val); renderAll(); return; }
     const mod = e.target.closest(".mod");
     if (mod && !e.target.closest("input,select,label,button") && !byId[mod.dataset.mod].locked) {
       toggle(mod.dataset.mod, !state.on.has(mod.dataset.mod)); renderAll();
@@ -238,7 +256,7 @@
   }));
   $("#presets").innerHTML = PRESETS.map((p) => `<button data-preset="${p.id}" title="${p.blurb}">${p.id === "worldwide" && !ARTIST.isDefault ? "All-in" : p.name}</button>`).join("");
   $("#presets").addEventListener("click", (e) => { if (e.target.dataset.preset) { applyPreset(e.target.dataset.preset); e.target.classList.add("active"); } });
-  $("#btn-reset").addEventListener("click", () => { state.on = new Set(MODULES.filter((m) => m.locked).map((m) => m.id)); state.qty = {}; state.tier = {}; renderAll(); });
+  $("#btn-reset").addEventListener("click", () => { state.on = new Set(MODULES.filter((m) => m.locked).map((m) => m.id)); state.qty = {}; state.tier = {}; state.pick = {}; renderAll(); });
   $("#btn-share").addEventListener("click", async () => {
     save();
     try { await navigator.clipboard.writeText(location.href); toast("Link copied — send it to the client"); }

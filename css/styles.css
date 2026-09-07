@@ -368,3 +368,14 @@ input, select { font: inherit; }
   .total-card strong { font-size: 30px; }
   .options { grid-template-columns: 1fr; }
 }
+
+.picks{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
+.chip.inc{opacity:.7}
+.chip button{background:none;border:0;color:inherit;cursor:pointer;padding:0;font-size:10px;line-height:1}
+
+.mod-ext{margin-top:6px;font-size:11px;color:var(--muted,#9aa)}
+.mod-ext b{color:#f5c542}
+#lines li.ext-head{margin-top:10px;border-top:1px dashed rgba(255,255,255,.15);padding-top:8px}
+#lines li.ext span:first-child{opacity:.75}
+.adm-t .ext{display:block;color:#f5c542}

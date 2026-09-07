@@ -13,7 +13,8 @@
  *   option_id tier option id (tier rows only)
  *   tagline, description
  *   one_time_usd, monthly_usd   module base price / per-unit price / tier price
- *   weeks     build effort (module rows)
+ *   days      build effort in days (module rows)
+ *   third_party_monthly_usd / third_party_note   external services billed at cost (Mailchimp, 8th Wall...)
  *   included  yes = always on and cannot be removed
  *   requires  module ids separated by ;
  *   preview   renderer key in js/preview.js (leave as is)
@@ -24,7 +25,7 @@ const path = require("path");
 const root = path.join(__dirname, "..");
 const MOD_PATH = path.join(root, "js", "modules.js");
 const CSV_PATH = path.join(root, "catalog.csv");
-const COLS = ["category", "type", "id", "name", "option_id", "tagline", "description", "one_time_usd", "monthly_usd", "weeks", "included", "requires", "preview", "min", "max", "default"];
+const COLS = ["category", "type", "id", "name", "option_id", "tagline", "description", "one_time_usd", "monthly_usd", "third_party_monthly_usd", "third_party_note", "days", "included", "requires", "preview", "min", "max", "default"];
 
 function loadCatalog() {
   const w = {};
@@ -43,10 +44,11 @@ function exportCsv() {
   const lines = [COLS.join(",")];
   for (const m of MODULES) {
     lines.push(row({ type: "module", id: m.id, category: cat[m.cat], name: m.name, tagline: m.tagline, description: m.desc,
-      one_time_usd: m.oneTime, monthly_usd: m.monthly, weeks: m.weeks, included: m.locked ? "yes" : "no",
+      one_time_usd: m.oneTime, monthly_usd: m.monthly, third_party_monthly_usd: m.ext || 0, third_party_note: m.extNote || "", days: m.days, included: m.locked ? "yes" : "no",
       requires: (m.requires || []).join(";"), preview: m.preview || "" }));
     if (m.qty) lines.push(row({ category: cat[m.cat], type: "quantity", id: m.id, name: m.qty.label, one_time_usd: m.qty.unit, monthly_usd: m.qty.unitMonthly || 0,
-      min: m.qty.min, max: m.qty.max, default: m.qty.default ?? m.qty.min }));
+      min: m.qty.min, max: m.qty.max, default: m.qty.default ?? m.qty.min,
+      tagline: m.qty.included ? m.qty.included.join(";") : "", option_id: m.qty.options ? m.qty.options.join(";") : "" }));
     if (m.tier) for (const o of m.tier.options)
       lines.push(row({ category: cat[m.cat], type: "tier", id: m.id, name: o.name, option_id: o.id, tagline: m.tier.label, one_time_usd: o.oneTime, monthly_usd: o.monthly }));
   }
@@ -84,7 +86,8 @@ function importCsv() {
     if (r.type === "module") {
       const cat = catIds.has(r.category) ? r.category : catByName[r.category.toLowerCase()];
       if (!cat) throw new Error(`Unknown category "${r.category}" for module ${r.id}`);
-      const m = { id: r.id, cat, name: r.name, tagline: r.tagline, desc: r.description, oneTime: num(r.one_time_usd), monthly: num(r.monthly_usd), weeks: num(r.weeks) };
+      const m = { id: r.id, cat, name: r.name, tagline: r.tagline, desc: r.description, oneTime: num(r.one_time_usd), monthly: num(r.monthly_usd), days: r.days != null ? num(r.days) : Math.round(num(r.weeks) * 7) };
+      if (r.third_party_monthly_usd || r.third_party_note) { m.ext = num(r.third_party_monthly_usd); if (r.third_party_note) m.extNote = r.third_party_note; }
       if (/^(yes|si|sí|true|1|x)$/i.test(r.included)) m.locked = true;
       if (r.requires) m.requires = r.requires.split(/[;|]/).map((s) => s.trim()).filter(Boolean);
       m.preview = r.preview || null;
@@ -93,6 +96,9 @@ function importCsv() {
       const m = byId[r.id]; if (!m) throw new Error(`quantity row before module ${r.id}`);
       m.qty = { label: r.name, min: num(r.min), max: num(r.max), unit: num(r.one_time_usd), unitMonthly: num(r.monthly_usd) };
       if (r.default !== "" && num(r.default) !== m.qty.min) m.qty.default = num(r.default);
+      const list = (s) => s.split(";").map((x) => x.trim()).filter(Boolean);
+      if (r.tagline) m.qty.included = list(r.tagline);
+      if (r.option_id) m.qty.options = list(r.option_id);
     } else if (r.type === "tier") {
       const m = byId[r.id]; if (!m) throw new Error(`tier row before module ${r.id}`);
       m.tier = m.tier || { label: r.tagline || "Option", options: [] };
@@ -102,7 +108,9 @@ function importCsv() {
   const src = mods.map((m) => {
     const parts = [`id: ${js(m.id)}`, `cat: ${js(m.cat)}`];
     if (m.locked) parts.push("locked: true");
-    parts.push(`name: ${js(m.name)}`, `tagline: ${js(m.tagline)}`, `\n    desc: ${js(m.desc)}`, `oneTime: ${m.oneTime}`, `monthly: ${m.monthly}`, `weeks: ${m.weeks}`);
+    parts.push(`name: ${js(m.name)}`, `tagline: ${js(m.tagline)}`, `\n    desc: ${js(m.desc)}`, `oneTime: ${m.oneTime}`, `monthly: ${m.monthly}`);
+    if (m.ext != null || m.extNote) parts.push(`ext: ${m.ext || 0}`, `extNote: ${js(m.extNote || "")}`);
+    parts.push(`days: ${m.days}`);
     if (m.requires) parts.push(`\n    requires: ${js(m.requires)}`);
     if (m.qty) parts.push(`qty: ${js(m.qty)}`);
     if (m.tier) parts.push(`tier: { label: ${js(m.tier.label)}, options: [\n      ${m.tier.options.map(js).join(",\n      ")} ] }`);

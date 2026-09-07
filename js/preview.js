@@ -20,7 +20,7 @@
   R.hero = (s) => `
     <div class="p-nav"><b>${A().upper}</b><span>Music</span><span>AR Filters</span><span>Tour</span><span>Fan Club</span><span>Store</span></div>
     <section data-mod="hero" class="hero">
-      ${s.has("i18n") ? `<div class="lang"><b>EN</b> · ES${s.qty("i18n") ? ` · +${s.qty("i18n")}` : ""}</div>` : ""}
+      ${s.has("i18n") ? `<div class="lang"><b>EN</b> · ES${(s.picks ? s.picks("i18n") : []).map((l) => " · " + l.slice(0, 2).toUpperCase()).join("")}</div>` : ""}
       <h1>${heroTitle()}</h1>
       <p>The official ${A().name} fan experience. Unlock AR filters, pre-save the new album, catch the tour and earn your place on the worldwide leaderboard.${A().isDefault ? " Dale!" : ""}</p>
       <div class="ctas">
