@@ -45,7 +45,7 @@
       const vids = ar.videos.map((v) => `<figure><video src="${v.src}" muted loop playsinline autoplay preload="metadata"></video><figcaption>${v.effect}</figcaption></figure>`).join("");
       return `<div class="ar-ref"><div class="ar-ref-vids">${vids || '<div class="ar-ref-empty">Image target demo</div>'}</div><h3>${m.name} <span class="pill">${ar.camera}</span></h3><p class="sub">${ar.what}</p></div>`;
     }).join("");
-    return sec("ar_hub", "WebAR hub", h("AR FILTERS - NO APP NEEDED") + p("Point your phone at the QR or tap on mobile. Works on iOS & Android in the browser."), refs);
+    return sec("ar_hub", "Web AR Filters", h("AR FILTERS - NO APP NEEDED") + p("Point your phone at the QR or tap on mobile. Works on iOS & Android in the browser."), refs);
   };
 
   R.ar_ugc = () => sec("ar_ugc", "UGC wall", h("FAN MOMENTS") + p("Moderated captures from fans worldwide — the best make it to the venue screens."),

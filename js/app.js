@@ -30,6 +30,7 @@
   /* ---------- state ---------- */
   const platformOperator = 25;
   const rushFee = 15;
+  const op = (v) => Math.round(v * (1 + platformOperator / 100));
   const state = { on: new Set(), qty: {}, tier: {}, pick: {}, discount: 0, plan: 1, device: "desktop" };
   MODULES.filter((m) => m.locked).forEach((m) => state.on.add(m.id));
 
@@ -48,7 +49,7 @@
     let one = m.oneTime, mo = m.monthly;
     if (m.qty) { const q = view.qty(m.id); one += q * m.qty.unit; mo += q * (m.qty.unitMonthly || 0); }
     if (m.tier) { const t = m.tier.options.find((o) => o.id === view.tier(m.id)); one += t.oneTime; mo += t.monthly; }
-    return { one, mo, ext: m.ext || 0 };
+    return { one: op(one), mo: op(mo), ext: m.ext || 0 };
   }
   const dependents = (id) => MODULES.filter((m) => (m.requires || []).includes(id)).map((m) => m.id);
 
@@ -125,9 +126,9 @@
       const picks = view.picks(m.id);
       const left = m.qty.options.filter((o) => !picks.includes(o));
       controls += `<div class="picks">${(m.qty.included || []).map((o) => `<span class="chip inc">${o}</span>`).join("")}${picks.map((o) => `<span class="chip">${o} <button data-unpick="${m.id}" data-val="${o}" title="Remove">✕</button></span>`).join("")}</div>
-        ${left.length && picks.length < m.qty.max ? `<label>${m.qty.label} <select data-pick="${m.id}"><option value="">+ Add language (${fmt(m.qty.unit)} each)</option>${left.map((o) => `<option>${o}</option>`).join("")}</select></label>` : ""}`;
-    } else if (m.qty) controls += `<label>${m.qty.label} <input type="number" data-qty="${m.id}" min="${m.qty.min}" max="${m.qty.max}" value="${view.qty(m.id)}" /> <span>× ${fmt(m.qty.unit)}</span></label>`;
-    if (m.tier) controls += `<label>${m.tier.label} <select data-tier="${m.id}">${m.tier.options.map((o) => `<option value="${o.id}" ${view.tier(m.id) === o.id ? "selected" : ""}>${o.name}${o.oneTime || o.monthly ? " — " : " (included)"}${o.oneTime ? "+" + fmt(o.oneTime) : ""}${o.monthly ? fmt(o.monthly) + "/mo" : ""}</option>`).join("")}</select></label>`;
+        ${left.length && picks.length < m.qty.max ? `<label>${m.qty.label} <select data-pick="${m.id}"><option value="">+ Add language (${fmt(op(m.qty.unit))} each)</option>${left.map((o) => `<option>${o}</option>`).join("")}</select></label>` : ""}`;
+    } else if (m.qty) controls += `<label>${m.qty.label} <input type="number" data-qty="${m.id}" min="${m.qty.min}" max="${m.qty.max}" value="${view.qty(m.id)}" /> <span>× ${fmt(op(m.qty.unit))}</span></label>`;
+    if (m.tier) controls += `<label>${m.tier.label} <select data-tier="${m.id}">${m.tier.options.map((o) => `<option value="${o.id}" ${view.tier(m.id) === o.id ? "selected" : ""}>${o.name}${o.oneTime || o.monthly ? " — " : " (included)"}${o.oneTime ? "+" + fmt(op(o.oneTime)) : ""}${o.monthly ? fmt(op(o.monthly)) + "/mo" : ""}</option>`).join("")}</select></label>`;
     if (m.requires) controls += `<span class="req">requires: ${m.requires.map((r) => byId[r].name).join(", ")}</span>`;
     return `<div class="mod ${on ? "on" : ""} ${m.locked ? "disabled" : ""}" data-mod="${m.id}">
       <div class="mod-row">
@@ -186,10 +187,9 @@
       if (m.tier) detail = m.tier.options.find((o) => o.id === view.tier(m.id)).name;
       lines.push(`<li><span>${m.name}<em>${c.name}${detail ? " · " + detail : ""}</em></span><span class="amt">${cost.one ? fmt(cost.one) : cost.mo ? "" : "Included"}${cost.mo ? `<small>${fmt(cost.mo)}/mo</small>` : ""}${m.locked ? "" : `<button data-remove="${m.id}" title="Remove">✕</button>`}</span></li>`);
     }));
-    const oneOp = Math.round(one * (1 + platformOperator / 100));
+    const oneOp = one; // module prices already carry platformOperator
     const rush = Math.round(oneOp * rushFee / 100);
     const oneNet = oneOp; // rush fee is added then cancelled by the PITCOIN coupon
-    mo = Math.round(mo * (1 + platformOperator / 100));
     const weeks = days / 7;
     const weeksTxt = Number.isInteger(weeks) ? `${weeks} week${weeks === 1 ? "" : "s"}` : `${weeks.toFixed(1)} weeks`;
 
