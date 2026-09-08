@@ -1,0 +1,1069 @@
+{
+  "generated": "2026-09-07",
+  "currency": "USD",
+  "budgets": [
+    {
+      "id": "base",
+      "name": "Base",
+      "max": 5000
+    },
+    {
+      "id": "mid",
+      "name": "Mid",
+      "max": 8000
+    },
+    {
+      "id": "top",
+      "name": "Top",
+      "max": 15000
+    }
+  ],
+  "presets": [
+    {
+      "id": "starter",
+      "name": "Starter",
+      "description": "≈ $5k — landing + AR hub + pre-save + calendar.",
+      "modules": [
+        "hero",
+        "hosting",
+        "capture",
+        "ar_hub",
+        "ar_face",
+        "presave",
+        "calendar",
+        "legal"
+      ]
+    },
+    {
+      "id": "fan",
+      "name": "Fan Experience",
+      "description": "≈ $8k — adds booth, drops, fan club, rewards, store.",
+      "modules": [
+        "hero",
+        "hosting",
+        "i18n",
+        "capture",
+        "cms",
+        "ar_hub",
+        "ar_face",
+        "ar_marker",
+        "ar_booth",
+        "ar_drops",
+        "presave",
+        "countdown",
+        "smartlinks",
+        "calendar",
+        "tickets",
+        "setlist",
+        "fanclub",
+        "points",
+        "quiz",
+        "fancard",
+        "store",
+        "video",
+        "socialfeed",
+        "legal",
+        "support"
+      ]
+    },
+    {
+      "id": "worldwide",
+      "name": "Mr. Worldwide",
+      "description": "≈ $15k — everything: volumetric AR, portal, livestream, collectibles.",
+      "modules": "all"
+    }
+  ],
+  "modules": [
+    {
+      "id": "hero",
+      "category": "Core & Brand",
+      "name": "Hero Landing & Brand System",
+      "tagline": "Above-the-fold, Mr. Worldwide style",
+      "description": "Full-screen hero with video/3D loop, tagline, primary CTAs, custom typography and color system. Includes responsive framework, nav and footer.",
+      "price": {
+        "oneTime": 2000,
+        "monthly": 0
+      },
+      "weeks": 3,
+      "requires": [],
+      "included": true
+    },
+    {
+      "id": "i18n",
+      "category": "Core & Brand",
+      "name": "Bilingual EN / ES (+ more)",
+      "tagline": "Dale, worldwide means worldwide",
+      "description": "Language switcher with full content localization. Additional languages billed per language.",
+      "price": {
+        "oneTime": 250,
+        "monthly": 0
+      },
+      "quantity": {
+        "label": "Extra languages (PT, FR, DE…)",
+        "min": 0,
+        "max": 8,
+        "unitPrice": 100,
+        "unitMonthly": 0
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "capture",
+      "category": "Core & Brand",
+      "name": "Fan Capture (Email + SMS)",
+      "tagline": "Own the audience",
+      "description": "Newsletter + SMS opt-in with double opt-in, tagging by interest (tour, AR, merch), connected to Mailchimp / Klaviyo / Community.",
+      "price": {
+        "oneTime": 350,
+        "monthly": 10
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "cms",
+      "category": "Core & Brand",
+      "name": "Headless CMS & Admin",
+      "tagline": "Team edits without a developer",
+      "description": "Sanity / Strapi CMS with roles, drafts, scheduled publishing and image pipeline. Editors update tour dates, news, filters and drops.",
+      "price": {
+        "oneTime": 300,
+        "monthly": 15
+      },
+      "weeks": 2,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "pwa",
+      "category": "Core & Brand",
+      "name": "PWA — Install to Home Screen",
+      "tagline": "App feel, no app store",
+      "description": "Offline shell, install prompt, splash screens, app icon. Basis for push notifications.",
+      "price": {
+        "oneTime": 150,
+        "monthly": 0
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "ar_hub",
+      "category": "WebAR Filter Hub",
+      "name": "WebAR Filter Hub",
+      "tagline": "The gallery that hosts every filter",
+      "description": "Filter gallery with thumbnails, categories, QR handoff from desktop to phone, camera permission flow, device compatibility fallback. Includes 8th Wall / Zappar commercial license setup.",
+      "price": {
+        "oneTime": 850,
+        "monthly": 50
+      },
+      "weeks": 3,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "ar_face",
+      "category": "WebAR Filter Hub",
+      "name": "Face Filters",
+      "tagline": "Shades, tux, 'Dale!' lens flares",
+      "description": "Face-tracked AR lenses (glasses, headwear, makeup, particle FX). Price per filter includes 3D asset, tracking tuning and QA on iOS/Android.",
+      "price": {
+        "oneTime": 0,
+        "monthly": 0
+      },
+      "quantity": {
+        "label": "Number of face filters",
+        "min": 1,
+        "max": 20,
+        "default": 3,
+        "unitPrice": 200,
+        "unitMonthly": 0
+      },
+      "weeks": 1,
+      "requires": [
+        "ar_hub"
+      ],
+      "included": false
+    },
+    {
+      "id": "ar_world",
+      "category": "WebAR Filter Hub",
+      "name": "World AR — Pitbull in Your Room",
+      "tagline": "Volumetric / 3D performer placement",
+      "description": "Surface-tracked AR: place a 3D or volumetric-captured Pitbull performing a snippet in the fan's space. Includes volumetric capture session coordination or stylized 3D avatar.",
+      "price": {
+        "oneTime": 0,
+        "monthly": 0
+      },
+      "tiers": [
+        {
+          "id": "avatar3d",
+          "name": "Stylized 3D avatar",
+          "oneTime": 600,
+          "monthly": 0
+        },
+        {
+          "id": "volumetric",
+          "name": "Volumetric capture (real Pitbull)",
+          "oneTime": 1000,
+          "monthly": 0
+        }
+      ],
+      "weeks": 4,
+      "requires": [
+        "ar_hub"
+      ],
+      "included": false
+    },
+    {
+      "id": "ar_marker",
+      "category": "WebAR Filter Hub",
+      "name": "Image-Target AR",
+      "tagline": "Scan the album cover, poster or ticket",
+      "description": "Album art, tour posters, merch tags and tickets come alive with video, 3D and links. Per target pricing.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 0
+      },
+      "quantity": {
+        "label": "Image targets",
+        "min": 1,
+        "max": 15,
+        "default": 2,
+        "unitPrice": 100,
+        "unitMonthly": 0
+      },
+      "weeks": 1,
+      "requires": [
+        "ar_hub"
+      ],
+      "included": false
+    },
+    {
+      "id": "ar_tryon",
+      "category": "WebAR Filter Hub",
+      "name": "AR Merch Try-On",
+      "tagline": "Caps, tees, chains — try before buy",
+      "description": "Body/face-tracked try-on of merch items with direct add-to-cart. Per SKU 3D modelling included.",
+      "price": {
+        "oneTime": 150,
+        "monthly": 0
+      },
+      "quantity": {
+        "label": "Merch SKUs modelled",
+        "min": 1,
+        "max": 30,
+        "default": 4,
+        "unitPrice": 50,
+        "unitMonthly": 0
+      },
+      "weeks": 2,
+      "requires": [
+        "ar_hub"
+      ],
+      "included": false
+    },
+    {
+      "id": "ar_booth",
+      "category": "WebAR Filter Hub",
+      "name": "AR Photo & Video Booth",
+      "tagline": "Capture, brand, share in one tap",
+      "description": "Record 15s clips or photos with the active filter, branded watermark + hashtag, native share sheet to TikTok/IG/WhatsApp, download.",
+      "price": {
+        "oneTime": 250,
+        "monthly": 10
+      },
+      "weeks": 1.5,
+      "requires": [
+        "ar_hub"
+      ],
+      "included": false
+    },
+    {
+      "id": "ar_drops",
+      "category": "WebAR Filter Hub",
+      "name": "Timed & Geo-Fenced Filter Drops",
+      "tagline": "Only in Miami. Only tonight.",
+      "description": "Unlock filters by date window, GPS geofence (venue/city) or QR at the show. Countdown teaser cards for upcoming filters.",
+      "price": {
+        "oneTime": 200,
+        "monthly": 10
+      },
+      "weeks": 2,
+      "requires": [
+        "ar_hub"
+      ],
+      "included": false
+    },
+    {
+      "id": "ar_portal",
+      "category": "WebAR Filter Hub",
+      "name": "AR Portal — Walk into the Show",
+      "tagline": "360° concert portal in your living room",
+      "description": "Step-through portal into a 360° concert / backstage video environment with spatial audio.",
+      "price": {
+        "oneTime": 350,
+        "monthly": 0
+      },
+      "weeks": 3,
+      "requires": [
+        "ar_hub"
+      ],
+      "included": false
+    },
+    {
+      "id": "ar_ugc",
+      "category": "WebAR Filter Hub",
+      "name": "UGC Wall (Moderated)",
+      "tagline": "Fan-made AR moments, curated",
+      "description": "Fans submit booth captures; moderation queue with AI pre-screening; approved posts appear on a live wall and can be pushed to venue screens.",
+      "price": {
+        "oneTime": 150,
+        "monthly": 15
+      },
+      "weeks": 2,
+      "requires": [
+        "ar_booth"
+      ],
+      "included": false
+    },
+    {
+      "id": "ar_analytics",
+      "category": "WebAR Filter Hub",
+      "name": "AR Analytics",
+      "tagline": "Sessions, dwell time, shares, devices",
+      "description": "Per-filter funnel: opens → camera granted → capture → share. Exports for sponsors.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 5
+      },
+      "weeks": 1,
+      "requires": [
+        "ar_hub"
+      ],
+      "included": false
+    },
+    {
+      "id": "presave",
+      "category": "Music & Releases",
+      "name": "Pre-Save Campaign",
+      "tagline": "Spotify · Apple Music · Deezer · Amazon",
+      "description": "OAuth pre-save with follow-artist, auto-add to library on release day, fan data capture, thank-you page with exclusive filter unlock.",
+      "price": {
+        "oneTime": 500,
+        "monthly": 10
+      },
+      "weeks": 1.5,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "countdown",
+      "category": "Music & Releases",
+      "name": "Release Countdown & Reveal",
+      "tagline": "Tension until midnight",
+      "description": "Timezone-aware countdown, scheduled reveal of cover art/tracklist, confetti moment, auto-switch to smart links on release.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 0
+      },
+      "weeks": 0.5,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "smartlinks",
+      "category": "Music & Releases",
+      "name": "Smart Links & Discography",
+      "tagline": "Every release, every platform",
+      "description": "Auto-synced discography (Spotify API) with per-release smart link pages and embedded players.",
+      "price": {
+        "oneTime": 150,
+        "monthly": 5
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "player",
+      "category": "Music & Releases",
+      "name": "Persistent Mini Player",
+      "tagline": "Music keeps playing as fans browse",
+      "description": "Sticky player with previews / full Spotify Web Playback for logged-in premium users.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 0
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "lyrics",
+      "category": "Music & Releases",
+      "name": "Lyrics & Translations",
+      "tagline": "Sing along in EN/ES",
+      "description": "Synced lyrics per track with bilingual toggle and share-a-line cards.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 5
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "playlist",
+      "category": "Music & Releases",
+      "name": "Fan Co-Created Playlist",
+      "tagline": "Fans vote the pre-show playlist",
+      "description": "Fans submit and up-vote tracks; winning playlist published to Spotify weekly.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 5
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "calendar",
+      "category": "Tour & Calendar",
+      "name": "Tour Calendar",
+      "tagline": "Dates synced from Bandsintown / Songkick",
+      "description": "Interactive calendar + map view, auto-import, ticket links, 'notify me when he's near me' alerts, add-to-calendar (ICS/Google).",
+      "price": {
+        "oneTime": 350,
+        "monthly": 5
+      },
+      "weeks": 1.5,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "tickets",
+      "category": "Tour & Calendar",
+      "name": "Ticketing & Presale Codes",
+      "tagline": "Fan-club presale windows",
+      "description": "Ticketmaster / AXS deep links, unique presale codes distributed to members, waitlists per city.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 0
+      },
+      "weeks": 1,
+      "requires": [
+        "calendar"
+      ],
+      "included": false
+    },
+    {
+      "id": "setlist",
+      "category": "Tour & Calendar",
+      "name": "Setlist Voting",
+      "tagline": "Fans pick one song per show",
+      "description": "Per-city poll open until doors; results feed a screen backstage and a post-show recap.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 5
+      },
+      "weeks": 1,
+      "requires": [
+        "calendar"
+      ],
+      "included": false
+    },
+    {
+      "id": "vip",
+      "category": "Tour & Calendar",
+      "name": "Meet & Greet / VIP Booking",
+      "tagline": "Bookable experiences with payments",
+      "description": "Slot booking, Stripe checkout, QR passes and reminders.",
+      "price": {
+        "oneTime": 200,
+        "monthly": 10
+      },
+      "weeks": 2,
+      "requires": [
+        "calendar"
+      ],
+      "included": false
+    },
+    {
+      "id": "livestream",
+      "category": "Tour & Calendar",
+      "name": "Livestream & Watch Party",
+      "tagline": "PPV or free, with live chat",
+      "description": "Mux / Vimeo OTT player, paywall option, live chat with emoji reactions, replay window.",
+      "price": {
+        "oneTime": 300,
+        "monthly": 25
+      },
+      "weeks": 2,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "afterparty",
+      "category": "Tour & Calendar",
+      "name": "Post-Show Recap Pages",
+      "tagline": "Auto-generated per city",
+      "description": "Photos, setlist, fan captures and next-city teaser published automatically after each date.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 5
+      },
+      "weeks": 1,
+      "requires": [
+        "calendar"
+      ],
+      "included": false
+    },
+    {
+      "id": "fanclub",
+      "category": "Fan Engagement",
+      "name": "Fan Club Membership",
+      "tagline": "Free + paid tiers, single sign-on",
+      "description": "Social/email login, profile, tiered membership (Free / Dale / Worldwide) with Stripe subscriptions and perks gating.",
+      "price": {
+        "oneTime": 400,
+        "monthly": 25
+      },
+      "weeks": 3,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "points",
+      "category": "Fan Engagement",
+      "name": "Points & Rewards",
+      "tagline": "Earn for streams, shares, AR captures",
+      "description": "Points engine with rules, badges, streaks, reward catalog (presale, merch discounts, filter unlocks).",
+      "price": {
+        "oneTime": 300,
+        "monthly": 10
+      },
+      "weeks": 2,
+      "requires": [
+        "fanclub"
+      ],
+      "included": false
+    },
+    {
+      "id": "leaderboard",
+      "category": "Fan Engagement",
+      "name": "Worldwide Leaderboard",
+      "tagline": "Top fans by country and city",
+      "description": "Global and per-country rankings, weekly reset, shareable rank cards.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 5
+      },
+      "weeks": 1,
+      "requires": [
+        "points"
+      ],
+      "included": false
+    },
+    {
+      "id": "contests",
+      "category": "Fan Engagement",
+      "name": "Contests & Giveaways",
+      "tagline": "Compliant sweepstakes engine",
+      "description": "Entry mechanics (share, capture, pre-save), T&Cs generator, random draw, winner notification.",
+      "price": {
+        "oneTime": 150,
+        "monthly": 5
+      },
+      "weeks": 1.5,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "quiz",
+      "category": "Fan Engagement",
+      "name": "'How Worldwide Are You?' Quiz",
+      "tagline": "Personality quiz with shareable result",
+      "description": "Branching quiz with result cards, unlocks a matching AR filter, drives email capture.",
+      "price": {
+        "oneTime": 150,
+        "monthly": 0
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "fancard",
+      "category": "Fan Engagement",
+      "name": "Fan Card Generator",
+      "tagline": "Wrapped-style personal stats card",
+      "description": "Pulls Spotify listening data (with consent) to render a personalised 'Mr. Worldwide Passport' image for sharing.",
+      "price": {
+        "oneTime": 200,
+        "monthly": 5
+      },
+      "weeks": 1.5,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "push",
+      "category": "Fan Engagement",
+      "name": "Push & WhatsApp Notifications",
+      "tagline": "Filter drop live. Tickets on sale. Dale.",
+      "description": "Web push (via PWA) + WhatsApp Business broadcast with segmentation.",
+      "price": {
+        "oneTime": 150,
+        "monthly": 15
+      },
+      "weeks": 1,
+      "requires": [
+        "pwa"
+      ],
+      "included": false
+    },
+    {
+      "id": "birthday",
+      "category": "Fan Engagement",
+      "name": "Personalised Video Messages",
+      "tagline": "AI-cloned voice shout-outs (with approval)",
+      "description": "Fans request a birthday / graduation shout-out; approved template videos rendered with fan's name. Consent + review workflow.",
+      "price": {
+        "oneTime": 250,
+        "monthly": 25
+      },
+      "weeks": 2.5,
+      "requires": [
+        "fanclub"
+      ],
+      "included": false
+    },
+    {
+      "id": "fanwall",
+      "category": "Fan Engagement",
+      "name": "Fan Wall & Comments",
+      "tagline": "Moderated community feed",
+      "description": "Threaded posts, reactions, profanity filter, report flow, pinned artist posts.",
+      "price": {
+        "oneTime": 200,
+        "monthly": 10
+      },
+      "weeks": 2,
+      "requires": [
+        "fanclub"
+      ],
+      "included": false
+    },
+    {
+      "id": "store",
+      "category": "Commerce & Drops",
+      "name": "Merch Store",
+      "tagline": "Shopify headless, on-brand checkout",
+      "description": "Product grid, variants, cart, Shopify checkout, inventory sync, regional pricing and taxes.",
+      "price": {
+        "oneTime": 350,
+        "monthly": 10
+      },
+      "weeks": 3,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "drops",
+      "category": "Commerce & Drops",
+      "name": "Limited Drops & Queue",
+      "tagline": "Hype releases without crashing",
+      "description": "Countdown drops, virtual waiting room, per-fan purchase limits, member-early-access.",
+      "price": {
+        "oneTime": 200,
+        "monthly": 10
+      },
+      "weeks": 1.5,
+      "requires": [
+        "store"
+      ],
+      "included": false
+    },
+    {
+      "id": "collectibles",
+      "category": "Commerce & Drops",
+      "name": "Digital Collectibles",
+      "tagline": "Stamps, AR unlockables, optional on-chain",
+      "description": "Collect digital passport stamps per show / release / filter; optional wallet-less NFT minting (Polygon) for verified scarcity.",
+      "price": {
+        "oneTime": 200,
+        "monthly": 10
+      },
+      "weeks": 2,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "bundles",
+      "category": "Commerce & Drops",
+      "name": "Album + Merch Bundles",
+      "tagline": "Chart-eligible D2C bundles",
+      "description": "Bundle builder, vinyl/CD pre-orders, fulfilment partner integration, chart-reporting exports.",
+      "price": {
+        "oneTime": 150,
+        "monthly": 0
+      },
+      "weeks": 1,
+      "requires": [
+        "store"
+      ],
+      "included": false
+    },
+    {
+      "id": "donate",
+      "category": "Commerce & Drops",
+      "name": "Foundation & Causes",
+      "tagline": "SLAM! schools, disaster relief",
+      "description": "Donation flow, impact counters and campaign pages for the artist's philanthropy.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 0
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "sponsors",
+      "category": "Commerce & Drops",
+      "name": "Sponsor & Brand Zones",
+      "tagline": "Monetise the traffic",
+      "description": "Branded filter placements, sponsor modules with impression reporting and custom landing pages.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 0
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "news",
+      "category": "Content & Media",
+      "name": "News & Announcements",
+      "tagline": "Editorial hub",
+      "description": "Article pages, categories, rich embeds, SEO schema, RSS.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 0
+      },
+      "weeks": 1,
+      "requires": [
+        "cms"
+      ],
+      "included": false
+    },
+    {
+      "id": "video",
+      "category": "Content & Media",
+      "name": "Video Hub",
+      "tagline": "Music videos, BTS, interviews",
+      "description": "YouTube/Vimeo sync, playlists, chapters, autoplay grid.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 5
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "gallery",
+      "category": "Content & Media",
+      "name": "Photo Gallery",
+      "tagline": "Tour, red carpet, studio",
+      "description": "Masonry galleries with lightbox, albums per tour date, download-for-fans option.",
+      "price": {
+        "oneTime": 80,
+        "monthly": 5
+      },
+      "weeks": 0.5,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "timeline",
+      "category": "Content & Media",
+      "name": "Career Timeline",
+      "tagline": "From Miami to Mr. Worldwide",
+      "description": "Scroll-driven interactive biography with milestones, awards and media.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 0
+      },
+      "weeks": 1.5,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "podcast",
+      "category": "Content & Media",
+      "name": "Podcast / Audio Series",
+      "tagline": "Motivational drops from Mr. 305",
+      "description": "Episode pages, RSS feed, embedded player, transcripts.",
+      "price": {
+        "oneTime": 80,
+        "monthly": 5
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "press",
+      "category": "Content & Media",
+      "name": "Press & Partners Kit",
+      "tagline": "Bios, photos, logos, rider",
+      "description": "Gated download area for press and promoters with usage terms.",
+      "price": {
+        "oneTime": 60,
+        "monthly": 0
+      },
+      "weeks": 0.5,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "socialfeed",
+      "category": "Social & Community",
+      "name": "Social Feed Aggregator",
+      "tagline": "IG · TikTok · X · YouTube in one wall",
+      "description": "Auto-pulled posts with moderation, hashtag filtering, click-through.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 10
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "challenge",
+      "category": "Social & Community",
+      "name": "TikTok / Reels Challenge Hub",
+      "tagline": "Dance challenge with the AR filter",
+      "description": "Challenge brief, sound link, featured entries, leaderboard by views, prize integration.",
+      "price": {
+        "oneTime": 150,
+        "monthly": 5
+      },
+      "weeks": 1.5,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "sharecards",
+      "category": "Social & Community",
+      "name": "Dynamic Share Cards",
+      "tagline": "Every page shares beautifully",
+      "description": "Server-rendered OG images per city, filter, rank and quiz result.",
+      "price": {
+        "oneTime": 80,
+        "monthly": 5
+      },
+      "weeks": 0.5,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "worldmap",
+      "category": "Social & Community",
+      "name": "Worldwide Fan Map",
+      "tagline": "Live pins from every fan check-in",
+      "description": "Real-time globe of fan check-ins and AR captures; per-country counters; heat during shows.",
+      "price": {
+        "oneTime": 150,
+        "monthly": 10
+      },
+      "weeks": 2,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "discord",
+      "category": "Social & Community",
+      "name": "Discord / Community Bridge",
+      "tagline": "Members-only server with role sync",
+      "description": "Membership tier → Discord role sync, event announcements, bot commands.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 5
+      },
+      "weeks": 1,
+      "requires": [
+        "fanclub"
+      ],
+      "included": false
+    },
+    {
+      "id": "analytics",
+      "category": "Data & Growth",
+      "name": "Analytics & Dashboards",
+      "tagline": "GA4 + Looker Studio, weekly digest",
+      "description": "Event taxonomy, dashboards for team/label, monthly insight digest.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 10
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "crm",
+      "category": "Data & Growth",
+      "name": "CRM Integration",
+      "tagline": "Salesforce / HubSpot / Braze",
+      "description": "Bi-directional sync of fan profiles, tags and events.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 5
+      },
+      "weeks": 1.5,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "seo",
+      "category": "Data & Growth",
+      "name": "SEO & Performance Pass",
+      "tagline": "Core Web Vitals green",
+      "description": "Technical SEO, structured data, image/CDN optimisation, Lighthouse ≥ 90.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 0
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "abtest",
+      "category": "Data & Growth",
+      "name": "A/B Testing & Personalisation",
+      "tagline": "Show Miami fans Miami dates first",
+      "description": "Geo/segment-based hero variants and CTA experiments.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 10
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "pixels",
+      "category": "Data & Growth",
+      "name": "Ad Pixels & Consent",
+      "tagline": "Meta, TikTok, Google, Spotify Ad",
+      "description": "Server-side tagging with consent-mode compliance.",
+      "price": {
+        "oneTime": 60,
+        "monthly": 0
+      },
+      "weeks": 0.5,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "hosting",
+      "category": "Operations & Care",
+      "name": "Hosting, CDN & Security",
+      "tagline": "Vercel/Cloudflare, global edge",
+      "description": "Edge hosting, DDoS protection, SSL, daily backups, monitoring. Scales for drop-night traffic spikes.",
+      "price": {
+        "oneTime": 250,
+        "monthly": 25
+      },
+      "weeks": 0.5,
+      "requires": [],
+      "included": true
+    },
+    {
+      "id": "legal",
+      "category": "Operations & Care",
+      "name": "Privacy, Cookies & Age Gate",
+      "tagline": "GDPR / CCPA / COPPA ready",
+      "description": "Consent manager, policy pages, data export/delete requests, age gate for AR camera use.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 5
+      },
+      "weeks": 0.5,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "a11y",
+      "category": "Operations & Care",
+      "name": "Accessibility (WCAG 2.2 AA)",
+      "tagline": "Everyone gets in",
+      "description": "Audit + remediation, captions, reduced-motion modes, AR alternatives.",
+      "price": {
+        "oneTime": 100,
+        "monthly": 0
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "support",
+      "category": "Operations & Care",
+      "name": "Maintenance & Support Retainer",
+      "tagline": "Updates, monitoring, small changes",
+      "description": "Monthly hours for content help, dependency updates and new filter QA.",
+      "price": {
+        "oneTime": 0,
+        "monthly": 0
+      },
+      "tiers": [
+        {
+          "id": "basic",
+          "name": "Basic — 4 h/mo",
+          "oneTime": 0,
+          "monthly": 150
+        },
+        {
+          "id": "pro",
+          "name": "Pro — 10 h/mo, 24h SLA",
+          "oneTime": 0,
+          "monthly": 350
+        },
+        {
+          "id": "tour",
+          "name": "Tour mode — on-call during shows",
+          "oneTime": 0,
+          "monthly": 700
+        }
+      ],
+      "weeks": 0,
+      "requires": [],
+      "included": false
+    },
+    {
+      "id": "launch",
+      "category": "Operations & Care",
+      "name": "Launch Campaign Support",
+      "tagline": "Go-live war room",
+      "description": "Load testing, launch-day monitoring, QR/print assets for the AR filters, team training.",
+      "price": {
+        "oneTime": 150,
+        "monthly": 0
+      },
+      "weeks": 1,
+      "requires": [],
+      "included": false
+    }
+  ]
+}

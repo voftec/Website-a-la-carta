@@ -1,0 +1,108 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin — Módulos que ofrecemos</title>
+  <link rel="stylesheet" href="css/styles.css?v=1788840645.00663" />
+  <style>
+    body { overflow: auto; height: auto; min-height: 100vh; }
+    .adm { max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 1fr 320px; gap: 20px; }
+    .adm-tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+    .adm-tools input { flex: 1; min-width: 200px; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--text); }
+    .adm button { padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel-2); color: var(--text); }
+    .adm button:disabled { opacity: .4; cursor: default; }
+    .adm button.danger { border-color: #7a2038; color: #ff8fb0; }
+    .adm button.ok { border-color: #1f6b44; color: var(--ok); }
+    .adm button.primary { background: var(--accent); color: #111; border-color: var(--accent); font-weight: 600; }
+    .adm-cat { margin-bottom: 22px; }
+    .adm-cat h2 { font-size: 15px; color: var(--muted); margin: 0 0 8px; display: flex; gap: 8px; align-items: center; }
+    .adm-cat h2 small { font-weight: 400; }
+    table.adm-t { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    .adm-t th, .adm-t td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--line); font-size: 13px; vertical-align: top; }
+    .adm-t th { color: var(--muted); font-weight: 500; font-size: 12px; }
+    .adm-t tr:last-child td { border-bottom: 0; }
+    .adm-t td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .adm-t tr.removed td { opacity: .45; text-decoration: line-through; }
+    .adm-t tr.removed td:last-child { text-decoration: none; opacity: 1; }
+    .adm-t .name b { display: block; }
+    .adm-t .name span { color: var(--muted); font-size: 12px; }
+    .adm-t .name i { display: block; color: var(--accent-3); font-size: 11px; font-style: normal; margin-top: 2px; }
+    .tag.ed { color: var(--accent); }
+    .adm-t td.acts { text-align: right; white-space: nowrap; }
+    .adm-t td.acts button { margin-left: 6px; }
+    .adm-t tr.open td { background: var(--panel-2); border-bottom: 0; }
+    .adm-t tr.edrow td { background: var(--panel-2); padding: 4px 12px 14px; }
+    .editor .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .editor .grid.tier { grid-template-columns: 2fr 1fr 1fr; margin-bottom: 8px; }
+    .editor h4 { margin: 14px 0 6px; font-size: 12px; color: var(--muted); font-weight: 500; }
+    .editor .f { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); }
+    .editor .f.wide { grid-column: 1 / -1; }
+    .editor input, .editor textarea { width: 100%; padding: 7px 9px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--text); font-size: 13px; resize: vertical; }
+    .editor input:focus, .editor textarea:focus { outline: none; border-color: var(--accent); }
+    .editor .ed-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 12px; }
+    .tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 6px; background: var(--panel-2); color: var(--muted); margin-left: 6px; }
+    .adm-side { position: sticky; top: 20px; align-self: start; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; }
+    .adm-side h3 { font-size: 14px; margin-bottom: 12px; }
+    .adm-side .kv { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+    .adm-side .kv b { font-variant-numeric: tabular-nums; }
+    .adm-side .kv.total { border: 0; margin-top: 8px; font-size: 16px; }
+    .adm-side .kv.total b { color: var(--accent); }
+    .adm-side .hint { color: var(--muted); font-size: 12px; margin-top: 12px; line-height: 1.5; }
+    .adm-side .actions { display: grid; gap: 8px; margin-top: 14px; }
+    .adm-removed { margin-top: 14px; }
+    .adm-removed li { display: flex; justify-content: space-between; gap: 8px; align-items: center; font-size: 12px; padding: 4px 0; }
+    .adm-removed ul { list-style: none; margin: 6px 0 0; padding: 0; }
+    @media (max-width: 900px) { .adm { grid-template-columns: 1fr; } .adm-side { position: static; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">AR</span>
+      <div>
+        <h1>Módulos que ofrecemos</h1>
+        <p>Editá título, descripción, precios y duración, o eliminá lo que no querés ofrecer. Todo se puede deshacer.</p>
+      </div>
+    </div>
+    <div class="adm-tools" style="margin:0">
+      <button id="undo" title="Ctrl+Z">↶ Deshacer</button>
+      <button id="redo" title="Ctrl+Shift+Z">↷ Rehacer</button>
+      <a href="index.html" target="_blank"><button>Abrir configurador ↗</button></a>
+    </div>
+  </header>
+
+  <main class="adm">
+    <section>
+      <div class="adm-tools">
+        <input id="q" type="search" placeholder="Buscar módulo…" />
+        <label style="font-size:13px;color:var(--muted)"><input type="checkbox" id="show-removed" checked /> mostrar eliminados</label>
+      </div>
+      <div id="list"></div>
+    </section>
+
+    <aside class="adm-side">
+      <h3>Price calculator final</h3>
+      <div class="kv"><span>Módulos ofrecidos</span><b id="s-count"></b></div>
+      <div class="kv"><span>Eliminados</span><b id="s-removed"></b></div>
+      <div class="kv"><span>Editados</span><b id="s-edited"></b></div>
+      <div class="kv"><span>Desarrollo (suma)</span><b id="s-weeks"></b></div>
+      <div class="kv"><span>Base one-time (todo activado)</span><b id="s-one"></b></div>
+      <div class="kv"><span>Mensual nuestro (todo activado)</span><b id="s-mon"></b></div>
+      <div class="kv"><span>Terceros a costo (todo activado)</span><b id="s-ext"></b></div>
+      <div class="kv total"><span>Oferta máxima</span><b id="s-max"></b></div>
+      <p class="hint">Suma de todos los módulos ofrecidos con sus cantidades por defecto y el tier más barato — es el techo del configurador.</p>
+      <div class="actions">
+        <button id="restore-all" class="ok">Restaurar todo (deshacer ediciones)</button>
+        <button id="export-csv" class="primary">Descargar catalog.csv (solo ofrecidos)</button>
+      </div>
+      <p class="hint">Los cambios quedan guardados en este navegador. Para fijarlos en el sitio publicado: descargá el CSV, reemplazá <code>catalog.csv</code> y corré <code>node tools/catalog.js import</code>.</p>
+      <div class="adm-removed" id="removed-box"></div>
+    </aside>
+  </main>
+
+  <script src="js/modules.js?v=1788840645.00663"></script>
+  <script src="js/local-edits.js?v=1788840645.00663"></script>
+  <script src="js/admin.js?v=1788840645.00663"></script>
+</body>
+</html>

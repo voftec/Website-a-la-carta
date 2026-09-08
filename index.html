@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Website à la carte — Mr. Worldwide Fan Experience</title>
+  <meta name="description" content="Interactive proposal: pick the modules, preview the full fan-experience landing, and see the price update live." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=1788840645.00663" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">AR</span>
+      <div>
+        <h1>Website à la carte</h1>
+        <p id="brand-sub">Mr. Worldwide · WebAR Fan Experience — interactive proposal</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <div class="presets" id="presets"></div>
+      <button class="btn ghost" id="btn-reset" title="Clear all optional modules">Reset</button>
+      <button class="btn ghost" id="btn-share" title="Copy shareable link">Share</button>
+    </div>
+  </header>
+
+  <nav class="mobile-tabs" id="mobile-tabs">
+    <button data-tab="left" class="active">Modules<small id="tab-count"></small></button>
+    <button data-tab="center">Preview<small id="tab-sections"></small></button>
+    <button data-tab="right">Price<small id="tab-price"></small></button>
+  </nav>
+
+  <main class="layout">
+    <!-- LEFT: module catalog -->
+    <aside class="panel panel-left show">
+      <div class="panel-head">
+        <h2>Modules</h2>
+        <input id="search" type="search" placeholder="Search modules…" />
+      </div>
+      <div id="catalog" class="catalog"></div>
+    </aside>
+
+    <!-- CENTER: full landing preview -->
+    <section class="panel panel-center">
+      <div class="device-bar">
+        <div class="device-toggle">
+          <button data-device="desktop" class="active">Desktop</button>
+          <button data-device="mobile">Mobile</button>
+        </div>
+        <span id="page-length" class="page-length"></span>
+      </div>
+      <div class="device-frame" id="device-frame">
+        <div class="browser-chrome"><span></span><span></span><span></span><em id="pv-domain">mrworldwide.com</em></div>
+        <div id="preview" class="preview"></div>
+      </div>
+    </section>
+
+    <!-- RIGHT: price calculator -->
+    <aside class="panel panel-right">
+      <div class="panel-head"><h2>Price calculator</h2></div>
+      <div class="totals">
+        <div class="total-card" hidden>
+          <span>One-time build</span>
+          <strong id="t-onetime">$0</strong>
+        </div>
+        <div class="total-card" hidden>
+          <span>Monthly (licences, hosting, care)</span>
+          <strong id="t-monthly">$0<small>/mo</small></strong>
+        </div>
+        <div class="total-row" hidden><span>Third-party services <small>(client's plan)</small></span><strong id="t-ext">$0<small>/mo</small></strong></div>
+        <div class="total-row" hidden><span>Estimated timeline</span><strong id="t-weeks">0 weeks</strong></div>
+        <div class="total-row"><span>Modules selected</span><strong id="t-count">0</strong></div>
+      </div>
+
+      <h3>Line items</h3>
+      <ul id="lines" class="lines"></ul>
+      <div class="total-row" hidden><span>Subtotal</span><strong id="t-subtotal">$0</strong></div>
+      <div class="total-row"><span>Rush fee <small>(15%, this project only)</small></span><strong id="t-rush">$0</strong></div>
+      <div class="total-row coupon"><span>Discount <span class="pill">PITCOIN</span></span><strong id="t-coupon">- $0</strong></div>
+      <div class="budget-total"><span>Budget</span><b id="t-budget">$0 USD</b></div>
+      <div class="budget-total delivery"><span>Delivery</span><b id="t-delivery">0 weeks</b></div>
+
+      <div class="timeline" id="timeline"></div>
+      <p class="fineprint"><b>Hosting &amp; domain:</b> hosting is included in the budget (static page with SSL and CDN). The custom domain (www.yourdomain.com) is not included in this budget - it is an extra paid by the client directly at a registrar; we connect it to the site.</p>
+      <p class="fineprint">Prices in USD, indicative for proposal purposes. No hidden fees.</p>
+    </aside>
+  </main>
+
+  <div class="mobile-bar">
+    <div class="mb-total"><b id="mb-onetime">$0</b><span id="mb-monthly">+ $0/mo</span></div>
+    <button class="btn primary" data-tab="right">See price</button>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="js/modules.js?v=1788840645.00663"></script>
+  <script src="js/ar-media.js?v=1788840645.00663"></script>
+  <script src="js/local-edits.js?v=1788840645.00663"></script>
+  <script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
+  <script src="js/globe.js?v=1788840645.00663"></script>
+  <script src="js/preview.js?v=1788840645.00663"></script>
+  <script src="js/app.js?v=1788840645.00663"></script>
+</body>
+</html>
