@@ -7,7 +7,7 @@
   <meta name="description" content="Interactive proposal: pick the modules, preview the full fan-experience landing, and see the price update live." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css?v=1788837751.46548" />
+  <link rel="stylesheet" href="css/styles.css?v=1788837851.53831" />
 </head>
 <body>
   <header class="topbar">
@@ -61,16 +61,16 @@
     <aside class="panel panel-right">
       <div class="panel-head"><h2>Price calculator</h2></div>
       <div class="totals">
-        <div class="total-card">
+        <div class="total-card" hidden>
           <span>One-time build</span>
           <strong id="t-onetime">$0</strong>
         </div>
-        <div class="total-card">
+        <div class="total-card" hidden>
           <span>Monthly (licences, hosting, care)</span>
           <strong id="t-monthly">$0<small>/mo</small></strong>
         </div>
-        <div class="total-row"><span>Third-party services <small>(client's plan)</small></span><strong id="t-ext">$0<small>/mo</small></strong></div>
-        <div class="total-row"><span>Estimated timeline</span><strong id="t-weeks">0 weeks</strong></div>
+        <div class="total-row" hidden><span>Third-party services <small>(client's plan)</small></span><strong id="t-ext">$0<small>/mo</small></strong></div>
+        <div class="total-row" hidden><span>Estimated timeline</span><strong id="t-weeks">0 weeks</strong></div>
         <div class="total-row"><span>Modules selected</span><strong id="t-count">0</strong></div>
       </div>
 
@@ -94,12 +94,12 @@
 
   <div id="toast" class="toast"></div>
 
-  <script src="js/modules.js?v=1788837751.46548"></script>
-  <script src="js/ar-media.js?v=1788837751.46548"></script>
-  <script src="js/local-edits.js?v=1788837751.46548"></script>
+  <script src="js/modules.js?v=1788837851.53831"></script>
+  <script src="js/ar-media.js?v=1788837851.53831"></script>
+  <script src="js/local-edits.js?v=1788837851.53831"></script>
   <script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
-  <script src="js/globe.js?v=1788837751.46548"></script>
-  <script src="js/preview.js?v=1788837751.46548"></script>
-  <script src="js/app.js?v=1788837751.46548"></script>
+  <script src="js/globe.js?v=1788837851.53831"></script>
+  <script src="js/preview.js?v=1788837851.53831"></script>
+  <script src="js/app.js?v=1788837851.53831"></script>
 </body>
 </html>

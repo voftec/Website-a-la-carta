@@ -127,7 +127,7 @@
       controls += `<div class="picks">${(m.qty.included || []).map((o) => `<span class="chip inc">${o}</span>`).join("")}${picks.map((o) => `<span class="chip">${o} <button data-unpick="${m.id}" data-val="${o}" title="Remove">✕</button></span>`).join("")}</div>
         ${left.length && picks.length < m.qty.max ? `<label>${m.qty.label} <select data-pick="${m.id}"><option value="">+ Add language (${fmt(m.qty.unit)} each)</option>${left.map((o) => `<option>${o}</option>`).join("")}</select></label>` : ""}`;
     } else if (m.qty) controls += `<label>${m.qty.label} <input type="number" data-qty="${m.id}" min="${m.qty.min}" max="${m.qty.max}" value="${view.qty(m.id)}" /> <span>× ${fmt(m.qty.unit)}</span></label>`;
-    if (m.tier) controls += `<label>${m.tier.label} <select data-tier="${m.id}">${m.tier.options.map((o) => `<option value="${o.id}" ${view.tier(m.id) === o.id ? "selected" : ""}>${o.name} — ${o.oneTime ? fmt(o.oneTime) : ""}${o.monthly ? fmt(o.monthly) + "/mo" : ""}</option>`).join("")}</select></label>`;
+    if (m.tier) controls += `<label>${m.tier.label} <select data-tier="${m.id}">${m.tier.options.map((o) => `<option value="${o.id}" ${view.tier(m.id) === o.id ? "selected" : ""}>${o.name}${o.oneTime || o.monthly ? " — " : " (included)"}${o.oneTime ? "+" + fmt(o.oneTime) : ""}${o.monthly ? fmt(o.monthly) + "/mo" : ""}</option>`).join("")}</select></label>`;
     if (m.requires) controls += `<span class="req">requires: ${m.requires.map((r) => byId[r].name).join(", ")}</span>`;
     return `<div class="mod ${on ? "on" : ""} ${m.locked ? "disabled" : ""}" data-mod="${m.id}">
       <div class="mod-row">

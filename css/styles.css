@@ -104,9 +104,12 @@ input, select { font: inherit; }
 .mod.on .mod-desc, .mod.expanded .mod-desc { display: block; }
 .mod-controls { margin: 8px 0 0 26px; display: none; gap: 8px; align-items: center; font-size: 12px; flex-wrap: wrap; }
 .mod.on .mod-controls { display: flex; }
+.mod-controls label { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; max-width: 100%; min-width: 0; }
 .mod-controls select, .mod-controls input[type="number"] {
   background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px;
+  max-width: 100%; min-width: 0; box-sizing: border-box;
 }
+.mod-controls select { flex: 1 1 100%; text-overflow: ellipsis; }
 .mod-controls input[type="number"] { width: 64px; }
 .mod-controls .req { color: var(--accent-2); }
 .mod-more { border: none; background: none; color: var(--muted); font-size: 11px; padding: 0; margin-left: 26px; margin-top: 4px; }
