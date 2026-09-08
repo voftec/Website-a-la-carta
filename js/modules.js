@@ -13,7 +13,7 @@ window.CATEGORIES = [
   { id: "ops", name: "Operations & Care", icon: "🛡️", blurb: "Hosting, security and compliance." },
 ];
 
-window.CATALOG_VERSION = "2026-09-08.16";
+window.CATALOG_VERSION = "2026-09-08.17";
 window.MODULES = [
   { id: "hero", cat: "core", locked: true, name: "Hero Landing & Brand System", tagline: "Above-the-fold, Mr. Worldwide style", 
     desc: "Full-screen hero with video/3D loop, tagline, primary CTAs, custom typography and color system. Includes responsive framework, nav and footer.", oneTime: 1600, monthly: 0, ext: 0, extNote: "", days: 4, preview: "hero" },
@@ -24,9 +24,9 @@ window.MODULES = [
       {"id":"standard","name":"US / LatAm - email capture","oneTime":0,"monthly":0},
       {"id":"eu","name":"+ Europe (GDPR) - adds delete-my-data form","oneTime":200,"monthly":0} ] }, preview: "capture" },
   { id: "ar_face", cat: "ar", name: "AR Face Tracking Filter", tagline: "Front camera - effects on the fan's face", 
-    desc: "Face-tracked AR filter using the front camera: glasses, headwear, makeup, masks and particle FX that follow the fan's face in real time. Includes 3D asset, tracking tuning and QA on iOS/Android. Price per filter.", oneTime: 1000, monthly: 0, ext: 0, extNote: "", days: 7, preview: "ar_face" },
+    desc: "Face-tracked AR filter using the front camera: glasses, headwear, makeup, masks and particle FX that follow the fan's face in real time. Includes 3D asset, tracking tuning and QA on iOS/Android. Price per filter.", oneTime: 1550, monthly: 0, ext: 0, extNote: "", days: 7, preview: "ar_face" },
   { id: "ar_world", cat: "ar", name: "AR World Filter", tagline: "Back camera - the artist in the fan's space", 
-    desc: "World-tracked AR using the back camera: a 3D character, stage or object is placed on the floor or table and fans walk around it, record and share. Includes 3D asset, tracking tuning and QA on iOS/Android. Price per filter.", oneTime: 1000, monthly: 0, ext: 0, extNote: "", days: 7, preview: "ar_world" },
+    desc: "World-tracked AR using the back camera: a 3D character, stage or object is placed on the floor or table and fans walk around it, record and share. Includes 3D asset, tracking tuning and QA on iOS/Android. Price per filter.", oneTime: 1550, monthly: 0, ext: 0, extNote: "", days: 7, preview: "ar_world" },
   { id: "presave", cat: "music", name: "Pre-Save Campaign", tagline: "Spotify · Apple Music · Deezer · Amazon", 
     desc: "OAuth pre-save with follow-artist, auto-add to library on release day, fan data capture, thank-you page with exclusive filter unlock.", oneTime: 550, monthly: 0, ext: 0, extNote: "", days: 2, preview: "presave" },
   { id: "countdown", cat: "music", name: "Release Countdown & Reveal", tagline: "Tension until midnight", 
