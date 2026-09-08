@@ -13,14 +13,16 @@ window.CATEGORIES = [
   { id: "ops", name: "Operations & Care", icon: "🛡️", blurb: "Hosting, compliance and ongoing support." },
 ];
 
-window.CATALOG_VERSION = "2026-09-08.2";
+window.CATALOG_VERSION = "2026-09-08.3";
 window.MODULES = [
   { id: "hero", cat: "core", locked: true, name: "Hero Landing & Brand System", tagline: "Above-the-fold, Mr. Worldwide style", 
     desc: "Full-screen hero with video/3D loop, tagline, primary CTAs, custom typography and color system. Includes responsive framework, nav and footer.", oneTime: 2000, monthly: 0, ext: 0, extNote: "", days: 21, preview: "hero" },
   { id: "i18n", cat: "core", name: "Languages", tagline: "English + Spanish included - add any other language for $100 each", 
     desc: "The site comes in English and Spanish with a language switcher at the top. Each additional language (French, Italian, German, Dutch...) is +$100: we translate the whole site copy and add it to the switcher.", oneTime: 0, monthly: 0, ext: 0, extNote: "", days: 7, qty: {"label":"Add a language","min":0,"max":12,"unit":100,"unitMonthly":0,"included":["English","Spanish"],"options":["French","Italian","German","Dutch","Portuguese","Japanese","Korean","Mandarin","Arabic","Hindi","Russian","Turkish"]}, preview: "i18n" },
-  { id: "capture", cat: "core", name: "Fan Capture (Email + SMS)", tagline: "Own the audience", 
-    desc: "Newsletter + SMS opt-in with double opt-in, tagging by interest (tour, AR, merch), connected to Mailchimp / Klaviyo / Community.", oneTime: 350, monthly: 10, ext: 20, extNote: "Mailchimp / Klaviyo plan (grows with list size); SMS via Twilio pay-per-message", days: 7, preview: "capture" },
+  { id: "capture", cat: "core", name: "Fan Capture (Newsletter)", tagline: "Capture fan emails and grow your list", 
+    desc: "Email capture form to build the artist's newsletter list: double opt-in, tagging by interest (tour, AR, merch), connected to Mailchimp / Klaviyo so the team sends campaigns from there - we never store emails ourselves. If fans in the European Union will sign up, the site also needs a 'delete my data' request form to be compliant with GDPR (data protection law) - pick the 'US / LatAm + Europe' option (+$200).", oneTime: 350, monthly: 10, ext: 20, extNote: "Mailchimp / Klaviyo plan (grows with list size)", days: 7, tier: { label: "Regions", options: [
+      {"id":"standard","name":"US / LatAm - email capture","oneTime":0,"monthly":0},
+      {"id":"eu","name":"+ Europe (GDPR) - adds delete-my-data form","oneTime":200,"monthly":0} ] }, preview: "capture" },
   { id: "ar_face", cat: "ar", name: "AR Face Tracking Filter", tagline: "Front camera - effects on the fan's face", 
     desc: "Face-tracked AR filter using the front camera: glasses, headwear, makeup, masks and particle FX that follow the fan's face in real time. Includes 3D asset, tracking tuning and QA on iOS/Android. Price per filter.", oneTime: 1550, monthly: 0, ext: 99, extNote: "8th Wall WebAR license (per project)", days: 7, preview: "ar_face" },
   { id: "ar_world", cat: "ar", name: "AR World Filter", tagline: "Back camera - the artist in the fan's space", 
