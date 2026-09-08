@@ -170,9 +170,9 @@
   function renderCalc() {
     const lines = [];
     let one = 0, mo = 0, ext = 0, days = 0;
-    const extLines = [];
+    const extLines = [], effort = [];
     CATEGORIES.forEach((c) => MODULES.filter((m) => m.cat === c.id && state.on.has(m.id)).forEach((m) => {
-      const cost = modCost(m); one += cost.one; mo += cost.mo; ext += cost.ext; days += m.days || 0;
+      const cost = modCost(m); one += cost.one; mo += cost.mo; ext += cost.ext; days += m.days || 0; if (m.days) effort.push([m.name, m.days]);
       if (m.ext || m.extNote) extLines.push(`<li class="ext"><span>${m.name}<em>${m.extNote || ""}</em></span><span class="amt">${m.ext ? `<small>${fmt(m.ext)}/mo</small>` : "<small>at cost</small>"}</span></li>`);
       let detail = "";
       if (m.qty?.options) detail = [...(m.qty.included || []), ...view.picks(m.id)].join(", ");
@@ -183,15 +183,15 @@
     const disc = one * state.discount;
     if (disc) lines.push(`<li class="discount"><span>Discount (${Math.round(state.discount * 100)}%)</span><span class="amt">−${fmt(disc)}</span></li>`);
     const oneNet = one - disc;
-    // Parallel workstreams: effective calendar time ≈ 45% of summed effort, min 3 weeks
-    const calWeeks = Math.max(3, Math.round((days / 7) * 0.45));
+    const weeks = days / 7;
+    const weeksTxt = Number.isInteger(weeks) ? `${weeks} week${weeks === 1 ? "" : "s"}` : `${weeks.toFixed(1)} weeks`;
 
     renderBudget(oneNet);
     $("#t-onetime").textContent = fmt(oneNet);
     $("#t-monthly").innerHTML = fmt(mo) + "<small>/mo</small>";
     $("#t-ext").innerHTML = fmt(ext) + "<small>/mo</small>";
     $("#t-year").textContent = fmt(oneNet + (mo + ext) * 12);
-    $("#t-weeks").textContent = `${calWeeks} weeks`;
+    $("#t-weeks").textContent = `${weeksTxt} (${days} days)`;
     $("#t-count").textContent = state.on.size;
     $("#tab-count").textContent = `${state.on.size} selected`;
     $("#tab-price").textContent = fmt(oneNet);
@@ -205,8 +205,7 @@
     const labels = ["Kickoff", "Design sign-off", "Launch"];
     $("#plan-breakdown").innerHTML = splits.map((s, i) => `<span>${labels[i] || "Milestone " + (i + 1)}: <b>${fmt(oneNet * s)}</b></span>`).join("");
 
-    const phases = [["Discovery & UX", 0.15], ["Design system", 0.15], ["Build & AR production", 0.5], ["QA & launch", 0.2]];
-    $("#timeline").innerHTML = `<h3>Timeline (${calWeeks} wks, parallel streams)</h3>` + phases.map(([n, f]) => `<div class="ph"><b>${n}</b><i style="width:${f * 100}%"></i><span>${Math.max(1, Math.round(calWeeks * f))} wk</span></div>`).join("");
+    $("#timeline").innerHTML = `<h3>Timeline (${weeksTxt} · ${days} days total)</h3>` + effort.map(([n, d]) => `<div class="ph"><b>${n}</b><i style="width:${(d / days) * 100}%"></i><span>${d} d</span></div>`).join("");
 
     document.querySelectorAll("#presets button").forEach((b) => b.classList.remove("active"));
   }
