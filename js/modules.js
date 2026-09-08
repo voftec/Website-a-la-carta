@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Module catalog for the Mr. Worldwide fan-experience site.
  * Each module: id, category, name, tagline, description, oneTime (USD), monthly (USD),
  * weeks (build effort), tier (optional variants), qty (optional per-unit pricing),
@@ -13,14 +13,14 @@ window.CATEGORIES = [
   { id: "ops", name: "Operations & Care", icon: "🛡️", blurb: "Hosting, compliance and ongoing support." },
 ];
 
-window.CATALOG_VERSION = "2026-09-08.5";
+window.CATALOG_VERSION = "2026-09-08.6";
 window.MODULES = [
   { id: "hero", cat: "core", locked: true, name: "Hero Landing & Brand System", tagline: "Above-the-fold, Mr. Worldwide style", 
-    desc: "Full-screen hero with video/3D loop, tagline, primary CTAs, custom typography and color system. Includes responsive framework, nav and footer.", oneTime: 2000, monthly: 0, ext: 0, extNote: "", days: 21, preview: "hero" },
+    desc: "Full-screen hero with video/3D loop, tagline, primary CTAs, custom typography and color system. Includes responsive framework, nav and footer.", oneTime: 2000, monthly: 0, ext: 0, extNote: "", days: 4, preview: "hero" },
   { id: "i18n", cat: "core", name: "Languages", tagline: "English + Spanish included - add any other language for $100 each", 
     desc: "The site comes in English and Spanish with a language switcher at the top. Each additional language (French, Italian, German, Dutch...) is +$100: we translate the whole site copy and add it to the switcher.", oneTime: 0, monthly: 0, ext: 0, extNote: "", days: 7, qty: {"label":"Add a language","min":0,"max":12,"unit":100,"unitMonthly":0,"included":["English","Spanish"],"options":["French","Italian","German","Dutch","Portuguese","Japanese","Korean","Mandarin","Arabic","Hindi","Russian","Turkish"]}, preview: "i18n" },
   { id: "capture", cat: "core", name: "Fan Capture (Newsletter)", tagline: "Capture fan emails and grow your list", 
-    desc: "Email capture form to build the artist's newsletter list: double opt-in, tagging by interest (tour, AR, merch), connected to Mailchimp / Klaviyo so the team sends campaigns from there - we never store emails ourselves. If fans in the European Union will sign up, the site also needs a 'delete my data' request form to be compliant with GDPR (data protection law) - pick the 'US / LatAm + Europe' option (+$200).", oneTime: 350, monthly: 0, ext: 20, extNote: "Mailchimp / Klaviyo plan (grows with list size)", days: 7, tier: { label: "Regions", options: [
+    desc: "Email capture form to build the artist's newsletter list: double opt-in, tagging by interest (tour, AR, merch), connected to Mailchimp / Klaviyo so the team sends campaigns from there - we never store emails ourselves. If fans in the European Union will sign up, the site also needs a 'delete my data' request form to be compliant with GDPR (data protection law) - pick the 'US / LatAm + Europe' option (+$200).", oneTime: 350, monthly: 0, ext: 20, extNote: "Mailchimp / Klaviyo plan (grows with list size)", days: 2, tier: { label: "Regions", options: [
       {"id":"standard","name":"US / LatAm - email capture","oneTime":0,"monthly":0},
       {"id":"eu","name":"+ Europe (GDPR) - adds delete-my-data form","oneTime":200,"monthly":0} ] }, preview: "capture" },
   { id: "ar_face", cat: "ar", name: "AR Face Tracking Filter", tagline: "Front camera - effects on the fan's face", 
@@ -28,11 +28,11 @@ window.MODULES = [
   { id: "ar_world", cat: "ar", name: "AR World Filter", tagline: "Back camera - the artist in the fan's space", 
     desc: "World-tracked AR using the back camera: a 3D character, stage or object is placed on the floor or table and fans walk around it, record and share. Includes 3D asset, tracking tuning and QA on iOS/Android. Price per filter.", oneTime: 1550, monthly: 0, ext: 0, extNote: "", days: 7, preview: "ar_world" },
   { id: "presave", cat: "music", name: "Pre-Save Campaign", tagline: "Spotify · Apple Music · Deezer · Amazon", 
-    desc: "OAuth pre-save with follow-artist, auto-add to library on release day, fan data capture, thank-you page with exclusive filter unlock.", oneTime: 500, monthly: 0, ext: 20, extNote: "Pre-save platform (feature.fm) - $0 if we use own OAuth", days: 11, preview: "presave" },
+    desc: "OAuth pre-save with follow-artist, auto-add to library on release day, fan data capture, thank-you page with exclusive filter unlock.", oneTime: 500, monthly: 0, ext: 20, extNote: "Pre-save platform (feature.fm) - $0 if we use own OAuth", days: 2, preview: "presave" },
   { id: "countdown", cat: "music", name: "Release Countdown & Reveal", tagline: "Tension until midnight", 
     desc: "Timezone-aware countdown, scheduled reveal of cover art/tracklist, confetti moment, auto-switch to smart links on release.", oneTime: 100, monthly: 0, ext: 0, extNote: "", days: 4, preview: "countdown" },
   { id: "calendar", cat: "tour", name: "Tour Calendar", tagline: "Dates synced from Bandsintown / Songkick", 
-    desc: "Interactive calendar + map view, auto-import, ticket links, 'notify me when he's near me' alerts, add-to-calendar (ICS/Google).", oneTime: 350, monthly: 0, ext: 0, extNote: "", days: 11, preview: "calendar" },
+    desc: "Interactive calendar + map view, auto-import, ticket links, 'notify me when he's near me' alerts, add-to-calendar (ICS/Google).", oneTime: 350, monthly: 0, ext: 0, extNote: "", days: 1, preview: "calendar" },
   { id: "worldmap", cat: "social", name: "Worldwide Fan Map", tagline: "A pin on the map for every fan who uses the filters", 
     desc: "Live world map: every time a fan uses one of the AR filters, they are asked for permission and a pin is dropped on the map at their location. Per-country and per-city counters, real-time heat while the campaign runs.", oneTime: 150, monthly: 0, ext: 0, extNote: "Mapbox free tier up to 50k loads/month", days: 14, preview: "worldmap" },
   { id: "sponsors", cat: "social", name: "Sponsors Wall", tagline: "Auto-scrolling logo strip of the event sponsors", 
