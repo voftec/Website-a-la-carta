@@ -13,16 +13,12 @@ window.CATEGORIES = [
   { id: "ops", name: "Operations & Care", icon: "🛡️", blurb: "Hosting, security and compliance." },
 ];
 
-window.CATALOG_VERSION = "2026-09-08.26";
+window.CATALOG_VERSION = "2026-09-08.27";
 window.MODULES = [
   { id: "hero", cat: "core", locked: true, name: "Hero Landing & Brand System", tagline: "Above-the-fold, Mr. Worldwide style", 
     desc: "Full-screen hero with video/3D loop, tagline, primary CTAs, custom typography and color system. Includes responsive framework, nav and footer.", oneTime: 1500, monthly: 0, ext: 0, extNote: "", days: 4, preview: "hero" },
   { id: "i18n", cat: "core", name: "Languages", tagline: "English + Spanish included - add any other language for $63 each", 
     desc: "The site comes in English and Spanish with a language switcher at the top. Each additional language (French, Italian, German, Dutch...) is +$63: we translate the whole site copy and add it to the switcher.", oneTime: 0, monthly: 0, ext: 0, extNote: "", days: 1, qty: {"label":"Add a language","min":0,"max":12,"unit":50,"unitMonthly":0,"included":["English","Spanish"],"options":["French","Italian","German","Dutch","Portuguese","Japanese","Korean","Mandarin","Arabic","Hindi","Russian","Turkish"]}, preview: "i18n" },
-  { id: "capture", cat: "core", name: "Fan Capture (Newsletter)", tagline: "Capture fan emails and grow your list", 
-    desc: "Email capture form to build the artist's newsletter list: double opt-in, tagging by interest (tour, AR, merch), connected to Mailchimp / Klaviyo so the team sends campaigns from there - we never store emails ourselves. If fans in the European Union will sign up, the site also needs a 'delete my data' request form to be compliant with GDPR (data protection law) - pick the 'US / LatAm + Europe' option (+$188).", oneTime: 200, monthly: 0, ext: 0, extNote: "Mailchimp / Klaviyo plan - the client picks and pays the plan", days: 2, tier: { label: "Regions", options: [
-      {"id":"standard","name":"US / LatAm - email capture","oneTime":0,"monthly":0},
-      {"id":"eu","name":"+ Europe (GDPR) - adds delete-my-data form","oneTime":150,"monthly":0} ] }, preview: "capture" },
   { id: "ar_face", cat: "ar", name: "AR Face Tracking Filter", tagline: "Front camera - effects on the fan's face", 
     desc: "Face-tracked AR filter using the front camera: glasses, headwear, makeup, masks and particle FX that follow the fan's face in real time. Includes 3D asset, tracking tuning and testing on iOS/Android. Price per filter.", oneTime: 1550, monthly: 0, ext: 0, extNote: "", days: 7, preview: "ar_face" },
   { id: "ar_world", cat: "ar", name: "AR World Filter", tagline: "Back camera - the artist in the fan's space", 
@@ -38,7 +34,7 @@ window.MODULES = [
   { id: "sponsors", cat: "social", name: "Sponsors Wall", tagline: "Auto-scrolling logo strip of the event sponsors", 
     desc: "Sponsors section at the bottom of the site: an auto-scrolling strip with the logos of the event/tour sponsors, each linking to the sponsor's site. Logos are managed by your team (add, remove, reorder). Sponsor metrics are included: with the Analytics & Fan Dashboard module, every logo reports impressions and clicks so each sponsor gets a report of how many fans saw their brand.", oneTime: 150, monthly: 0, ext: 0, extNote: "", days: 3, preview: "sponsors" },
   { id: "analytics", cat: "growth", name: "Analytics & Fan Dashboard (Google Analytics)", tagline: "GA4 with 10 tracked events + a private metrics dashboard page (not shown on the public site)", 
-    desc: "Google Analytics 4 wired into the whole site with 10 tracked events included (page views, AR filter opens, pre-saves, ticket clicks, sign-ups, merch clicks, shares, video plays, language, country). Includes a private dashboard page where your team sees all metrics segmented by country, device, campaign and fan tier. Each extra event to track is +$50.", oneTime: 500, monthly: 0, ext: 0, extNote: "", days: 2, qty: {"label":"Extra events to track","min":0,"max":30,"unit":50,"unitMonthly":0}, preview: "analytics" },
+    desc: "Google Analytics 4 wired into the whole site with 10 tracked events included (page views, AR filter opens, pre-saves, ticket clicks, sign-ups, merch clicks, shares, video plays, language, country). Includes a private dashboard page where your team sees all metrics segmented by country, device, campaign and fan tier. Each extra event to track is +$63.", oneTime: 500, monthly: 0, ext: 0, extNote: "", days: 2, qty: {"label":"Extra events to track","min":0,"max":30,"unit":50,"unitMonthly":0}, preview: "analytics" },
   { id: "seo", cat: "growth", name: "SEO & Performance Pass", tagline: "Core Web Vitals green", 
     desc: "Technical SEO, structured data, image/CDN optimisation, Lighthouse ≥ 90.", oneTime: 200, monthly: 0, ext: 0, extNote: "", days: 1, preview: null },
   { id: "hosting", cat: "ops", locked: true, name: "Hosting, CDN & Security", tagline: "Static-page hosting included - domain not included", 
@@ -51,10 +47,10 @@ window.MODULES = [
 
 /* Pre-built bundles the client can start from */
 window.PRESETS = [
-  { id: "starter", name: "Starter", blurb: "Landing + 1 AR filter + pre-save + calendar + newsletter.",
-    modules: ["hero", "hosting", "capture", "ar_face", "presave", "calendar"] },
+  { id: "starter", name: "Starter", blurb: "Landing + 1 AR filter + pre-save + calendar.",
+    modules: ["hero", "hosting", "ar_face", "presave", "calendar"] },
   { id: "fan", name: "Fan Experience", blurb: "2 AR filters + countdown, fan map, analytics, SEO.",
-    modules: ["hero", "hosting", "i18n", "capture", "ar_face", "ar_world", "presave", "countdown", "calendar", "worldmap", "analytics", "seo"] },
+    modules: ["hero", "hosting", "i18n", "ar_face", "ar_world", "presave", "countdown", "calendar", "worldmap", "analytics", "seo"] },
   { id: "worldwide", name: "Mr. Worldwide", blurb: "Everything, top tiers, 2 AR filters + 4 extra languages.",
     modules: "all" },
 ];
