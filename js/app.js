@@ -263,7 +263,6 @@
     try { await navigator.clipboard.writeText(location.href); toast("Link copied — send it to the client"); }
     catch { toast("Copy this URL from the address bar"); }
   });
-  $("#btn-export").addEventListener("click", () => window.print());
 
   /* mobile tabs */
   function showTab(tab) {
