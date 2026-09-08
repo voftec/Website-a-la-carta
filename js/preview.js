@@ -122,12 +122,11 @@
   R.worldmap = () => sec("worldmap", "Fan map", h("FANS CHECKING IN RIGHT NOW") + p("A pin on the globe for every fan who opens a filter (with their permission)."),
     `<div class="globe3d"><div class="globe-stats"><span><b>12,480</b> fans on the map</span><span><b>64</b> countries</span><span><b>+318</b> in the last hour</span></div></div>`);
 
-  R.sponsors = (s) => {
+  R.sponsors = () => {
     const logos = ["Voli 305", "Bud Light", "Pepsi", "Norwegian", "Sprint", "Kodak", "Boost", "Fireball"];
     const strip = logos.concat(logos).map((n) => `<span>${n}</span>`).join("");
-    const metrics = s.tier("sponsors") === "metrics";
-    return sec("sponsors", "Sponsors", h("OFFICIAL PARTNERS") + p(metrics ? "Each logo reports impressions & clicks to Analytics - every sponsor gets its own reach report." : "Auto-scrolling strip with the event sponsors."),
-      `<div class="marquee"><div>${strip}</div></div>` + (metrics ? `<div class="chips"><span class="chip">Voli 305 - 84k impressions - 2.1k clicks</span><span class="chip">Pepsi - 79k impressions - 1.4k clicks</span></div>` : ""));
+    return sec("sponsors", "Sponsors", h("OFFICIAL PARTNERS") + p("Auto-scrolling strip with the event sponsors."),
+      `<div class="marquee"><div>${strip}</div></div>`);
   };
 
   R.capture = () => sec("capture", "Fan capture", h("STAY IN THE LOOP") + p("Tour alerts, filter drops and presale codes. EN / ES."),
