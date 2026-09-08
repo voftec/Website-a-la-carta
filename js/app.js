@@ -208,7 +208,7 @@
     $("#t-budget").textContent = `${fmt(oneNet)} USD`;
     $("#mb-onetime").textContent = fmt(oneNet);
     $("#mb-monthly").textContent = (mo + ext) ? `+ ${fmt(mo + ext)}/mo third-party` : extLines.length ? "+ third-party plan TBD" : "";
-    if (extLines.length) lines.push(`<li class="ext-head"><span>Third-party services<em>monthly plan chosen and paid by the client</em></span><span class="amt">${ext ? fmt(ext) + "<small>/mo</small>" : "<small>To be discussed</small>"}</span></li>`, ...extLines);
+    if (extLines.length) lines.push(...extLines);
     $("#lines").innerHTML = lines.join("");
 
     $("#timeline").innerHTML = `<h3>Timeline (${weeksTxt} · ${days} days total)</h3>` + effort.map(([n, d]) => `<div class="ph"><b>${n}</b><i style="width:${(d / days) * 100}%"></i><span>${d} d</span></div>`).join("");
