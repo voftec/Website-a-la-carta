@@ -56,11 +56,11 @@ window.MODULES = [
 
 /* Pre-built bundles the client can start from */
 window.PRESETS = [
-  { id: "starter", name: "Starter", blurb: "≈ $5k — landing + AR filters + pre-save + calendar.",
+  { id: "starter", name: "Starter", blurb: "Landing + 1 AR filter + pre-save + calendar + newsletter.",
     modules: ["hero", "hosting", "capture", "ar_face", "presave", "calendar"] },
-  { id: "fan", name: "Fan Experience", blurb: "≈ $8k — adds more filters, fan club, rewards, store.",
-    modules: ["hero", "hosting", "i18n", "capture", "ar_face", "presave", "countdown", "calendar", "support"] },
-  { id: "worldwide", name: "Mr. Worldwide", blurb: "≈ $15k — everything: livestream, collectibles, fan map, full retainer.",
+  { id: "fan", name: "Fan Experience", blurb: "2 AR filters + countdown, fan map, analytics, SEO, support.",
+    modules: ["hero", "hosting", "i18n", "capture", "ar_face", "ar_world", "presave", "countdown", "calendar", "worldmap", "analytics", "seo", "support"] },
+  { id: "worldwide", name: "Mr. Worldwide", blurb: "Everything, top tiers, 2 AR filters + 4 extra languages.",
     modules: "all" },
 ];
 
