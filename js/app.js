@@ -188,7 +188,7 @@
     }));
     const oneOp = Math.round(one * (1 + platformOperator / 100));
     const rush = Math.round(oneOp * rushFee / 100);
-    const oneNet = oneOp; // subtotal carries the rush fee; the PITCOIN coupon takes it back off
+    const oneNet = oneOp; // rush fee is added then cancelled by the PITCOIN coupon
     mo = Math.round(mo * (1 + platformOperator / 100));
     const weeks = days / 7;
     const weeksTxt = Number.isInteger(weeks) ? `${weeks} week${weeks === 1 ? "" : "s"}` : `${weeks.toFixed(1)} weeks`;
@@ -197,8 +197,9 @@
     $("#t-monthly").innerHTML = fmt(mo) + "<small>/mo</small>";
     $("#t-monthly").closest(".total-card").hidden = !mo;
     $("#t-ext").innerHTML = ext ? fmt(ext) + "<small>/mo</small>" : extLines.length ? "<small>To be discussed</small>" : "$0";
-    $("#t-subtotal").textContent = fmt(oneOp + rush);
-    $("#t-rush").textContent = "- " + fmt(rush);
+    $("#t-subtotal").textContent = fmt(oneOp);
+    $("#t-rush").textContent = "+ " + fmt(rush);
+    $("#t-coupon").textContent = "- " + fmt(rush);
     $("#t-weeks").textContent = `${weeksTxt} · ${days} days`;
     $("#t-delivery").textContent = `${weeksTxt} · ${days} days`;
     $("#t-count").textContent = state.on.size;
