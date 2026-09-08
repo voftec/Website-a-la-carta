@@ -98,7 +98,7 @@
     state.on = new Set(MODULES.filter((m) => m.locked).map((m) => m.id));
     state.tier = {}; state.pick = {}; state.qty = {};
     (p.modules === "all" ? MODULES.map((m) => m.id) : p.modules).forEach((id) => state.on.add(id));
-    if (pid === "worldwide") { state.tier.capture = "eu"; state.tier.sponsors = "metrics"; state.pick.i18n = ["Portuguese", "French", "Italian", "German"]; }
+    if (pid === "worldwide") { state.tier.capture = "eu"; state.pick.i18n = ["Portuguese", "French", "Italian", "German"]; }
     if (render) renderAll();
   }
 
