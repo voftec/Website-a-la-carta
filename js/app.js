@@ -28,6 +28,7 @@
   $("#pv-domain").textContent = ARTIST.domain;
 
   /* ---------- state ---------- */
+  const platformOperator = 25;
   const state = { on: new Set(), qty: {}, tier: {}, pick: {}, discount: 0, plan: 1, device: "desktop" };
   MODULES.filter((m) => m.locked).forEach((m) => state.on.add(m.id));
 
@@ -38,6 +39,10 @@
     tier: (id) => state.tier[id] ?? byId[id]?.tier?.options[0].id,
   };
 
+  function modDays(m) {
+    if (m.id === "i18n") return view.picks(m.id).length ? 2 : 1;
+    return m.days || 0;
+  }
   function modCost(m) {
     let one = m.oneTime, mo = m.monthly;
     if (m.qty) { const q = view.qty(m.id); one += q * m.qty.unit; mo += q * (m.qty.unitMonthly || 0); }
@@ -85,8 +90,6 @@
       });
     });
     opts.forEach((o) => { if (o[0] === "d") state.discount = +o.slice(1); if (o[0] === "p") state.plan = +o.slice(1); });
-    $("#discount").value = String(state.discount);
-    $("#plan").value = String(state.plan);
   }
 
   function applyPreset(pid, render = true) {
@@ -133,7 +136,7 @@
         </div>
         <div class="mod-price"><b>${one ? fmt(one) : mo ? "" : "—"}</b><small>${mo ? fmt(mo) + "/mo" : one ? "one-time" : ""}</small></div>
       </div>
-      <div class="mod-desc">${m.desc}${m.days ? ` <em>~${m.days} days</em>` : ""}${m.ext || m.extNote ? `<div class="mod-ext">Third-party: <b>${m.ext ? fmt(m.ext) + "/mo" : "usage-based"}</b> - ${m.extNote || ""} (billed at cost)</div>` : ""}${arRefs(m)}</div>
+      <div class="mod-desc">${m.desc}${modDays(m) ? ` <em>~${modDays(m)} day${modDays(m) === 1 ? "" : "s"}</em>` : ""}${m.ext || m.extNote ? `<div class="mod-ext">Third-party: <b>${m.ext ? fmt(m.ext) + "/mo" : "usage-based"}</b> - ${m.extNote || ""} (billed at cost)</div>` : ""}${arRefs(m)}</div>
       <div class="mod-controls">${controls}</div>
       <button class="mod-more" data-more="${m.id}">details ▾</button>
     </div>`;
@@ -172,7 +175,7 @@
     let one = 0, mo = 0, ext = 0, days = 0;
     const extLines = [], effort = [];
     CATEGORIES.forEach((c) => MODULES.filter((m) => m.cat === c.id && state.on.has(m.id)).forEach((m) => {
-      const cost = modCost(m); one += cost.one; mo += cost.mo; ext += cost.ext; days += m.days || 0; if (m.days) effort.push([m.name, m.days]);
+      const cost = modCost(m); one += cost.one; mo += cost.mo; ext += cost.ext; const md = modDays(m); days += md; if (md) effort.push([m.name, md]);
       if (m.ext || m.extNote) extLines.push(`<li class="ext"><span>${m.name}<em>${m.extNote || ""}</em></span><span class="amt">${m.ext ? `<small>${fmt(m.ext)}/mo</small>` : "<small>at cost</small>"}</span></li>`);
       let detail = "";
       if (m.qty?.options) detail = [...(m.qty.included || []), ...view.picks(m.id)].join(", ");
@@ -180,17 +183,14 @@
       if (m.tier) detail = m.tier.options.find((o) => o.id === view.tier(m.id)).name;
       lines.push(`<li><span>${m.name}<em>${c.name}${detail ? " · " + detail : ""}</em></span><span class="amt">${cost.one ? fmt(cost.one) : cost.mo ? "" : "Included"}${cost.mo ? `<small>${fmt(cost.mo)}/mo</small>` : ""}${m.locked ? "" : `<button data-remove="${m.id}" title="Remove">✕</button>`}</span></li>`);
     }));
-    const disc = one * state.discount;
-    if (disc) lines.push(`<li class="discount"><span>Discount (${Math.round(state.discount * 100)}%)</span><span class="amt">−${fmt(disc)}</span></li>`);
-    const oneNet = one - disc;
+    const oneNet = Math.round(one * (1 + platformOperator / 100));
+    mo = Math.round(mo * (1 + platformOperator / 100));
     const weeks = days / 7;
     const weeksTxt = Number.isInteger(weeks) ? `${weeks} week${weeks === 1 ? "" : "s"}` : `${weeks.toFixed(1)} weeks`;
 
-    renderBudget(oneNet);
     $("#t-onetime").textContent = fmt(oneNet);
     $("#t-monthly").innerHTML = fmt(mo) + "<small>/mo</small>";
     $("#t-ext").innerHTML = fmt(ext) + "<small>/mo</small>";
-    $("#t-year").textContent = fmt(oneNet + (mo + ext) * 12);
     $("#t-weeks").textContent = `${weeksTxt} · ${days} days`;
     $("#t-delivery").textContent = `${weeksTxt} · ${days} days`;
     $("#t-count").textContent = state.on.size;
@@ -202,29 +202,9 @@
     if (extLines.length) lines.push(`<li class="ext-head"><span>Third-party services<em>billed at cost, paid by the artist</em></span><span class="amt">${fmt(ext)}<small>/mo</small></span></li>`, ...extLines);
     $("#lines").innerHTML = lines.join("");
 
-    const splits = { 1: [1], 2: [0.5, 0.5], 3: [0.4, 0.3, 0.3] }[state.plan];
-    const labels = ["Kickoff", "Design sign-off", "Launch"];
-    $("#plan-breakdown").innerHTML = splits.map((s, i) => `<span>${labels[i] || "Milestone " + (i + 1)}: <b>${fmt(oneNet * s)}</b></span>`).join("");
-
     $("#timeline").innerHTML = `<h3>Timeline (${weeksTxt} · ${days} days total)</h3>` + effort.map(([n, d]) => `<div class="ph"><b>${n}</b><i style="width:${(d / days) * 100}%"></i><span>${d} d</span></div>`).join("");
 
     document.querySelectorAll("#presets button").forEach((b) => b.classList.remove("active"));
-  }
-
-  function renderBudget(oneNet) {
-    const top = BUDGETS[BUDGETS.length - 1].max;
-    const band = BUDGETS.find((b) => oneNet <= b.max);
-    const pct = Math.min(100, (oneNet / top) * 100);
-    const over = oneNet > top;
-    const mb = $("#mb-band");
-    mb.textContent = band ? `${band.name} band · ${fmt(band.max - oneNet)} left` : `${fmt(oneNet - top)} over top`;
-    mb.classList.toggle("over", over);
-    $("#budget").innerHTML = `
-      <div class="budget-head"><span>Budget band</span><b class="${over ? "over" : ""}">${band ? band.name + " · up to " + fmt(band.max) : "Over " + fmt(top)}</b></div>
-      <div class="budget-bar"><i style="width:${pct}%"></i>${BUDGETS.slice(0, -1).map((b) => `<em style="left:${(b.max / top) * 100}%"></em>`).join("")}</div>
-      <div class="budget-ticks">${BUDGETS.map((b) => `<span class="${band && band.id === b.id ? "cur" : ""}">${b.name} ${fmt(b.max)}</span>`).join("")}</div>
-      ${band && band.max - oneNet > 0 && band.max - oneNet < 1500 ? `<div class="budget-hint">${fmt(band.max - oneNet)} left in this band</div>` : ""}
-      ${over ? `<div class="budget-hint over">${fmt(oneNet - top)} above the top budget — remove modules or lower the volumetric / filter count</div>` : ""}`;
   }
 
   function renderAll() { renderCatalog(); renderPreview(); renderCalc(); save(); }
@@ -251,8 +231,6 @@
   });
   $("#search").addEventListener("input", renderCatalog);
   $("#lines").addEventListener("click", (e) => { if (e.target.dataset.remove) { toggle(e.target.dataset.remove, false); renderAll(); } });
-  $("#discount").addEventListener("change", (e) => { state.discount = +e.target.value; renderCalc(); save(); });
-  $("#plan").addEventListener("change", (e) => { state.plan = +e.target.value; renderCalc(); save(); });
   $("#preview").addEventListener("click", (e) => {
     const s = e.target.closest("section[data-mod]");
     if (!s) return;

@@ -7,7 +7,7 @@
   <meta name="description" content="Interactive proposal: pick the modules, preview the full fan-experience landing, and see the price update live." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css?v=1788835343.4576" />
+  <link rel="stylesheet" href="css/styles.css?v=1788835951.7343" />
 </head>
 <body>
   <header class="topbar">
@@ -60,7 +60,6 @@
     <!-- RIGHT: price calculator -->
     <aside class="panel panel-right">
       <div class="panel-head"><h2>Price calculator</h2></div>
-      <div id="budget" class="budget"></div>
       <div class="totals">
         <div class="total-card">
           <span>One-time build</span>
@@ -71,31 +70,9 @@
           <strong id="t-monthly">$0<small>/mo</small></strong>
         </div>
         <div class="total-row"><span>Third-party services <small>(billed at cost)</small></span><strong id="t-ext">$0<small>/mo</small></strong></div>
-        <div class="total-row"><span>First-year total <small>(build + 12 months, incl. third-party)</small></span><strong id="t-year">$0</strong></div>
         <div class="total-row"><span>Estimated timeline</span><strong id="t-weeks">0 weeks</strong></div>
         <div class="total-row"><span>Modules selected</span><strong id="t-count">0</strong></div>
       </div>
-
-      <div class="options">
-        <label class="opt">
-          <span>Discount</span>
-          <select id="discount">
-            <option value="0">None</option>
-            <option value="0.10">10% — bundle (15+ modules)</option>
-            <option value="0.15">15% — annual prepay</option>
-            <option value="0.20">20% — launch partner</option>
-          </select>
-        </label>
-        <label class="opt">
-          <span>Payment plan</span>
-          <select id="plan">
-            <option value="1">100% upfront</option>
-            <option value="2">50 / 50</option>
-            <option value="3">40 / 30 / 30</option>
-          </select>
-        </label>
-      </div>
-      <div id="plan-breakdown" class="plan-breakdown"></div>
 
       <h3>Line items</h3>
       <ul id="lines" class="lines"></ul>
@@ -109,16 +86,15 @@
 
   <div class="mobile-bar">
     <div class="mb-total"><b id="mb-onetime">$0</b><span id="mb-monthly">+ $0/mo</span></div>
-    <div class="mb-band" id="mb-band"></div>
     <button class="btn primary" data-tab="right">See price</button>
   </div>
 
   <div id="toast" class="toast"></div>
 
-  <script src="js/modules.js?v=1788835343.4576"></script>
-  <script src="js/ar-media.js?v=1788835343.4576"></script>
-  <script src="js/local-edits.js?v=1788835343.4576"></script>
-  <script src="js/preview.js?v=1788835343.4576"></script>
-  <script src="js/app.js?v=1788835343.4576"></script>
+  <script src="js/modules.js?v=1788835951.7343"></script>
+  <script src="js/ar-media.js?v=1788835951.7343"></script>
+  <script src="js/local-edits.js?v=1788835951.7343"></script>
+  <script src="js/preview.js?v=1788835951.7343"></script>
+  <script src="js/app.js?v=1788835951.7343"></script>
 </body>
 </html>
