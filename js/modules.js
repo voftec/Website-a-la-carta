@@ -13,7 +13,7 @@ window.CATEGORIES = [
   { id: "ops", name: "Operations & Care", icon: "🛡️", blurb: "Hosting, security and compliance." },
 ];
 
-window.CATALOG_VERSION = "2026-09-08.21";
+window.CATALOG_VERSION = "2026-09-08.22";
 window.MODULES = [
   { id: "hero", cat: "core", locked: true, name: "Hero Landing & Brand System", tagline: "Above-the-fold, Mr. Worldwide style", 
     desc: "Full-screen hero with video/3D loop, tagline, primary CTAs, custom typography and color system. Includes responsive framework, nav and footer.", oneTime: 1600, monthly: 0, ext: 0, extNote: "", days: 4, preview: "hero" },
@@ -32,7 +32,7 @@ window.MODULES = [
   { id: "countdown", cat: "music", name: "Release Countdown & Reveal", tagline: "Tension until midnight", 
     desc: "Timezone-aware countdown, scheduled reveal of cover art/tracklist, confetti moment, auto-switch to smart links on release.", oneTime: 100, monthly: 0, ext: 0, extNote: "", days: 0.5, preview: "countdown" },
   { id: "calendar", cat: "tour", name: "Tour Calendar", tagline: "Dates synced from Bandsintown / Songkick", 
-    desc: "Interactive calendar + map view, auto-import, ticket links, 'notify me when he's near me' alerts, add-to-calendar (ICS/Google).", oneTime: 500, monthly: 0, ext: 0, extNote: "", days: 1, preview: "calendar" },
+    desc: "Interactive calendar + map view, auto-import, ticket links, 'notify me when he's near me' alerts, add-to-calendar (ICS/Google).", oneTime: 300, monthly: 0, ext: 0, extNote: "", days: 1, preview: "calendar" },
   { id: "worldmap", cat: "social", name: "Worldwide Fan Map", tagline: "A pin on the map for every fan who uses the filters", 
     desc: "Live world map: every time a fan uses one of the AR filters, they are asked for permission and a pin is dropped on the map at their location. Per-country and per-city counters, real-time heat while the campaign runs.", oneTime: 150, monthly: 0, ext: 0, extNote: "", days: 1, preview: "worldmap" },
   { id: "sponsors", cat: "social", name: "Sponsors Wall", tagline: "Auto-scrolling logo strip of the event sponsors", 

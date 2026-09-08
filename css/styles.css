@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --bg: #0b0b10;
   --panel: #14141c;
   --panel-2: #1c1c27;
@@ -430,7 +430,7 @@ input, select { font: inherit; }
 .globe-stats span{background:rgba(11,11,20,.7);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:6px 12px;font-size:12px;color:#c7c7d6;backdrop-filter:blur(6px)}
 .globe-stats b{color:#ffd233;margin-right:4px}
 
-.totals [hidden] { display: none !important; }
+.totals [hidden], .total-row[hidden] { display: none !important; }
 
 .coupon .pill { display: inline-block; background: var(--accent); color: #111; font-weight: 800; font-size: 10px; letter-spacing: .08em; padding: 2px 8px; border-radius: 999px; margin: 0 4px; vertical-align: middle; }
 .coupon strong { color: #4ade80; }
