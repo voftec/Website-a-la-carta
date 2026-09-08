@@ -13,7 +13,7 @@ window.CATEGORIES = [
   { id: "ops", name: "Operations & Care", icon: "🛡️", blurb: "Hosting, security and compliance." },
 ];
 
-window.CATALOG_VERSION = "2026-09-08.14";
+window.CATALOG_VERSION = "2026-09-08.15";
 window.MODULES = [
   { id: "hero", cat: "core", locked: true, name: "Hero Landing & Brand System", tagline: "Above-the-fold, Mr. Worldwide style", 
     desc: "Full-screen hero with video/3D loop, tagline, primary CTAs, custom typography and color system. Includes responsive framework, nav and footer.", oneTime: 1600, monthly: 0, ext: 0, extNote: "", days: 4, preview: "hero" },
@@ -42,7 +42,7 @@ window.MODULES = [
   { id: "analytics", cat: "growth", name: "Analytics & Fan Dashboard (Google Analytics)", tagline: "GA4 with 10 tracked events + a private metrics dashboard page (not shown on the public site)", 
     desc: "Google Analytics 4 wired into the whole site with 10 tracked events included (page views, AR filter opens, pre-saves, ticket clicks, sign-ups, merch clicks, shares, video plays, language, country). Includes a private dashboard page where your team sees all metrics segmented by country, device, campaign and fan tier. Each extra event to track is +$50.", oneTime: 500, monthly: 0, ext: 0, extNote: "", days: 2, qty: {"label":"Extra events to track","min":0,"max":30,"unit":50,"unitMonthly":0}, preview: "analytics" },
   { id: "seo", cat: "growth", name: "SEO & Performance Pass", tagline: "Core Web Vitals green", 
-    desc: "Technical SEO, structured data, image/CDN optimisation, Lighthouse ≥ 90.", oneTime: 100, monthly: 0, ext: 0, extNote: "", days: 1, preview: null },
+    desc: "Technical SEO, structured data, image/CDN optimisation, Lighthouse ≥ 90.", oneTime: 200, monthly: 0, ext: 0, extNote: "", days: 1, preview: null },
   { id: "hosting", cat: "ops", locked: true, name: "Hosting, CDN & Security", tagline: "Static-page hosting included - domain not included", 
     desc: "Hosting is included in the budget: the site is deployed as a static page (Vercel/Cloudflare) with SSL, global CDN and DDoS protection. The custom domain (www.yourdomain.com) is not included in this budget: it is an extra paid and owned by the client (~$10-20/year at a registrar); we connect it to the site.", oneTime: 400, monthly: 0, ext: 0, extNote: "", days: 4, preview: null },
   { id: "a11y", cat: "ops", name: "Accessibility (WCAG 2.2 AA)", tagline: "Everyone gets in", 
