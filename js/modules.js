@@ -13,10 +13,10 @@ window.CATEGORIES = [
   { id: "ops", name: "Operations & Care", icon: "🛡️", blurb: "Hosting, security and compliance." },
 ];
 
-window.CATALOG_VERSION = "2026-09-08.22";
+window.CATALOG_VERSION = "2026-09-08.23";
 window.MODULES = [
   { id: "hero", cat: "core", locked: true, name: "Hero Landing & Brand System", tagline: "Above-the-fold, Mr. Worldwide style", 
-    desc: "Full-screen hero with video/3D loop, tagline, primary CTAs, custom typography and color system. Includes responsive framework, nav and footer.", oneTime: 1600, monthly: 0, ext: 0, extNote: "", days: 4, preview: "hero" },
+    desc: "Full-screen hero with video/3D loop, tagline, primary CTAs, custom typography and color system. Includes responsive framework, nav and footer.", oneTime: 1500, monthly: 0, ext: 0, extNote: "", days: 4, preview: "hero" },
   { id: "i18n", cat: "core", name: "Languages", tagline: "English + Spanish included - add any other language for $50 each", 
     desc: "The site comes in English and Spanish with a language switcher at the top. Each additional language (French, Italian, German, Dutch...) is +$50: we translate the whole site copy and add it to the switcher.", oneTime: 0, monthly: 0, ext: 0, extNote: "", days: 1, qty: {"label":"Add a language","min":0,"max":12,"unit":50,"unitMonthly":0,"included":["English","Spanish"],"options":["French","Italian","German","Dutch","Portuguese","Japanese","Korean","Mandarin","Arabic","Hindi","Russian","Turkish"]}, preview: "i18n" },
   { id: "capture", cat: "core", name: "Fan Capture (Newsletter)", tagline: "Capture fan emails and grow your list", 
