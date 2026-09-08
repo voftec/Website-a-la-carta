@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   const $ = (s) => document.querySelector(s);
 
   /* ---------- edits made in admin.html (localStorage) ---------- */
@@ -93,7 +93,7 @@
     const p = PRESETS.find((x) => x.id === pid);
     state.on = new Set(MODULES.filter((m) => m.locked).map((m) => m.id));
     (p.modules === "all" ? MODULES.map((m) => m.id) : p.modules).forEach((id) => state.on.add(id));
-    if (pid === "worldwide") { state.tier.ar_world = "volumetric"; state.tier.support = "tour"; state.qty.ar_face = 4; }
+    if (pid === "worldwide") { state.tier.support = "tour"; state.tier.capture = "eu"; state.tier.sponsors = "metrics"; }
     if (render) renderAll();
   }
 
@@ -191,7 +191,8 @@
     $("#t-monthly").innerHTML = fmt(mo) + "<small>/mo</small>";
     $("#t-ext").innerHTML = fmt(ext) + "<small>/mo</small>";
     $("#t-year").textContent = fmt(oneNet + (mo + ext) * 12);
-    $("#t-weeks").textContent = `${weeksTxt} (${days} days)`;
+    $("#t-weeks").textContent = `${weeksTxt} · ${days} days`;
+    $("#t-delivery").textContent = `${weeksTxt} · ${days} days`;
     $("#t-count").textContent = state.on.size;
     $("#tab-count").textContent = `${state.on.size} selected`;
     $("#tab-price").textContent = fmt(oneNet);
