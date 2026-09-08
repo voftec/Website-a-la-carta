@@ -10,10 +10,10 @@ window.CATEGORIES = [
   { id: "music", name: "Music & Releases", icon: "🎧", blurb: "Pre-saves, smart links and release moments." },
   { id: "tour", name: "Tour & Calendar", icon: "📅", blurb: "Dates, tickets and live moments." },  { id: "social", name: "Social & Community", icon: "📣", blurb: "UGC, challenges and shareable fan moments." },
   { id: "growth", name: "Data & Growth", icon: "📈", blurb: "Analytics, CRM and marketing plumbing." },
-  { id: "ops", name: "Operations & Care", icon: "🛡️", blurb: "Hosting, compliance and ongoing support." },
+  { id: "ops", name: "Operations & Care", icon: "🛡️", blurb: "Hosting, security and compliance." },
 ];
 
-window.CATALOG_VERSION = "2026-09-08.7";
+window.CATALOG_VERSION = "2026-09-08.9";
 window.MODULES = [
   { id: "hero", cat: "core", locked: true, name: "Hero Landing & Brand System", tagline: "Above-the-fold, Mr. Worldwide style", 
     desc: "Full-screen hero with video/3D loop, tagline, primary CTAs, custom typography and color system. Includes responsive framework, nav and footer.", oneTime: 2000, monthly: 0, ext: 0, extNote: "", days: 4, preview: "hero" },
@@ -24,42 +24,37 @@ window.MODULES = [
       {"id":"standard","name":"US / LatAm - email capture","oneTime":0,"monthly":0},
       {"id":"eu","name":"+ Europe (GDPR) - adds delete-my-data form","oneTime":200,"monthly":0} ] }, preview: "capture" },
   { id: "ar_face", cat: "ar", name: "AR Face Tracking Filter", tagline: "Front camera - effects on the fan's face", 
-    desc: "Face-tracked AR filter using the front camera: glasses, headwear, makeup, masks and particle FX that follow the fan's face in real time. Includes 3D asset, tracking tuning and QA on iOS/Android. Price per filter.", oneTime: 1550, monthly: 0, ext: 99, extNote: "8th Wall WebAR license (per project)", days: 7, preview: "ar_face" },
+    desc: "Face-tracked AR filter using the front camera: glasses, headwear, makeup, masks and particle FX that follow the fan's face in real time. Includes 3D asset, tracking tuning and QA on iOS/Android. Price per filter.", oneTime: 1550, monthly: 0, ext: 0, extNote: "", days: 7, preview: "ar_face" },
   { id: "ar_world", cat: "ar", name: "AR World Filter", tagline: "Back camera - the artist in the fan's space", 
     desc: "World-tracked AR using the back camera: a 3D character, stage or object is placed on the floor or table and fans walk around it, record and share. Includes 3D asset, tracking tuning and QA on iOS/Android. Price per filter.", oneTime: 1550, monthly: 0, ext: 0, extNote: "", days: 7, preview: "ar_world" },
   { id: "presave", cat: "music", name: "Pre-Save Campaign", tagline: "Spotify · Apple Music · Deezer · Amazon", 
-    desc: "OAuth pre-save with follow-artist, auto-add to library on release day, fan data capture, thank-you page with exclusive filter unlock.", oneTime: 500, monthly: 0, ext: 20, extNote: "Pre-save platform (feature.fm) - $0 if we use own OAuth", days: 2, preview: "presave" },
+    desc: "OAuth pre-save with follow-artist, auto-add to library on release day, fan data capture, thank-you page with exclusive filter unlock.", oneTime: 500, monthly: 0, ext: 0, extNote: "", days: 2, preview: "presave" },
   { id: "countdown", cat: "music", name: "Release Countdown & Reveal", tagline: "Tension until midnight", 
     desc: "Timezone-aware countdown, scheduled reveal of cover art/tracklist, confetti moment, auto-switch to smart links on release.", oneTime: 100, monthly: 0, ext: 0, extNote: "", days: 0.5, preview: "countdown" },
   { id: "calendar", cat: "tour", name: "Tour Calendar", tagline: "Dates synced from Bandsintown / Songkick", 
     desc: "Interactive calendar + map view, auto-import, ticket links, 'notify me when he's near me' alerts, add-to-calendar (ICS/Google).", oneTime: 350, monthly: 0, ext: 0, extNote: "", days: 1, preview: "calendar" },
   { id: "worldmap", cat: "social", name: "Worldwide Fan Map", tagline: "A pin on the map for every fan who uses the filters", 
-    desc: "Live world map: every time a fan uses one of the AR filters, they are asked for permission and a pin is dropped on the map at their location. Per-country and per-city counters, real-time heat while the campaign runs.", oneTime: 150, monthly: 0, ext: 0, extNote: "Mapbox free tier up to 50k loads/month", days: 1, preview: "worldmap" },
+    desc: "Live world map: every time a fan uses one of the AR filters, they are asked for permission and a pin is dropped on the map at their location. Per-country and per-city counters, real-time heat while the campaign runs.", oneTime: 150, monthly: 0, ext: 0, extNote: "", days: 1, preview: "worldmap" },
   { id: "sponsors", cat: "social", name: "Sponsors Wall", tagline: "Auto-scrolling logo strip of the event sponsors", 
     desc: "Sponsors section at the bottom of the site: an auto-scrolling strip with the logos of the event/tour sponsors, each linking to the sponsor's site. Logos are managed by your team (add, remove, reorder). With the 'Sponsor metrics' option, every logo reports impressions (how many people saw it on screen) and clicks to Google Analytics, so each sponsor gets a report of how many fans saw their brand - requires the Analytics & Fan Dashboard module.", oneTime: 300, monthly: 0, ext: 0, extNote: "", days: 3, tier: { label: "Sponsor metrics", options: [
       {"id":"logos","name":"Logos only - auto-scroll strip","oneTime":0,"monthly":0},
       {"id":"metrics","name":"+ Impressions & clicks per sponsor (needs Analytics)","oneTime":250,"monthly":0} ] }, preview: "sponsors" },
-  { id: "analytics", cat: "growth", name: "Analytics & Fan Dashboard (Google Analytics)", tagline: "GA4 with 10 tracked events + your own segmented dashboard", 
+  { id: "analytics", cat: "growth", name: "Analytics & Fan Dashboard (Google Analytics)", tagline: "GA4 with 10 tracked events + a private metrics dashboard page (not shown on the public site)", 
     desc: "Google Analytics 4 wired into the whole site with 10 tracked events included (page views, AR filter opens, pre-saves, ticket clicks, sign-ups, merch clicks, shares, video plays, language, country). Includes a private dashboard page where your team sees all metrics segmented by country, device, campaign and fan tier. Each extra event to track is +$50.", oneTime: 500, monthly: 0, ext: 0, extNote: "", days: 2, qty: {"label":"Extra events to track","min":0,"max":30,"unit":50,"unitMonthly":0}, preview: "analytics" },
   { id: "seo", cat: "growth", name: "SEO & Performance Pass", tagline: "Core Web Vitals green", 
     desc: "Technical SEO, structured data, image/CDN optimisation, Lighthouse ≥ 90.", oneTime: 100, monthly: 0, ext: 0, extNote: "", days: 1, preview: null },
   { id: "hosting", cat: "ops", locked: true, name: "Hosting, CDN & Security", tagline: "Vercel/Cloudflare, global edge", 
-    desc: "Edge hosting, DDoS protection, SSL, daily backups, monitoring. Scales for drop-night traffic spikes.", oneTime: 250, monthly: 0, ext: 20, extNote: "Vercel Pro / Cloudflare plan", days: 4, preview: null },
+    desc: "Edge hosting, DDoS protection, SSL, daily backups, monitoring. Scales for drop-night traffic spikes.", oneTime: 250, monthly: 0, ext: 0, extNote: "", days: 4, preview: null },
   { id: "a11y", cat: "ops", name: "Accessibility (WCAG 2.2 AA)", tagline: "Everyone gets in", 
     desc: "Audit + remediation, captions, reduced-motion modes, AR alternatives.", oneTime: 100, monthly: 0, ext: 0, extNote: "", days: 1, preview: null },
-  { id: "support", cat: "ops", name: "Maintenance & Support Retainer", tagline: "Updates, monitoring, small changes", 
-    desc: "Monthly hours for content help, dependency updates and new filter QA.", oneTime: 0, monthly: 0, ext: 0, extNote: "", days: 0, tier: { label: "Retainer level", options: [
-      {"id":"basic","name":"Basic — 4 h/mo","oneTime":0,"monthly":150},
-      {"id":"pro","name":"Pro — 10 h/mo, 24h SLA","oneTime":0,"monthly":350},
-      {"id":"tour","name":"Tour mode — on-call during shows","oneTime":0,"monthly":700} ] }, preview: null },
 ];
 
 /* Pre-built bundles the client can start from */
 window.PRESETS = [
   { id: "starter", name: "Starter", blurb: "Landing + 1 AR filter + pre-save + calendar + newsletter.",
     modules: ["hero", "hosting", "capture", "ar_face", "presave", "calendar"] },
-  { id: "fan", name: "Fan Experience", blurb: "2 AR filters + countdown, fan map, analytics, SEO, support.",
-    modules: ["hero", "hosting", "i18n", "capture", "ar_face", "ar_world", "presave", "countdown", "calendar", "worldmap", "analytics", "seo", "support"] },
+  { id: "fan", name: "Fan Experience", blurb: "2 AR filters + countdown, fan map, analytics, SEO.",
+    modules: ["hero", "hosting", "i18n", "capture", "ar_face", "ar_world", "presave", "countdown", "calendar", "worldmap", "analytics", "seo"] },
   { id: "worldwide", name: "Mr. Worldwide", blurb: "Everything, top tiers, 2 AR filters + 4 extra languages.",
     modules: "all" },
 ];

@@ -97,8 +97,7 @@
     state.on = new Set(MODULES.filter((m) => m.locked).map((m) => m.id));
     state.tier = {}; state.pick = {}; state.qty = {};
     (p.modules === "all" ? MODULES.map((m) => m.id) : p.modules).forEach((id) => state.on.add(id));
-    if (pid === "fan") { state.tier.support = "pro"; }
-    if (pid === "worldwide") { state.tier.support = "tour"; state.tier.capture = "eu"; state.tier.sponsors = "metrics"; state.pick.i18n = ["Portuguese", "French", "Italian", "German"]; }
+    if (pid === "worldwide") { state.tier.capture = "eu"; state.tier.sponsors = "metrics"; state.pick.i18n = ["Portuguese", "French", "Italian", "German"]; }
     if (render) renderAll();
   }
 
@@ -165,6 +164,7 @@
     html += R.footer(view);
     const el = $("#preview");
     el.innerHTML = html;
+    if (window.mountGlobe) el.querySelectorAll(".globe3d").forEach((g) => window.mountGlobe(g));
     const sections = el.querySelectorAll("section").length;
     const px = sections * (state.device === "mobile" ? 700 : 520);
     $("#page-length").textContent = `${sections} sections · ≈ ${(px / 900).toFixed(1)} screens · scroll to explore`;
@@ -192,6 +192,7 @@
 
     $("#t-onetime").textContent = fmt(oneNet);
     $("#t-monthly").innerHTML = fmt(mo) + "<small>/mo</small>";
+    $("#t-monthly").closest(".total-card").hidden = !mo;
     $("#t-ext").innerHTML = fmt(ext) + "<small>/mo</small>";
     $("#t-weeks").textContent = `${weeksTxt} · ${days} days`;
     $("#t-delivery").textContent = `${weeksTxt} · ${days} days`;
@@ -200,7 +201,7 @@
     $("#tab-price").textContent = fmt(oneNet);
     $("#t-budget").textContent = `${fmt(oneNet)} USD`;
     $("#mb-onetime").textContent = fmt(oneNet);
-    $("#mb-monthly").textContent = `+ ${fmt(mo + ext)}/mo`;
+    $("#mb-monthly").textContent = mo + ext ? `+ ${fmt(mo + ext)}/mo third-party` : "";
     if (extLines.length) lines.push(`<li class="ext-head"><span>Third-party services<em>billed at cost, paid by the artist</em></span><span class="amt">${fmt(ext)}<small>/mo</small></span></li>`, ...extLines);
     $("#lines").innerHTML = lines.join("");
 

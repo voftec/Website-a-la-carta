@@ -420,3 +420,9 @@ input, select { font: inherit; }
 
 .budget-total.delivery { margin-top: -6px; }
 .budget-total.delivery b { font-size: 20px; color: var(--text); }
+
+.globe3d{position:relative;height:360px;border-radius:16px;overflow:hidden;background:radial-gradient(ellipse at 50% 60%,#141a3a 0%,#0b0b14 70%)}
+.globe3d canvas{display:block;width:100%!important;height:100%!important}
+.globe-stats{position:absolute;left:14px;right:14px;bottom:12px;display:flex;gap:10px;flex-wrap:wrap;pointer-events:none}
+.globe-stats span{background:rgba(11,11,20,.7);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:6px 12px;font-size:12px;color:#c7c7d6;backdrop-filter:blur(6px)}
+.globe-stats b{color:#ffd233;margin-right:4px}

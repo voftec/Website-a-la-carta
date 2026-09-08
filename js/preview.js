@@ -1,4 +1,4 @@
-/* Renders each selected module as a section of the fan-experience landing. */
+﻿/* Renders each selected module as a section of the fan-experience landing. */
 (function () {
   const sec = (id, title, sub, body, cls = "") =>
     `<section data-mod="${id}" class="${cls}"><span class="tag">${title}</span>${sub}${body}</section>`;
@@ -119,8 +119,8 @@
   R.socialfeed = () => sec("socialfeed", "Social feed", h("#DALEWORLDWIDE"), `<div class="feed">${["TikTok", "Instagram", "X", "YouTube", "TikTok", "Instagram"].map((n) => `<div data-net="${n}"></div>`).join("")}</div>`);
   R.challenge = () => sec("challenge", "Challenge", h("THE DALE CHALLENGE") + p("Use the sound + the AR filter. Top videos win backstage passes."),
     `<div class="chips"><span class="pill p">Join on TikTok</span><span class="chip">48.2M views</span><span class="chip">Featured: @juanito_dance</span></div>`);
-  R.worldmap = () => sec("worldmap", "Fan map", h("FANS CHECKING IN RIGHT NOW") + p("Live pins from every fan and AR capture."),
-    `<div class="globe">${[[20, 30], [45, 50], [70, 40], [30, 65], [60, 70], [80, 25], [50, 20]].map(([x, y]) => `<i style="left:${x}%;top:${y}%"></i>`).join("")}</div>`);
+  R.worldmap = () => sec("worldmap", "Fan map", h("FANS CHECKING IN RIGHT NOW") + p("A pin on the globe for every fan who opens a filter (with their permission)."),
+    `<div class="globe3d"><div class="globe-stats"><span><b>12,480</b> fans on the map</span><span><b>64</b> countries</span><span><b>+318</b> in the last hour</span></div></div>`);
 
   R.sponsors = (s) => {
     const logos = ["Voli 305", "Bud Light", "Pepsi", "Norwegian", "Sprint", "Kodak", "Boost", "Fireball"];
@@ -136,6 +136,6 @@
   R.footer = (s) => `<div class="footer"><span>© ${A().name}${d(" · Mr. 305 Inc.", "")}</span><span>${s.has("legal") ? "Privacy · Cookies · Age 13+ for AR" : "Privacy"}${s.has("press") ? " · Press kit" : ""}${s.has("a11y") ? " · Accessibility" : ""}${s.has("pwa") ? " · 📲 Install app" : ""}</span></div>`;
 
   /* Order in which sections appear on the landing */
-  window.PREVIEW_ORDER = ["hero", "countdown", "presave", "ar_hub", "ar_ugc", "calendar", "setlist", "livestream", "fanclub", "points", "leaderboard", "quiz", "fancard", "contests", "birthday", "fanwall", "store", "collectibles", "donate", "smartlinks", "playlist", "video", "gallery", "news", "timeline", "challenge", "socialfeed", "worldmap", "capture", "analytics", "player", "sponsors"];
+  window.PREVIEW_ORDER = ["hero", "countdown", "presave", "ar_hub", "ar_ugc", "calendar", "setlist", "livestream", "fanclub", "points", "leaderboard", "quiz", "fancard", "contests", "birthday", "fanwall", "store", "collectibles", "donate", "smartlinks", "playlist", "video", "gallery", "news", "timeline", "challenge", "socialfeed", "worldmap", "capture", "player", "sponsors"];
   window.PREVIEW_RENDERERS = R;
 })();
