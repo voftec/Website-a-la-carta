@@ -18,5 +18,5 @@ Data & Growth,module,analytics,Analytics & Fan Dashboard (Google Analytics),,GA4
 Data & Growth,quantity,analytics,Extra events to track,,,,50,0,,,,,,,0,30,0
 Data & Growth,module,seo,SEO & Performance Pass,,Core Web Vitals green,"Technical SEO, structured data, image/CDN optimisation, Lighthouse ≥ 90.",200,0,0,,1,no,,,,,
 Operations & Care,module,hosting,"Hosting, CDN & Security",,Static-page hosting included - domain not included,"Hosting is included in the budget: the site is deployed as a static page (Vercel/Cloudflare) with SSL, global CDN and DDoS protection. The custom domain (www.yourdomain.com) is not included in this budget: it is an extra paid and owned by the client (~$10-20/year at a registrar); we connect it to the site.",400,0,0,,4,yes,,,,,
-Operations & Care,module,a11y,Accessibility (WCAG 2.2 AA),,Everyone gets in,"Audit + remediation, captions, reduced-motion modes.",250,0,0,,1,no,,,,,
+Operations & Care,module,a11y,Accessibility (WCAG 2.2 AA),,Everyone gets in,"Audit + remediation, captions, reduced-motion modes.",150,0,0,,1,no,,,,,
 Operations & Care,module,maint,Maintenance (4 months),,One payment covers 4 months of updates,"Optional. Paid once, covers 4 months: whenever you need to update photos, logos, texts, tour dates or upload a new video, send it to us and we handle it.",200,0,0,,0,no,,,,,

@@ -13,7 +13,7 @@ window.CATEGORIES = [
   { id: "ops", name: "Operations & Care", icon: "🛡️", blurb: "Hosting, security and compliance." },
 ];
 
-window.CATALOG_VERSION = "2026-09-08.18";
+window.CATALOG_VERSION = "2026-09-08.19";
 window.MODULES = [
   { id: "hero", cat: "core", locked: true, name: "Hero Landing & Brand System", tagline: "Above-the-fold, Mr. Worldwide style", 
     desc: "Full-screen hero with video/3D loop, tagline, primary CTAs, custom typography and color system. Includes responsive framework, nav and footer.", oneTime: 1600, monthly: 0, ext: 0, extNote: "", days: 4, preview: "hero" },
@@ -46,7 +46,7 @@ window.MODULES = [
   { id: "hosting", cat: "ops", locked: true, name: "Hosting, CDN & Security", tagline: "Static-page hosting included - domain not included", 
     desc: "Hosting is included in the budget: the site is deployed as a static page (Vercel/Cloudflare) with SSL, global CDN and DDoS protection. The custom domain (www.yourdomain.com) is not included in this budget: it is an extra paid and owned by the client (~$10-20/year at a registrar); we connect it to the site.", oneTime: 400, monthly: 0, ext: 0, extNote: "", days: 4, preview: null },
   { id: "a11y", cat: "ops", name: "Accessibility (WCAG 2.2 AA)", tagline: "Everyone gets in", 
-    desc: "Audit + remediation, captions, reduced-motion modes.", oneTime: 250, monthly: 0, ext: 0, extNote: "", days: 1, preview: null },
+    desc: "Audit + remediation, captions, reduced-motion modes.", oneTime: 150, monthly: 0, ext: 0, extNote: "", days: 1, preview: null },
   { id: "maint", cat: "ops", name: "Maintenance (4 months)", tagline: "One payment covers 4 months of updates", 
     desc: "Optional. Paid once, covers 4 months: whenever you need to update photos, logos, texts, tour dates or upload a new video, send it to us and we handle it.", oneTime: 200, monthly: 0, ext: 0, extNote: "", days: 0, preview: null },
 ];
