@@ -13,7 +13,7 @@ window.CATEGORIES = [
   { id: "ops", name: "Operations & Care", icon: "🛡️", blurb: "Hosting, compliance and ongoing support." },
 ];
 
-window.CATALOG_VERSION = "2026-09-08.4";
+window.CATALOG_VERSION = "2026-09-08.5";
 window.MODULES = [
   { id: "hero", cat: "core", locked: true, name: "Hero Landing & Brand System", tagline: "Above-the-fold, Mr. Worldwide style", 
     desc: "Full-screen hero with video/3D loop, tagline, primary CTAs, custom typography and color system. Includes responsive framework, nav and footer.", oneTime: 2000, monthly: 0, ext: 0, extNote: "", days: 21, preview: "hero" },
@@ -35,6 +35,10 @@ window.MODULES = [
     desc: "Interactive calendar + map view, auto-import, ticket links, 'notify me when he's near me' alerts, add-to-calendar (ICS/Google).", oneTime: 350, monthly: 0, ext: 0, extNote: "", days: 11, preview: "calendar" },
   { id: "worldmap", cat: "social", name: "Worldwide Fan Map", tagline: "A pin on the map for every fan who uses the filters", 
     desc: "Live world map: every time a fan uses one of the AR filters, they are asked for permission and a pin is dropped on the map at their location. Per-country and per-city counters, real-time heat while the campaign runs.", oneTime: 150, monthly: 0, ext: 0, extNote: "Mapbox free tier up to 50k loads/month", days: 14, preview: "worldmap" },
+  { id: "sponsors", cat: "social", name: "Sponsors Wall", tagline: "Auto-scrolling logo strip of the event sponsors", 
+    desc: "Sponsors section at the bottom of the site: an auto-scrolling strip with the logos of the event/tour sponsors, each linking to the sponsor's site. Logos are managed by your team (add, remove, reorder). With the 'Sponsor metrics' option, every logo reports impressions (how many people saw it on screen) and clicks to Google Analytics, so each sponsor gets a report of how many fans saw their brand - requires the Analytics & Fan Dashboard module.", oneTime: 300, monthly: 0, ext: 0, extNote: "", days: 3, tier: { label: "Sponsor metrics", options: [
+      {"id":"logos","name":"Logos only - auto-scroll strip","oneTime":0,"monthly":0},
+      {"id":"metrics","name":"+ Impressions & clicks per sponsor (needs Analytics)","oneTime":250,"monthly":0} ] }, preview: "sponsors" },
   { id: "analytics", cat: "growth", name: "Analytics & Fan Dashboard (Google Analytics)", tagline: "GA4 with 10 tracked events + your own segmented dashboard", 
     desc: "Google Analytics 4 wired into the whole site with 10 tracked events included (page views, AR filter opens, pre-saves, ticket clicks, sign-ups, merch clicks, shares, video plays, language, country). Includes a private dashboard page where your team sees all metrics segmented by country, device, campaign and fan tier. Each extra event to track is +$50.", oneTime: 500, monthly: 0, ext: 0, extNote: "", days: 3, qty: {"label":"Extra events to track","min":0,"max":30,"unit":50,"unitMonthly":0}, preview: "analytics" },
   { id: "seo", cat: "growth", name: "SEO & Performance Pass", tagline: "Core Web Vitals green", 

@@ -122,12 +122,20 @@
   R.worldmap = () => sec("worldmap", "Fan map", h("FANS CHECKING IN RIGHT NOW") + p("Live pins from every fan and AR capture."),
     `<div class="globe">${[[20, 30], [45, 50], [70, 40], [30, 65], [60, 70], [80, 25], [50, 20]].map(([x, y]) => `<i style="left:${x}%;top:${y}%"></i>`).join("")}</div>`);
 
+  R.sponsors = (s) => {
+    const logos = ["Voli 305", "Bud Light", "Pepsi", "Norwegian", "Sprint", "Kodak", "Boost", "Fireball"];
+    const strip = logos.concat(logos).map((n) => `<span>${n}</span>`).join("");
+    const metrics = s.tier("sponsors") === "metrics";
+    return sec("sponsors", "Sponsors", h("OFFICIAL PARTNERS") + p(metrics ? "Each logo reports impressions & clicks to Analytics - every sponsor gets its own reach report." : "Auto-scrolling strip with the event sponsors."),
+      `<div class="marquee"><div>${strip}</div></div>` + (metrics ? `<div class="chips"><span class="chip">Voli 305 - 84k impressions - 2.1k clicks</span><span class="chip">Pepsi - 79k impressions - 1.4k clicks</span></div>` : ""));
+  };
+
   R.capture = () => sec("capture", "Fan capture", h("STAY IN THE LOOP") + p("Tour alerts, filter drops and presale codes. EN / ES."),
     `<div class="form"><input placeholder="Email or phone" /><span class="pill y">Join</span></div>`);
 
   R.footer = (s) => `<div class="footer"><span>© ${A().name}${d(" · Mr. 305 Inc.", "")}</span><span>${s.has("legal") ? "Privacy · Cookies · Age 13+ for AR" : "Privacy"}${s.has("press") ? " · Press kit" : ""}${s.has("a11y") ? " · Accessibility" : ""}${s.has("pwa") ? " · 📲 Install app" : ""}</span></div>`;
 
   /* Order in which sections appear on the landing */
-  window.PREVIEW_ORDER = ["hero", "countdown", "presave", "ar_hub", "ar_ugc", "calendar", "setlist", "livestream", "fanclub", "points", "leaderboard", "quiz", "fancard", "contests", "birthday", "fanwall", "store", "collectibles", "donate", "smartlinks", "playlist", "video", "gallery", "news", "timeline", "challenge", "socialfeed", "worldmap", "capture", "analytics", "player"];
+  window.PREVIEW_ORDER = ["hero", "countdown", "presave", "ar_hub", "ar_ugc", "calendar", "setlist", "livestream", "fanclub", "points", "leaderboard", "quiz", "fancard", "contests", "birthday", "fanwall", "store", "collectibles", "donate", "smartlinks", "playlist", "video", "gallery", "news", "timeline", "challenge", "socialfeed", "worldmap", "capture", "analytics", "player", "sponsors"];
   window.PREVIEW_RENDERERS = R;
 })();
