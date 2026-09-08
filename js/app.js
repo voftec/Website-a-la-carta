@@ -29,6 +29,7 @@
 
   /* ---------- state ---------- */
   const platformOperator = 25;
+  const rushFee = 15;
   const state = { on: new Set(), qty: {}, tier: {}, pick: {}, discount: 0, plan: 1, device: "desktop" };
   MODULES.filter((m) => m.locked).forEach((m) => state.on.add(m.id));
 
@@ -137,7 +138,7 @@
         </div>
         <div class="mod-price"><b>${one ? fmt(one) : mo ? "" : "—"}</b><small>${mo ? fmt(mo) + "/mo" : one ? "one-time" : ""}</small></div>
       </div>
-      <div class="mod-desc">${m.desc}${modDays(m) ? ` <em>~${modDays(m)} day${modDays(m) === 1 ? "" : "s"}</em>` : ""}${m.ext || m.extNote ? `<div class="mod-ext">Third-party: <b>${m.ext ? fmt(m.ext) + "/mo" : "usage-based"}</b> - ${m.extNote || ""} (billed at cost)</div>` : ""}${arRefs(m)}</div>
+      <div class="mod-desc">${m.desc}${modDays(m) ? ` <em>~${modDays(m)} day${modDays(m) === 1 ? "" : "s"}</em>` : ""}${m.ext || m.extNote ? `<div class="mod-ext">Third-party: <b>${m.ext ? fmt(m.ext) + "/mo" : "monthly plan to be discussed"}</b> - ${m.extNote || ""}</div>` : ""}${arRefs(m)}</div>
       <div class="mod-controls">${controls}</div>
       <button class="mod-more" data-more="${m.id}">details ▾</button>
     </div>`;
@@ -178,14 +179,16 @@
     const extLines = [], effort = [];
     CATEGORIES.forEach((c) => MODULES.filter((m) => m.cat === c.id && state.on.has(m.id)).forEach((m) => {
       const cost = modCost(m); one += cost.one; mo += cost.mo; ext += cost.ext; const md = modDays(m); days += md; if (md) effort.push([m.name, md]);
-      if (m.ext || m.extNote) extLines.push(`<li class="ext"><span>${m.name}<em>${m.extNote || ""}</em></span><span class="amt">${m.ext ? `<small>${fmt(m.ext)}/mo</small>` : "<small>at cost</small>"}</span></li>`);
+      if (m.ext || m.extNote) extLines.push(`<li class="ext"><span>${m.name}<em>${m.extNote || ""}</em></span><span class="amt">${m.ext ? `<small>${fmt(m.ext)}/mo</small>` : "<small>To be discussed</small>"}</span></li>`);
       let detail = "";
       if (m.qty?.options) detail = [...(m.qty.included || []), ...view.picks(m.id)].join(", ");
       else if (m.qty) detail = `${view.qty(m.id)} × ${m.qty.label.toLowerCase()}`;
       if (m.tier) detail = m.tier.options.find((o) => o.id === view.tier(m.id)).name;
       lines.push(`<li><span>${m.name}<em>${c.name}${detail ? " · " + detail : ""}</em></span><span class="amt">${cost.one ? fmt(cost.one) : cost.mo ? "" : "Included"}${cost.mo ? `<small>${fmt(cost.mo)}/mo</small>` : ""}${m.locked ? "" : `<button data-remove="${m.id}" title="Remove">✕</button>`}</span></li>`);
     }));
-    const oneNet = Math.round(one * (1 + platformOperator / 100));
+    const oneOp = Math.round(one * (1 + platformOperator / 100));
+    const rush = Math.round(oneOp * rushFee / 100);
+    const oneNet = oneOp + rush;
     mo = Math.round(mo * (1 + platformOperator / 100));
     const weeks = days / 7;
     const weeksTxt = Number.isInteger(weeks) ? `${weeks} week${weeks === 1 ? "" : "s"}` : `${weeks.toFixed(1)} weeks`;
@@ -193,7 +196,9 @@
     $("#t-onetime").textContent = fmt(oneNet);
     $("#t-monthly").innerHTML = fmt(mo) + "<small>/mo</small>";
     $("#t-monthly").closest(".total-card").hidden = !mo;
-    $("#t-ext").innerHTML = fmt(ext) + "<small>/mo</small>";
+    $("#t-ext").innerHTML = ext ? fmt(ext) + "<small>/mo</small>" : extLines.length ? "<small>To be discussed</small>" : "$0";
+    $("#t-subtotal").textContent = fmt(oneOp);
+    $("#t-rush").textContent = fmt(rush);
     $("#t-weeks").textContent = `${weeksTxt} · ${days} days`;
     $("#t-delivery").textContent = `${weeksTxt} · ${days} days`;
     $("#t-count").textContent = state.on.size;
@@ -201,8 +206,8 @@
     $("#tab-price").textContent = fmt(oneNet);
     $("#t-budget").textContent = `${fmt(oneNet)} USD`;
     $("#mb-onetime").textContent = fmt(oneNet);
-    $("#mb-monthly").textContent = mo + ext ? `+ ${fmt(mo + ext)}/mo third-party` : "";
-    if (extLines.length) lines.push(`<li class="ext-head"><span>Third-party services<em>billed at cost, paid by the artist</em></span><span class="amt">${fmt(ext)}<small>/mo</small></span></li>`, ...extLines);
+    $("#mb-monthly").textContent = (mo + ext) ? `+ ${fmt(mo + ext)}/mo third-party` : extLines.length ? "+ third-party plan TBD" : "";
+    if (extLines.length) lines.push(`<li class="ext-head"><span>Third-party services<em>monthly plan chosen and paid by the client</em></span><span class="amt">${ext ? fmt(ext) + "<small>/mo</small>" : "<small>To be discussed</small>"}</span></li>`, ...extLines);
     $("#lines").innerHTML = lines.join("");
 
     $("#timeline").innerHTML = `<h3>Timeline (${weeksTxt} · ${days} days total)</h3>` + effort.map(([n, d]) => `<div class="ph"><b>${n}</b><i style="width:${(d / days) * 100}%"></i><span>${d} d</span></div>`).join("");
